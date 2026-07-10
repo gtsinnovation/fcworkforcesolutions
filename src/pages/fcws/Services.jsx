@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Heart, Home, Pill, Users, Brain, Car } from "lucide-react";
+import { ArrowRight, User, Utensils, Heart, Pill, ClipboardCheck, ShieldCheck } from "lucide-react";
 import Navbar from "@/components/fcws/Navbar";
 import Footer from "@/components/fcws/Footer";
 import { SERVICE_CATALOG } from "@/lib/fcws";
 
-const ICON_MAP = { Heart, Home, Pill, Users, Brain, Car };
+const ICON_MAP = { User, Utensils, Heart, Pill, ClipboardCheck, ShieldCheck };
 
 export default function Services() {
   return (
@@ -28,12 +28,12 @@ export default function Services() {
                 transition={{ delay: i * 0.05, duration: 0.4 }}
                 className="care-card group hover:shadow-md transition-shadow"
               >
-                <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-secondary" />
+                <div className="w-12 h-12 rounded-xl bg-accent/15 flex items-center justify-center mb-4">
+                  <Icon className="w-6 h-6 text-accent" />
                 </div>
                 <h3 className="font-heading font-semibold text-lg text-primary mb-2">{service.title}</h3>
                 <p className="text-sm text-muted-foreground mb-4">{service.description}</p>
-                <Link to={`/services/${service.slug}`} className="inline-flex items-center gap-1 text-sm font-medium text-secondary hover:gap-2 transition-all">
+                <Link to={`/services/${service.slug}`} className="inline-flex items-center gap-1 text-sm font-medium text-accent hover:gap-2 transition-all">
                   Learn more <ArrowRight className="w-4 h-4" />
                 </Link>
               </motion.div>

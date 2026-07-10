@@ -19,10 +19,13 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-background/90 backdrop-blur border-b border-border">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
-            <ShieldCheck className="w-5 h-5 text-secondary" />
+          <div className="w-9 h-9 rounded-xl bg-accent flex items-center justify-center">
+            <ShieldCheck className="w-5 h-5 text-accent-foreground" />
           </div>
-          <span className="font-heading font-bold text-lg text-primary hidden sm:block">Family Care Workforce</span>
+          <div className="hidden sm:block leading-tight">
+            <span className="font-heading font-bold text-base text-primary block">Family Care</span>
+            <span className="text-xs text-muted-foreground">Workforce Solutions</span>
+          </div>
         </Link>
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
           <Link to="/services" className="hover:text-primary transition-colors">Services</Link>

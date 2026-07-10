@@ -1,10 +1,10 @@
 export const SERVICE_CATALOG = [
-  { slug: "personal-care", title: "Personal Care & Hygiene", icon: "Heart", description: "Assistance with bathing, grooming, dressing, and toileting while preserving dignity and privacy." },
-  { slug: "homemaking", title: "Homemaking & Household Support", icon: "Home", description: "Light housekeeping, laundry, meal preparation, and household management to maintain a safe living environment." },
-  { slug: "medication-reminders", title: "Medication Reminders", icon: "Pill", description: "Trained caregivers provide timely medication reminders and coordinate with healthcare providers." },
-  { slug: "companionship", title: "Companionship & Social Engagement", icon: "Users", description: "Meaningful social interaction, conversation, and activities that support emotional well-being." },
-  { slug: "dementia-care", title: "Dementia & Alzheimer's Care", icon: "Brain", description: "Specialized care techniques and safety protocols tailored to clients with cognitive impairments." },
-  { slug: "transportation", title: "Transportation & Errands", icon: "Car", description: "Safe transportation to medical appointments, grocery shopping, and community activities." },
+  { slug: "personal-care", title: "Personal Care & Daily Living Assistance", icon: "User", description: "Compassionate assistance with bathing, grooming, dressing, and daily living activities while preserving dignity and independence." },
+  { slug: "meal-preparation", title: "Meal Preparation & Nutrition Support", icon: "Utensils", description: "Nutritious meal planning and preparation tailored to dietary needs and preferences, ensuring your loved ones eat well every day." },
+  { slug: "companionship", title: "Companionship & Emotional Support", icon: "Heart", description: "Meaningful social interaction, conversation, and emotional support that combats loneliness and enriches daily life." },
+  { slug: "medication-reminders", title: "Medication Reminders", icon: "Pill", description: "Timely medication reminders and coordination with healthcare providers to ensure prescriptions are taken correctly and safely." },
+  { slug: "light-housekeeping", title: "Light Housekeeping & Errands", icon: "ClipboardCheck", description: "Light housekeeping, laundry, grocery shopping, and errands to maintain a clean, safe, and comfortable living environment." },
+  { slug: "respite-care", title: "Respite Care for Family Caregivers", icon: "ShieldCheck", description: "Temporary relief for family caregivers, providing professional care while you rest, recharge, or attend to other responsibilities." },
 ];
 
 export const SERVICE_SLUGS = SERVICE_CATALOG.map(s => s.slug);

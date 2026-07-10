@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowLeft, Phone, CheckCircle, Heart, Home, Pill, Users, Brain, Car } from "lucide-react";
+import { ArrowRight, ArrowLeft, Phone, CheckCircle, Heart, User, Utensils, Pill, ClipboardCheck, ShieldCheck } from "lucide-react";
 import Navbar from "@/components/fcws/Navbar";
 import Footer from "@/components/fcws/Footer";
 import { Button } from "@/components/ui/button";
 import { SERVICE_CATALOG } from "@/lib/fcws";
 
-const ICON_MAP = { Heart, Home, Pill, Users, Brain, Car };
+const ICON_MAP = { User, Utensils, Heart, Pill, ClipboardCheck, ShieldCheck };
 
 export default function ServiceDetail() {
   const { slug } = useParams();
@@ -37,8 +37,8 @@ export default function ServiceDetail() {
         </Link>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="w-16 h-16 rounded-2xl bg-secondary/10 flex items-center justify-center mb-6">
-            <Icon className="w-8 h-8 text-secondary" />
+          <div className="w-16 h-16 rounded-2xl bg-accent/15 flex items-center justify-center mb-6">
+            <Icon className="w-8 h-8 text-accent" />
           </div>
           <h1 className="font-heading font-bold text-3xl md:text-4xl text-primary mb-4">{service.title}</h1>
           <p className="text-lg text-muted-foreground mb-8">{service.description}</p>
@@ -48,18 +48,18 @@ export default function ServiceDetail() {
             <ul className="space-y-3">
               {getFeatures(service.slug).map((f, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                   <span className="text-sm text-foreground">{f}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="care-card bg-secondary/5">
+          <div className="care-card bg-accent/5">
             <h2 className="font-heading font-semibold text-xl text-primary mb-2">Ready to Learn More?</h2>
             <p className="text-muted-foreground text-sm mb-6">Contact us for a free consultation about how {service.title.toLowerCase()} can help your family.</p>
             <div className="flex flex-wrap gap-3">
-              <Button asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+              <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
                 <Link to="/request-care">Request This Service <ArrowRight className="w-4 h-4 ml-2" /></Link>
               </Button>
               <Button asChild variant="outline">
@@ -77,11 +77,11 @@ export default function ServiceDetail() {
 function getFeatures(slug) {
   const features = {
     "personal-care": ["Bathing and showering assistance", "Grooming, hair and oral care", "Dressing and undressing", "Toileting and incontinence care", "Mobility and transfer assistance", "Skin care and comfort measures"],
-    "homemaking": ["Light housekeeping and sanitization", "Laundry and linen changes", "Meal planning and preparation", "Grocery shopping and errands", "Plant and pet care", "Organization and clutter management"],
-    "medication-reminders": ["Timely medication reminders", "Medication organization", "Coordination with pharmacy", "Health monitoring and logging", "Family communication updates", "Side effect observation"],
+    "meal-preparation": ["Nutritious meal planning", "Dietary restriction accommodation", "Grocery shopping for ingredients", "Fresh meal preparation daily", "Hydration monitoring", "Kitchen cleanup and sanitization"],
     "companionship": ["Friendly conversation and socializing", "Board games and cognitive activities", "Accompaniment to social events", "Reading aloud and shared hobbies", "Walks and light exercise", "Emotional support and companionship"],
-    "dementia-care": ["Specialized dementia-trained caregivers", "Wandering prevention and safety", "Cognitive stimulation activities", "Consistent caregiver matching", "Behavioral management techniques", "Family education and support"],
-    "transportation": ["Medical appointment transportation", "Grocery and pharmacy runs", "Social and community outings", "Religious service attendance", "Safe drop-off and pick-up", "Companion accompaniment"],
+    "medication-reminders": ["Timely medication reminders", "Medication organization", "Coordination with pharmacy", "Health monitoring and logging", "Family communication updates", "Side effect observation"],
+    "light-housekeeping": ["Light housekeeping and sanitization", "Laundry and linen changes", "Grocery shopping and errands", "Plant and pet care", "Organization and clutter management", "Safe environment checks"],
+    "respite-care": ["Temporary relief for family caregivers", "Flexible hourly or overnight care", "Caregiver matching for continuity", "Personal care and companionship", "Safe and supervised environment", "Peace of mind for families"],
   };
   return features[slug] || ["Personalized care tailored to individual needs", "Flexible scheduling options", "Trained and screened caregivers", "Ongoing care plan adjustments"];
 }
