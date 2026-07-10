@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import {
   User, Utensils, Heart, Pill, ClipboardCheck, ShieldCheck,
-  Phone, Map, Users, HeartHandshake, ArrowRight, Menu
+  Phone, MapPin, Users, HeartHandshake, Home, Menu
 } from "lucide-react";
 import { SERVICE_CATALOG } from "@/lib/fcws";
 import Footer from "@/components/fcws/Footer";
@@ -16,7 +15,7 @@ const TRUST_POINTS = [
   { icon: HeartHandshake, text: "Compassionate & respectful care" },
   { icon: Phone, text: "Regular updates & communication for peace of mind" },
   { icon: Users, text: "Reliable, professional & accountable" },
-  { icon: Map, text: "Proudly Liberian, committed to our community" },
+  { icon: MapPin, text: "Proudly Liberian, committed to our community" },
 ];
 
 export default function Landing() {
@@ -31,149 +30,128 @@ export default function Landing() {
     });
   }, []);
 
+  const dashboardPath = user?.role === "admin" ? "/admin" : user?.role === "caregiver" ? "/caregiver" : "/portal";
+
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Hero — Split layout with integrated navbar */}
+      {/* Hero */}
       <section className="bg-primary relative">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2">
-          {/* Left: nav + brand + headline */}
-          <div className="flex flex-col px-6 lg:px-12 py-6 md:py-10 text-primary-foreground">
+          {/* Left: brand + headline */}
+          <div className="flex flex-col px-6 lg:px-10 py-6 md:py-8 text-primary-foreground">
             {/* Top nav row */}
-            <div className="flex items-center justify-between mb-8 md:mb-12">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center">
-                  <ShieldCheck className="w-6 h-6 text-accent-foreground" />
+            <div className="flex items-center justify-between mb-6 md:mb-10">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center">
+                  <Home className="w-5 h-5 text-accent-foreground" />
                 </div>
                 <div className="leading-tight">
-                  <span className="font-heading font-extrabold text-base block">Family Care</span>
-                  <span className="text-[10px] text-accent font-semibold tracking-wider">WORKFORCE SOLUTIONS</span>
+                  <span className="font-heading font-bold text-sm block">Family Care</span>
+                  <span className="text-[9px] text-accent font-semibold tracking-widest">WORKFORCE SOLUTIONS</span>
                 </div>
               </div>
-              {/* Desktop nav */}
-              <div className="hidden md:flex items-center gap-6 text-sm font-medium text-primary-foreground/80">
+              <div className="hidden md:flex items-center gap-5 text-xs font-medium text-primary-foreground/70">
                 <Link to="/services" className="hover:text-accent transition-colors">Services</Link>
                 <Link to="/about" className="hover:text-accent transition-colors">About</Link>
                 <Link to="/careers" className="hover:text-accent transition-colors">Careers</Link>
                 <Link to="/quiz" className="hover:text-accent transition-colors">Training</Link>
                 {user ? (
-                  <Link to={user.role === "admin" ? "/admin" : user.role === "caregiver" ? "/caregiver" : "/portal"} className="bg-accent text-accent-foreground font-semibold rounded-full px-4 py-1.5 hover:opacity-90 transition text-sm">
-                    Dashboard
-                  </Link>
+                  <Link to={dashboardPath} className="bg-accent text-accent-foreground font-semibold rounded-full px-3 py-1 hover:opacity-90 transition text-xs">Dashboard</Link>
                 ) : (
-                  <Link to="/login" className="bg-accent text-accent-foreground font-semibold rounded-full px-4 py-1.5 hover:opacity-90 transition text-sm">
-                    Log in
-                  </Link>
+                  <Link to="/login" className="bg-accent text-accent-foreground font-semibold rounded-full px-3 py-1 hover:opacity-90 transition text-xs">Log in</Link>
                 )}
               </div>
-              {/* Mobile menu button */}
               <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-primary-foreground">
-                <Menu className="w-6 h-6" />
+                <Menu className="w-5 h-5" />
               </button>
             </div>
-            {/* Mobile nav dropdown */}
             {menuOpen && (
-              <div className="md:hidden flex flex-col gap-3 mb-6 text-sm font-medium text-primary-foreground/80">
+              <div className="md:hidden flex flex-col gap-3 mb-6 text-sm font-medium text-primary-foreground/70">
                 <Link to="/services" onClick={() => setMenuOpen(false)}>Services</Link>
                 <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
                 <Link to="/careers" onClick={() => setMenuOpen(false)}>Careers</Link>
                 <Link to="/quiz" onClick={() => setMenuOpen(false)}>Training</Link>
-                {user ? (
-                  <Link to={user.role === "admin" ? "/admin" : user.role === "caregiver" ? "/caregiver" : "/portal"} onClick={() => setMenuOpen(false)}>Dashboard</Link>
-                ) : (
-                  <Link to="/login" onClick={() => setMenuOpen(false)}>Log in</Link>
-                )}
+                {user ? <Link to={dashboardPath} onClick={() => setMenuOpen(false)}>Dashboard</Link> : <Link to="/login" onClick={() => setMenuOpen(false)}>Log in</Link>}
               </div>
             )}
 
-            <p className="text-xs text-accent font-semibold tracking-wider mb-2">Care You Can Trust. Family We Respect.</p>
-            <h1 className="font-heading font-extrabold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6">
+            <p className="text-[11px] text-accent font-semibold tracking-wide mb-2">Care You Can Trust. Family We Respect.</p>
+            <h1 className="font-heading font-bold text-2xl md:text-3xl leading-tight mb-4">
               PEACE OF MIND<br />EVERY DAY
             </h1>
-            <p className="text-base md:text-lg text-primary-foreground/80 max-w-md mb-8">
-              You may be far away, but your loved ones can still receive the love, care and support they deserve—right at home in Liberia. FCWS provides trusted, compassionate and professional caregivers so your family members are in <span className="text-accent font-semibold">safe hands</span>.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link to="/request-care" className="bg-accent text-accent-foreground font-semibold rounded-full px-6 py-3 hover:opacity-90 transition text-sm">
-                Request Care
-              </Link>
-              <Link to="/services" className="border border-primary-foreground/30 text-primary-foreground font-semibold rounded-full px-6 py-3 hover:bg-primary-foreground/10 transition text-sm">
-                Our Services
-              </Link>
+            <div className="space-y-3 text-sm text-primary-foreground/75 max-w-md mb-6">
+              <p>You may be far away, but your loved ones can still receive the love, care and support they deserve—right at home in Liberia.</p>
+              <p>FCWS provides trusted, compassionate and professional caregivers so your family members are in <span className="text-accent font-semibold">safe hands</span>, no matter where you are in the world.</p>
+              <p>From daily living assistance to companionship and medical support, we treat your family like our own.</p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Link to="/request-care" className="bg-accent text-accent-foreground font-semibold rounded-full px-5 py-2 hover:opacity-90 transition text-xs">Request Care</Link>
+              <Link to="/services" className="border border-primary-foreground/30 text-primary-foreground font-semibold rounded-full px-5 py-2 hover:bg-primary-foreground/10 transition text-xs">Our Services</Link>
             </div>
           </div>
 
           {/* Right: photo with badge */}
-          <div className="relative min-h-[300px] md:min-h-[560px]">
+          <div className="relative min-h-[280px] md:min-h-[520px]">
             <img
               src="https://images.unsplash.com/photo-1559759175-0eb30cd8c128?w=1200&h=900&fit=crop"
               alt="Caregiver assisting a senior at home"
               className="absolute inset-0 w-full h-full object-cover"
             />
-            {/* Top right badge */}
-            <div className="absolute top-6 right-6 bg-primary/85 backdrop-blur-sm text-primary-foreground rounded-xl px-5 py-3 max-w-[200px]">
-              <p className="font-heading font-bold text-sm leading-snug">CARING FOR YOUR LOVED ONES</p>
-              <p className="text-xs text-accent italic mt-1">When you can't be there.</p>
+            <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-primary/90 backdrop-blur-sm text-primary-foreground rounded-lg px-4 py-3 max-w-[180px]">
+              <div className="flex items-center gap-2 mb-1">
+                <Heart className="w-4 h-4 text-accent fill-accent" />
+                <p className="font-heading font-bold text-xs text-accent leading-tight">CARING FOR YOUR LOVED ONES</p>
+              </div>
+              <p className="text-[11px] text-primary-foreground/90 italic">When you can't be there.</p>
             </div>
           </div>
         </div>
+        {/* Curved bottom transition */}
+        <div className="h-8 md:h-12 bg-background rounded-t-[3rem] -mb-px"></div>
       </section>
 
-      {/* Services & Trust — Two column split */}
-      <section className="bg-background py-16 md:py-24">
+      {/* Services & Trust */}
+      <section className="bg-background py-10 md:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
-            {/* Left: Our Services */}
+          <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
+            {/* Our Services */}
             <div>
-              <h2 className="font-heading font-bold text-2xl md:text-3xl text-primary mb-2">OUR SERVICES</h2>
-              <div className="w-16 h-1 bg-accent mb-8" />
-              <div className="space-y-3">
-                {SERVICE_CATALOG.map((service) => {
+              <h2 className="font-heading font-bold text-lg md:text-xl text-primary mb-1">OUR SERVICES</h2>
+              <div className="w-12 h-0.5 bg-accent mb-6" />
+              <div>
+                {SERVICE_CATALOG.map((service, idx) => {
                   const Icon = SERVICE_ICONS[service.icon] || Heart;
                   return (
-                    <motion.div
-                      key={service.slug}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Link
-                        to={`/services/${service.slug}`}
-                        className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-accent hover:shadow-md transition-all group"
-                      >
-                        <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center shrink-0 group-hover:bg-accent transition-colors">
-                          <Icon className="w-5 h-5 text-primary-foreground group-hover:text-accent-foreground" />
+                    <div key={service.slug}>
+                      <Link to={`/services/${service.slug}`} className="flex items-center gap-3 py-2.5 group">
+                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-accent transition-colors">
+                          <Icon className="w-4 h-4 text-primary group-hover:text-accent-foreground transition-colors" />
                         </div>
-                        <span className="font-medium text-primary group-hover:text-accent transition-colors text-sm md:text-base">{service.title}</span>
-                        <ArrowRight className="w-4 h-4 text-muted-foreground ml-auto group-hover:text-accent transition-colors" />
+                        <span className="text-sm text-foreground/80 group-hover:text-accent transition-colors">{service.title}</span>
                       </Link>
-                    </motion.div>
+                      {idx < SERVICE_CATALOG.length - 1 && (
+                        <div className="border-t border-dashed border-accent/40"></div>
+                      )}
+                    </div>
                   );
                 })}
               </div>
             </div>
 
-            {/* Right: Why Families Trust FCWS */}
+            {/* Why Families Trust FCWS */}
             <div>
-              <h2 className="font-heading font-bold text-2xl md:text-3xl text-primary mb-2">WHY FAMILIES TRUST FCWS</h2>
-              <div className="w-16 h-1 bg-accent mb-8" />
-              <div className="space-y-5">
+              <h2 className="font-heading font-bold text-lg md:text-xl text-primary mb-1">WHY FAMILIES TRUST FCWS</h2>
+              <div className="w-12 h-0.5 bg-accent mb-6" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {TRUST_POINTS.map((point, i) => {
                   const Icon = point.icon;
                   return (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: 10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.3, delay: i * 0.05 }}
-                      className="flex items-start gap-4"
-                    >
-                      <div className="w-10 h-10 rounded-full bg-accent/15 flex items-center justify-center shrink-0">
+                    <div key={i} className="flex flex-col items-center text-center gap-2">
+                      <div className="w-12 h-12 rounded-full bg-accent/15 flex items-center justify-center shrink-0">
                         <Icon className="w-5 h-5 text-accent" />
                       </div>
-                      <p className="text-foreground/80 pt-2 text-sm md:text-base">{point.text}</p>
-                    </motion.div>
+                      <p className="text-xs text-foreground/70 leading-snug">{point.text}</p>
+                    </div>
                   );
                 })}
               </div>
@@ -182,22 +160,24 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* CTA Banner */}
+      {/* Referral Banner */}
       <section className="bg-accent text-accent-foreground">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 text-center">
-          <h2 className="font-heading font-bold text-2xl md:text-3xl text-primary mb-3">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10 text-center">
+          <h2 className="font-heading font-bold text-base md:text-lg text-primary mb-2">
             RECOMMEND FCWS TO OTHER LIBERIANS IN THE DIASPORA
           </h2>
-          <p className="text-primary/80 mb-2">
-            Your referral can bring comfort and care to someone you love.
-          </p>
-          <p className="text-sm italic text-primary/60 mb-6">Together, we care.</p>
-          <Link
-            to="/request-care"
-            className="inline-block bg-primary text-primary-foreground font-semibold rounded-full px-6 py-3 hover:opacity-90 transition text-sm"
-          >
-            Refer a Family
-          </Link>
+          <p className="text-sm text-primary/80 mb-1">Your referral can bring comfort and care to someone you love.</p>
+          <p className="text-xs italic text-primary/60">Together, we care.</p>
+        </div>
+      </section>
+
+      {/* Address Bar */}
+      <section className="bg-background py-6">
+        <div className="max-w-2xl mx-auto px-4">
+          <div className="flex items-center justify-center gap-2 bg-white border border-border rounded-full px-6 py-3 shadow-sm">
+            <MapPin className="w-4 h-4 text-accent shrink-0" />
+            <span className="text-sm text-foreground/80">FDA Community, Bernard's Farm, Monrovia, Liberia</span>
+          </div>
         </div>
       </section>
 
