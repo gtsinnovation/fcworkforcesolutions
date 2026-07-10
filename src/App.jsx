@@ -1,13 +1,25 @@
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
+import ProtectedRoute from '@/components/ProtectedRoute';
 // Add page imports here
 import Home from './pages/Home';
+import Services from '@/pages/fcws/Services';
+import ServiceDetail from '@/pages/fcws/ServiceDetail';
+import About from '@/pages/fcws/About';
+import Careers from '@/pages/fcws/Careers';
+import RequestCare from '@/pages/fcws/RequestCare';
+import Quiz from '@/pages/fcws/Quiz';
+import AdminDashboard from '@/pages/fcws/AdminDashboard';
+import CaregiverDashboard from '@/pages/fcws/CaregiverDashboard';
+import ClientPortal from '@/pages/fcws/ClientPortal';
+import DashboardShell from '@/components/fcws/DashboardShell';
+import { ADMIN_NAV, CAREGIVER_NAV, CLIENT_NAV } from '@/components/fcws/dashboardNav';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -35,8 +47,28 @@ const AuthenticatedApp = () => {
   // Render the main app
   return (
     <Routes>
-      {/* Add your page Route elements here */}
+      {/* Public pages */}
       <Route path="/" element={<Home />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/services/:slug" element={<ServiceDetail />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/careers" element={<Careers />} />
+      <Route path="/request-care" element={<RequestCare />} />
+      <Route path="/quiz" element={<Quiz />} />
+      
+      {/* Protected dashboard routes */}
+      <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
+        <Route element={<DashboardShell navItems={ADMIN_NAV} title="Admin" roleLabel="Admin" />}>
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Route>
+        <Route element={<DashboardShell navItems={CAREGIVER_NAV} title="Caregiver" roleLabel="Caregiver" />}>
+          <Route path="/caregiver" element={<CaregiverDashboard />} />
+        </Route>
+        <Route element={<DashboardShell navItems={CLIENT_NAV} title="Family Portal" roleLabel="Client" />}>
+          <Route path="/portal" element={<ClientPortal />} />
+        </Route>
+      </Route>
+      
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

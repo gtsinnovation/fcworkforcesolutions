@@ -1,0 +1,35 @@
+{
+  "name": "ScheduleEntry",
+  "type": "object",
+  "properties": {
+    "clientId": {
+      "type": "string"
+    },
+    "employeeId": {
+      "type": "string"
+    },
+    "service": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string"
+    },
+    "startTime": {
+      "type": "string"
+    },
+    "endTime": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "clientId",
+    "employeeId",
+    "service",
+    "date",
+    "startTime",
+    "endTime"
+  ]
+}

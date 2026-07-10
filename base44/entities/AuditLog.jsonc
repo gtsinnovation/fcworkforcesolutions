@@ -1,0 +1,25 @@
+{
+  "name": "AuditLog",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "userEmail": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "action",
+    "description"
+  ]
+}

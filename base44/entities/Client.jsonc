@@ -1,0 +1,38 @@
+{
+  "name": "Client",
+  "type": "object",
+  "properties": {
+    "fullName": {
+      "type": "string"
+    },
+    "emergencyContact": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "relationship": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      }
+    },
+    "services": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scheduleRules": {
+      "type": "string"
+    },
+    "billingNotes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "fullName"
+  ]
+}

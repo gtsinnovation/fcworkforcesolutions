@@ -1,5 +1,5 @@
-import QuizApp from "@/components/quiz/QuizApp";
+import Landing from "@/pages/fcws/Landing";
 
 export default function Home() {
-  return <QuizApp />;
+  return <Landing />;
 }

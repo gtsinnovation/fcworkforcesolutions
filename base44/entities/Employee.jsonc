@@ -1,0 +1,47 @@
+{
+  "name": "Employee",
+  "type": "object",
+  "properties": {
+    "fullName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "specializations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "hiringStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "screening",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "active": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "fullName",
+    "email",
+    "phone"
+  ]
+}

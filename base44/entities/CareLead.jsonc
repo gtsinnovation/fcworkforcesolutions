@@ -1,0 +1,26 @@
+{
+  "name": "CareLead",
+  "type": "object",
+  "properties": {
+    "fullName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "serviceInterest": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "fullName",
+    "email",
+    "phone"
+  ]
+}
