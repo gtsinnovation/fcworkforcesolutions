@@ -2,11 +2,12 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   User, Utensils, Heart, Pill, ClipboardCheck, ShieldCheck,
-  Phone, Map, Users, HeartHandshake, ArrowRight, MessageCircle
+  Phone, Map, Users, HeartHandshake, ArrowRight, Menu
 } from "lucide-react";
 import { SERVICE_CATALOG } from "@/lib/fcws";
-import Navbar from "@/components/fcws/Navbar";
 import Footer from "@/components/fcws/Footer";
+import { useState, useEffect } from "react";
+import { base44 } from "@/api/base44Client";
 
 const SERVICE_ICONS = { User, Utensils, Heart, Pill, ClipboardCheck, ShieldCheck };
 
@@ -19,19 +20,72 @@ const TRUST_POINTS = [
 ];
 
 export default function Landing() {
+  const [user, setUser] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    base44.auth.isAuthenticated().then(authed => {
+      if (authed) {
+        base44.auth.me().then(setUser).catch(() => {});
+      }
+    });
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-
-      {/* Hero — Split layout */}
-      <section className="bg-primary">
+      {/* Hero — Split layout with integrated navbar */}
+      <section className="bg-primary relative">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2">
-          {/* Left: text */}
-          <div className="flex flex-col justify-center px-6 lg:px-12 py-12 md:py-20 text-primary-foreground">
-            <span className="inline-block bg-accent text-accent-foreground text-xs font-bold tracking-wider px-4 py-1.5 rounded-full mb-6 self-start">
-              CARING FOR YOUR LOVED ONES
-            </span>
-            <p className="text-sm text-primary-foreground/60 italic mb-4">When you can't be there.</p>
+          {/* Left: nav + brand + headline */}
+          <div className="flex flex-col px-6 lg:px-12 py-6 md:py-10 text-primary-foreground">
+            {/* Top nav row */}
+            <div className="flex items-center justify-between mb-8 md:mb-12">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center">
+                  <ShieldCheck className="w-6 h-6 text-accent-foreground" />
+                </div>
+                <div className="leading-tight">
+                  <span className="font-heading font-extrabold text-base block">Family Care</span>
+                  <span className="text-[10px] text-accent font-semibold tracking-wider">WORKFORCE SOLUTIONS</span>
+                </div>
+              </div>
+              {/* Desktop nav */}
+              <div className="hidden md:flex items-center gap-6 text-sm font-medium text-primary-foreground/80">
+                <Link to="/services" className="hover:text-accent transition-colors">Services</Link>
+                <Link to="/about" className="hover:text-accent transition-colors">About</Link>
+                <Link to="/careers" className="hover:text-accent transition-colors">Careers</Link>
+                <Link to="/quiz" className="hover:text-accent transition-colors">Training</Link>
+                {user ? (
+                  <Link to={user.role === "admin" ? "/admin" : user.role === "caregiver" ? "/caregiver" : "/portal"} className="bg-accent text-accent-foreground font-semibold rounded-full px-4 py-1.5 hover:opacity-90 transition text-sm">
+                    Dashboard
+                  </Link>
+                ) : (
+                  <Link to="/login" className="bg-accent text-accent-foreground font-semibold rounded-full px-4 py-1.5 hover:opacity-90 transition text-sm">
+                    Log in
+                  </Link>
+                )}
+              </div>
+              {/* Mobile menu button */}
+              <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-primary-foreground">
+                <Menu className="w-6 h-6" />
+              </button>
+            </div>
+            {/* Mobile nav dropdown */}
+            {menuOpen && (
+              <div className="md:hidden flex flex-col gap-3 mb-6 text-sm font-medium text-primary-foreground/80">
+                <Link to="/services" onClick={() => setMenuOpen(false)}>Services</Link>
+                <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
+                <Link to="/careers" onClick={() => setMenuOpen(false)}>Careers</Link>
+                <Link to="/quiz" onClick={() => setMenuOpen(false)}>Training</Link>
+                {user ? (
+                  <Link to={user.role === "admin" ? "/admin" : user.role === "caregiver" ? "/caregiver" : "/portal"} onClick={() => setMenuOpen(false)}>Dashboard</Link>
+                ) : (
+                  <Link to="/login" onClick={() => setMenuOpen(false)}>Log in</Link>
+                )}
+              </div>
+            )}
+
+            <p className="text-xs text-accent font-semibold tracking-wider mb-2">Care You Can Trust. Family We Respect.</p>
             <h1 className="font-heading font-extrabold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6">
               PEACE OF MIND<br />EVERY DAY
             </h1>
@@ -47,14 +101,19 @@ export default function Landing() {
               </Link>
             </div>
           </div>
-          {/* Right: photo */}
-          <div className="relative min-h-[300px] md:min-h-full">
+
+          {/* Right: photo with badge */}
+          <div className="relative min-h-[300px] md:min-h-[560px]">
             <img
               src="https://images.unsplash.com/photo-1559759175-0eb30cd8c128?w=1200&h=900&fit=crop"
               alt="Caregiver assisting a senior at home"
               className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-primary/10 md:bg-transparent" />
+            {/* Top right badge */}
+            <div className="absolute top-6 right-6 bg-primary/85 backdrop-blur-sm text-primary-foreground rounded-xl px-5 py-3 max-w-[200px]">
+              <p className="font-heading font-bold text-sm leading-snug">CARING FOR YOUR LOVED ONES</p>
+              <p className="text-xs text-accent italic mt-1">When you can't be there.</p>
+            </div>
           </div>
         </div>
       </section>
