@@ -36,9 +36,11 @@ export default function Landing() {
     <div className="min-h-screen flex flex-col">
       {/* Hero */}
       <section className="bg-primary relative">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 relative">
+          {/* Gold vertical divider */}
+          <div className="hidden md:block absolute top-8 bottom-8 left-1/2 -translate-x-1/2 w-[3px] bg-accent rounded-full"></div>
           {/* Left: brand + headline */}
-          <div className="flex flex-col px-6 lg:px-10 py-6 md:py-8 text-primary-foreground">
+          <div className="flex flex-col px-6 lg:px-10 py-6 md:py-8 text-primary-foreground md:pr-8">
             {/* Top nav row */}
             <div className="flex items-center justify-between mb-6 md:mb-10">
               <div className="flex items-center gap-2">
@@ -93,8 +95,8 @@ export default function Landing() {
           {/* Right: photo with badge */}
           <div className="relative min-h-[280px] md:min-h-[520px]">
             <img
-              src="https://images.unsplash.com/photo-1559759175-0eb30cd8c128?w=1200&h=900&fit=crop"
-              alt="Caregiver assisting a senior at home"
+              src="https://media.base44.com/images/public/6a50456441d8a4a42f7c8722/680aed369_LANDINshort.jpeg"
+              alt="FCWS caregiver with senior client"
               className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-primary/90 backdrop-blur-sm text-primary-foreground rounded-lg px-4 py-3 max-w-[180px]">
