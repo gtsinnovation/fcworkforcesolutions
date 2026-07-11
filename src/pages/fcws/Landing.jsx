@@ -56,7 +56,6 @@ export default function Landing() {
                 <Link to="/services" className="hover:text-accent transition-colors">Services</Link>
                 <Link to="/about" className="hover:text-accent transition-colors">About</Link>
                 <Link to="/careers" className="hover:text-accent transition-colors">Careers</Link>
-                <Link to="/quiz" className="hover:text-accent transition-colors">Training</Link>
                 {user ? (
                   <Link to={dashboardPath} className="bg-accent text-accent-foreground font-semibold rounded-full px-3 py-1 hover:opacity-90 transition text-xs">Dashboard</Link>
                 ) : (
@@ -72,7 +71,6 @@ export default function Landing() {
                 <Link to="/services" onClick={() => setMenuOpen(false)}>Services</Link>
                 <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
                 <Link to="/careers" onClick={() => setMenuOpen(false)}>Careers</Link>
-                <Link to="/quiz" onClick={() => setMenuOpen(false)}>Training</Link>
                 {user ? <Link to={dashboardPath} onClick={() => setMenuOpen(false)}>Dashboard</Link> : <Link to="/login" onClick={() => setMenuOpen(false)}>Log in</Link>}
               </div>
             )}
