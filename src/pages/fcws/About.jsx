@@ -12,15 +12,25 @@ export default function About() {
       <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
           <h1 className="font-heading font-bold text-3xl md:text-4xl text-primary mb-4">About Family Care Workforce Solutions</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Dedicated to providing compassionate, professional care that empowers individuals to live with dignity and independence at home.</p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Because peace of mind should never depend on distance.</p>
         </motion.div>
 
         <div className="care-card mb-8">
+          <h2 className="font-heading font-bold text-xl text-primary mb-4">How We Got Here</h2>
           <p className="text-foreground leading-relaxed">
-            Founded in 2008, Family Care Workforce Solutions began with a simple mission: to provide families with trustworthy, compassionate care for their loved ones. What started as a small team of dedicated caregivers has grown into a comprehensive care organization serving hundreds of families across the region.
+            Family Care Workforce Solutions (FCWS) was born from a personal wake-up call.
           </p>
           <p className="text-muted-foreground leading-relaxed mt-4">
-            Today, we combine time-honored caregiving values with modern training, technology, and care coordination to deliver exceptional service. Our caregivers complete a rigorous 18-module training program and ongoing education to ensure the highest quality of care.
+            While visiting my elderly mother in Liberia, I asked to see her medications. To my surprise, I found expired pills, unlabeled bottles, and different tablets mixed together. We immediately organized her care, but two years later, she experienced a sudden medical emergency. By God's grace, family members were nearby and responded quickly. That terrifying moment made us realize just how vulnerable our loved ones can be without consistent, professional support.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mt-4">
+            But we quickly realized this vulnerability isn't unique to the elderly. Working parents struggle to find trustworthy childcare. Individuals recovering at home or living with disabilities lack daily, compassionate assistance. At the same time, thousands of capable young people and women in Liberia are searching for meaningful work but lack access to professional training.
+          </p>
+          <p className="text-foreground leading-relaxed mt-4">
+            FCWS was founded to bridge these two critical needs: providing trusted, non-medical care for families while creating sustainable careers through professional caregiver training and workforce development.
+          </p>
+          <p className="text-foreground leading-relaxed mt-4 font-medium">
+            Whether a family lives next door or thousands of miles away, FCWS ensures their loved ones receive safe, dignified, and professional care from people they can trust.
           </p>
         </div>
 
@@ -30,14 +40,14 @@ export default function About() {
               <Target className="w-6 h-6 text-secondary" />
             </div>
             <h3 className="font-heading font-semibold text-lg text-primary mb-2">Our Mission</h3>
-            <p className="text-sm text-muted-foreground">To enhance the quality of life for individuals and families by delivering compassionate, professional, and personalized home care services that preserve dignity and promote independence.</p>
+            <p className="text-sm text-muted-foreground">To enrich lives by providing trusted, compassionate, non-medical home care and household support services, while empowering Liberian youth and women through professional certification, job creation, and workforce development.</p>
           </div>
           <div className="care-card">
             <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center mb-4">
               <Eye className="w-6 h-6 text-secondary" />
             </div>
             <h3 className="font-heading font-semibold text-lg text-primary mb-2">Our Vision</h3>
-            <p className="text-sm text-muted-foreground">To be the most trusted and respected home care provider in our community, known for excellence in caregiver training, client satisfaction, and innovative care solutions.</p>
+            <p className="text-sm text-muted-foreground">To be Liberia's premier family care and workforce development organization—transforming lives through professional training, creating rewarding careers, and ensuring every family has access to dependable, dignified care.</p>
           </div>
         </div>
 
