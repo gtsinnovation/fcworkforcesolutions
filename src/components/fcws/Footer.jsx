@@ -20,7 +20,7 @@ export default function Footer() {
           </div>
 
           {/* We Care Like Family */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center md:border-l md:border-accent/40 md:pl-6">
             <h3 className="font-heading font-bold text-sm text-accent mb-3">WE CARE LIKE FAMILY</h3>
             <div className="w-12 h-12 rounded-full bg-accent/15 flex items-center justify-center mb-3">
               <Heart className="w-6 h-6 text-accent fill-accent" />
@@ -31,7 +31,7 @@ export default function Footer() {
           </div>
 
           {/* Brand / Mission */}
-          <div className="flex flex-col items-center md:items-end">
+          <div className="flex flex-col items-center md:items-end md:border-l md:border-accent/40 md:pl-6">
             <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center mb-3">
               <Home className="w-6 h-6 text-accent-foreground" />
             </div>

@@ -104,7 +104,9 @@ export default function Landing() {
       {/* Services & Trust */}
       <section className="bg-background py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
+          <div className="grid md:grid-cols-2 gap-10 lg:gap-16 relative">
+            {/* Gold vertical divider between columns */}
+            <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[3px] bg-accent/60 rounded-full"></div>
             {/* Our Services */}
             <div>
               <h2 className="font-heading font-bold text-lg md:text-xl text-primary mb-1">OUR SERVICES</h2>
