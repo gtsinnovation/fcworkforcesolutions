@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Navbar from "@/components/fcws/Navbar";
 import Footer from "@/components/fcws/Footer";
-import { Mail, Send, CheckCircle } from "lucide-react";
+import { Mail, Send, CheckCircle, Loader2 } from "lucide-react";
+import { base44 } from "@/api/base44Client";
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -11,12 +12,23 @@ export default function Contact() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const message = formData.get("message");
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData,
+      await base44.functions.invoke("sendEmail", {
+        to: "fcworkforcesolution@gmail.com",
+        subject: `New Contact Form Message — ${name}`,
+        replyTo: email,
+        html: `
+          <h2>New Contact Form Message</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message.replace(/\n/g, "<br>")}</p>
+        `,
       });
-      if (res.ok) setSubmitted(true);
+      setSubmitted(true);
     } catch {
       // ignore
     }
@@ -45,8 +57,6 @@ export default function Contact() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="care-card space-y-5">
-            <input type="hidden" name="access_key" value="d32ecb38-0808-4916-a056-91989c835aad" />
-            <input type="hidden" name="from_name" value="FCWS Website Contact Form" />
             <div>
               <label className="block text-sm font-semibold text-primary mb-1.5">Name</label>
               <input
@@ -82,8 +92,7 @@ export default function Contact() {
               disabled={loading}
               className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-60"
             >
-              {loading ? "Sending..." : "Submit"}
-              <Send className="w-4 h-4" />
+              {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending...</> : <>Submit <Send className="w-4 h-4" /></>}
             </button>
           </form>
         )}

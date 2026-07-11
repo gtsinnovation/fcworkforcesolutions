@@ -24,13 +24,28 @@ export default function RequestCare() {
     const form = e.currentTarget;
     const formData = new FormData(form);
     try {
-      await base44.entities.CareLead.create({
+      const leadData = {
         fullName: formData.get("fullName"),
         email: formData.get("email"),
         phone: formData.get("phone"),
         serviceInterest: formData.get("serviceInterest") || "General inquiry",
         message: formData.get("message") || "",
-      });
+      };
+      await base44.entities.CareLead.create(leadData);
+      await base44.functions.invoke("sendEmail", {
+        to: "fcworkforcesolution@gmail.com",
+        subject: `New Care Request — ${leadData.fullName}`,
+        replyTo: leadData.email,
+        html: `
+          <h2>New Care Request</h2>
+          <p><strong>Name:</strong> ${leadData.fullName}</p>
+          <p><strong>Email:</strong> ${leadData.email}</p>
+          <p><strong>Phone:</strong> ${leadData.phone}</p>
+          <p><strong>Service Interest:</strong> ${leadData.serviceInterest}</p>
+          <p><strong>Message:</strong></p>
+          <p>${leadData.message.replace(/\n/g, "<br>")}</p>
+        `,
+      }).catch(() => {});
       setSubmitted(true);
       form.reset();
     } catch (err) {
