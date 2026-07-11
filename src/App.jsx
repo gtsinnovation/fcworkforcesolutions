@@ -14,6 +14,8 @@ import ServiceDetail from '@/pages/fcws/ServiceDetail';
 import About from '@/pages/fcws/About';
 import Careers from '@/pages/fcws/Careers';
 import RequestCare from '@/pages/fcws/RequestCare';
+import PrivacyPolicy from '@/pages/fcws/PrivacyPolicy';
+import TermsOfUse from '@/pages/fcws/TermsOfUse';
 import Quiz from '@/pages/fcws/Quiz';
 import AdminDashboard from '@/pages/fcws/AdminDashboard';
 import CaregiverDashboard from '@/pages/fcws/CaregiverDashboard';
@@ -55,6 +57,8 @@ const AuthenticatedApp = () => {
       <Route path="/about" element={<About />} />
       <Route path="/careers" element={<Careers />} />
       <Route path="/request-care" element={<RequestCare />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-use" element={<TermsOfUse />} />
       <Route path="/quiz" element={<Quiz />} />
       
       {/* Protected dashboard routes */}
