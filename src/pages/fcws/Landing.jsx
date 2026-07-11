@@ -44,12 +44,12 @@ export default function Landing() {
             {/* Top nav row */}
             <div className="flex items-center justify-between mb-6 md:mb-10">
               <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center">
-                  <Home className="w-5 h-5 text-accent-foreground" />
-                </div>
-                <div className="leading-tight">
-                  <span className="font-heading font-bold text-sm block">Family Care</span>
-                  <span className="text-[9px] text-accent font-semibold tracking-widest">WORKFORCE SOLUTIONS</span>
+                <div className="bg-white rounded-xl px-2 py-1 shadow-sm">
+                  <img
+                    src="https://media.base44.com/images/public/6a50456441d8a4a42f7c8722/a8c8279ee_logov2.png"
+                    alt="Family Care Workforce Solutions"
+                    className="h-12 md:h-14 w-auto object-contain"
+                  />
                 </div>
               </div>
               <div className="hidden md:flex items-center gap-5 text-xs font-medium text-primary-foreground/70">
