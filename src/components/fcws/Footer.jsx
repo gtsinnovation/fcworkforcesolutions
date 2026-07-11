@@ -1,4 +1,4 @@
-import { Home, MessageCircle, Heart } from "lucide-react";
+import { Home, MessageCircle, Heart, Facebook, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
@@ -6,18 +6,24 @@ export default function Footer() {
     <footer className="bg-primary text-primary-foreground mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid gap-8 md:grid-cols-3 text-center md:text-left">
-          {/* WhatsApp / Contact */}
+          {/* Contact Us */}
           <div>
-            <h3 className="font-heading font-bold text-sm text-accent mb-4">WHATSAPP / CONTACT</h3>
-            <div className="flex items-center justify-center md:justify-start gap-2 mb-3">
-              <MessageCircle className="w-4 h-4 text-accent" />
-              <MessageCircle className="w-4 h-4 text-accent" />
-              <MessageCircle className="w-4 h-4 text-accent" />
+            <h3 className="font-heading font-bold text-sm text-accent mb-4">CONTACT US</h3>
+            <div className="space-y-3 text-sm text-primary-foreground/70">
+              <div className="flex items-center justify-center md:justify-start gap-2">
+                <Phone className="w-4 h-4 text-accent shrink-0" />
+                <span>+231 88 898 87976 / +231 76 143 5652</span>
+              </div>
+              <div className="flex items-center justify-center md:justify-start gap-3">
+                <span className="text-primary-foreground/60 text-xs">Chat:</span>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition" aria-label="Facebook">
+                  <Facebook className="w-5 h-5 text-accent" />
+                </a>
+                <a href="https://wa.me/231888988796" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition" aria-label="WhatsApp">
+                  <MessageCircle className="w-5 h-5 text-accent fill-accent" />
+                </a>
+              </div>
             </div>
-            <ul className="space-y-2 text-sm text-primary-foreground/70">
-              <li>+231 88 898 87976</li>
-              <li>+231 76 143 5652</li>
-            </ul>
           </div>
 
           {/* We Care Like Family */}
