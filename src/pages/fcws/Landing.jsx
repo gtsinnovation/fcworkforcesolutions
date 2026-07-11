@@ -92,20 +92,13 @@ export default function Landing() {
             </div>
           </div>
 
-          {/* Right: photo with badge */}
-          <div className="relative min-h-[280px] md:min-h-[520px]">
+          {/* Right: banner image */}
+          <div className="relative min-h-[280px] md:min-h-[520px] bg-primary">
             <img
               src="https://media.base44.com/images/public/6a50456441d8a4a42f7c8722/b89ce0a9a_LANDINshort1.jpg"
               alt="FCWS caregiver with senior client"
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-contain object-right"
             />
-            <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-primary/90 backdrop-blur-sm text-primary-foreground rounded-lg px-4 py-3 max-w-[180px]">
-              <div className="flex items-center gap-2 mb-1">
-                <Heart className="w-4 h-4 text-accent fill-accent" />
-                <p className="font-heading font-bold text-xs text-accent leading-tight">CARING FOR YOUR LOVED ONES</p>
-              </div>
-              <p className="text-[11px] text-primary-foreground/90 italic">When you can't be there.</p>
-            </div>
           </div>
         </div>
         {/* Curved bottom transition */}
