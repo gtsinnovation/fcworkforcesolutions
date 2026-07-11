@@ -78,8 +78,8 @@ export default function Landing() {
             )}
 
             <p className="text-[11px] text-accent font-semibold tracking-wide mb-2">Care You Can Trust. Family We Respect.</p>
-            <h1 className="font-heading font-bold text-2xl md:text-3xl leading-tight mb-4">
-              PEACE OF MIND<br />EVERY DAY
+            <h1 className="font-heading font-bold text-lg md:text-xl leading-tight mb-4">
+              PEACE OF MIND EVERY DAY
             </h1>
             <div className="space-y-3 text-sm text-primary-foreground/75 max-w-md mb-6">
               <p>You may be far away, but your loved ones can still receive the love, care and support they deserve—right at home in Liberia.</p>
