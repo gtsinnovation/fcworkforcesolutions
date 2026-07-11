@@ -20,6 +20,7 @@ import CaregiverDashboard from '@/pages/fcws/CaregiverDashboard';
 import ClientPortal from '@/pages/fcws/ClientPortal';
 import DashboardShell from '@/components/fcws/DashboardShell';
 import { ADMIN_NAV, CAREGIVER_NAV, CLIENT_NAV } from '@/components/fcws/dashboardNav';
+import PWAInstallPrompt from '@/components/fcws/PWAInstallPrompt';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -83,6 +84,7 @@ function App() {
         <Router>
           <ScrollToTop />
           <AuthenticatedApp />
+          <PWAInstallPrompt />
         </Router>
         <Toaster />
       </QueryClientProvider>
