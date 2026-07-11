@@ -56,11 +56,6 @@ export default function Landing() {
                 <Link to="/services" className="hover:text-accent transition-colors">Services</Link>
                 <Link to="/about" className="hover:text-accent transition-colors">About</Link>
                 <Link to="/careers" className="hover:text-accent transition-colors">Careers</Link>
-                {user ? (
-                  <Link to={dashboardPath} className="bg-accent text-accent-foreground font-semibold rounded-full px-3 py-1 hover:opacity-90 transition text-xs">Dashboard</Link>
-                ) : (
-                  <Link to="/login" className="bg-accent text-accent-foreground font-semibold rounded-full px-3 py-1 hover:opacity-90 transition text-xs">Log in</Link>
-                )}
               </div>
               <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-primary-foreground">
                 <Menu className="w-5 h-5" />
@@ -71,7 +66,7 @@ export default function Landing() {
                 <Link to="/services" onClick={() => setMenuOpen(false)}>Services</Link>
                 <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
                 <Link to="/careers" onClick={() => setMenuOpen(false)}>Careers</Link>
-                {user ? <Link to={dashboardPath} onClick={() => setMenuOpen(false)}>Dashboard</Link> : <Link to="/login" onClick={() => setMenuOpen(false)}>Log in</Link>}
+
               </div>
             )}
 

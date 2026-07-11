@@ -1,7 +1,19 @@
-import { Home, MessageCircle, Heart, Facebook, Phone, Mail } from "lucide-react";
+import { Home, MessageCircle, Heart, Facebook, Phone, Mail, LayoutDashboard, LogIn } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { base44 } from "@/api/base44Client";
 
 export default function Footer() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    base44.auth.isAuthenticated().then(authed => {
+      if (authed) base44.auth.me().then(setUser).catch(() => {});
+    });
+  }, []);
+
+  const dashboardPath = user?.role === "admin" ? "/admin" : user?.role === "caregiver" ? "/caregiver" : "/portal";
+
   return (
     <footer className="bg-primary text-primary-foreground mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -45,9 +57,18 @@ export default function Footer() {
             <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center mb-3">
               <Home className="w-6 h-6 text-accent-foreground" />
             </div>
-            <p className="text-sm text-primary-foreground/70 text-center md:text-right max-w-xs">
+            <p className="text-sm text-primary-foreground/70 text-center md:text-right max-w-xs mb-4">
               Serving families across Liberia with dignity, compassion and excellence.
             </p>
+            {user ? (
+              <Link to={dashboardPath} className="inline-flex items-center gap-2 bg-accent text-accent-foreground font-semibold rounded-full px-4 py-2 text-xs hover:opacity-90 transition">
+                <LayoutDashboard className="w-4 h-4" /> Dashboard
+              </Link>
+            ) : (
+              <Link to="/login" className="inline-flex items-center gap-2 bg-accent text-accent-foreground font-semibold rounded-full px-4 py-2 text-xs hover:opacity-90 transition">
+                <LogIn className="w-4 h-4" /> Log in
+              </Link>
+            )}
           </div>
         </div>
       </div>
