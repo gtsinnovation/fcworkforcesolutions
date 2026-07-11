@@ -1,4 +1,4 @@
-import { Home, MessageCircle, Heart, Facebook, Phone } from "lucide-react";
+import { Home, MessageCircle, Heart, Facebook, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
@@ -22,6 +22,9 @@ export default function Footer() {
                 <a href="https://wa.me/231888988796" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition" aria-label="WhatsApp">
                   <MessageCircle className="w-5 h-5 text-accent fill-accent" />
                 </a>
+                <Link to="/contact" className="hover:opacity-80 transition" aria-label="Email">
+                  <Mail className="w-5 h-5 text-accent" />
+                </Link>
               </div>
             </div>
           </div>
