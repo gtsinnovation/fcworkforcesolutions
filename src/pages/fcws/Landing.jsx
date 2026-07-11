@@ -95,7 +95,7 @@ export default function Landing() {
           {/* Right: photo with badge */}
           <div className="relative min-h-[280px] md:min-h-[520px]">
             <img
-              src="https://media.base44.com/images/public/6a50456441d8a4a42f7c8722/680aed369_LANDINshort.jpeg"
+              src="https://media.base44.com/images/public/6a50456441d8a4a42f7c8722/b89ce0a9a_LANDINshort1.jpg"
               alt="FCWS caregiver with senior client"
               className="absolute inset-0 w-full h-full object-cover"
             />
