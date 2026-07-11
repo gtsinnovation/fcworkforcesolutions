@@ -167,10 +167,15 @@ export default function Landing() {
       {/* Address Bar */}
       <section className="bg-background py-6">
         <div className="max-w-2xl mx-auto px-4">
-          <div className="flex items-center justify-center gap-2 bg-white border border-border rounded-full px-6 py-3 shadow-sm">
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=FDA+Community+Bernard's+Farm+Monrovia+Liberia"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 bg-white border border-border rounded-full px-6 py-3 shadow-sm hover:border-accent transition-colors"
+          >
             <MapPin className="w-4 h-4 text-accent shrink-0" />
             <span className="text-sm text-foreground/80">FDA Community, Bernard's Farm, Monrovia, Liberia</span>
-          </div>
+          </a>
         </div>
       </section>
 
