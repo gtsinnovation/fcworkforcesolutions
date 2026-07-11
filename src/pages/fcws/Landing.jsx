@@ -38,7 +38,7 @@ export default function Landing() {
       <section className="bg-primary relative">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 relative">
           {/* Gold vertical divider */}
-          <div className="hidden md:block absolute top-0 bottom-8 left-1/2 -translate-x-1/2 w-[3px] bg-accent rounded-full"></div>
+          <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[3px] bg-accent rounded-full"></div>
           {/* Left: brand + headline */}
           <div className="flex flex-col px-6 lg:px-10 py-6 md:py-8 text-primary-foreground md:pr-8">
             {/* Top nav row */}
@@ -99,12 +99,10 @@ export default function Landing() {
             />
           </div>
         </div>
-        {/* Curved bottom transition */}
-        <div className="h-8 md:h-12 bg-background rounded-t-[3rem] -mb-px"></div>
       </section>
 
       {/* Services & Trust */}
-      <section className="bg-background py-10 md:py-14">
+      <section className="bg-background py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
             {/* Our Services */}
