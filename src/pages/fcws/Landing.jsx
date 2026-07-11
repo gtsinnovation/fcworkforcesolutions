@@ -38,7 +38,7 @@ export default function Landing() {
       <section className="bg-primary relative">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 relative">
           {/* Gold vertical divider */}
-          <div className="hidden md:block absolute top-8 bottom-8 left-1/2 -translate-x-1/2 w-[3px] bg-accent rounded-full"></div>
+          <div className="hidden md:block absolute top-0 bottom-8 left-1/2 -translate-x-1/2 w-[3px] bg-accent rounded-full"></div>
           {/* Left: brand + headline */}
           <div className="flex flex-col px-6 lg:px-10 py-6 md:py-8 text-primary-foreground md:pr-8">
             {/* Top nav row */}
@@ -95,7 +95,7 @@ export default function Landing() {
             <img
               src="https://media.base44.com/images/public/6a50456441d8a4a42f7c8722/b89ce0a9a_LANDINshort1.jpg"
               alt="FCWS caregiver with senior client"
-              className="absolute inset-0 w-full h-full object-contain object-right"
+              className="absolute inset-0 w-full h-full object-contain [object-position:top_right]"
             />
           </div>
         </div>
