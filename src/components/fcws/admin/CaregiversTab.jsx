@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Plus, Loader2, Briefcase, Mail, Phone, CheckCircle, XCircle, Clock } from "lucide-react";
+import { Plus, Loader2, Briefcase, Mail, Phone, CheckCircle, XCircle, Clock, Eye } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -133,6 +134,11 @@ export default function CaregiversTab() {
                 </div>
               </div>
               <div className="flex gap-2 flex-shrink-0">
+                <Button asChild size="sm" variant="ghost">
+                  <Link to={`/admin/caregivers/${emp.id}`}>
+                    <Eye className="w-4 h-4 mr-1" /> View
+                  </Link>
+                </Button>
                 {emp.hiringStatus !== "approved" && (
                   <Button size="sm" variant="outline" className="border-emerald-500 text-emerald-600 hover:bg-emerald-50" onClick={() => updateStatus(emp.id, "approved", true)}>
                     <CheckCircle className="w-4 h-4 mr-1" /> Approve

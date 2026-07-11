@@ -19,6 +19,7 @@ import TermsOfUse from '@/pages/fcws/TermsOfUse';
 import Contact from '@/pages/fcws/Contact';
 import Quiz from '@/pages/fcws/Quiz';
 import AdminDashboard from '@/pages/fcws/AdminDashboard';
+import CaregiverDetail from '@/pages/fcws/CaregiverDetail';
 import CaregiverDashboard from '@/pages/fcws/CaregiverDashboard';
 import ClientPortal from '@/pages/fcws/ClientPortal';
 import DashboardShell from '@/components/fcws/DashboardShell';
@@ -67,6 +68,7 @@ const AuthenticatedApp = () => {
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
         <Route element={<DashboardShell navItems={ADMIN_NAV} title="Admin" roleLabel="Admin" />}>
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/caregivers/:id" element={<CaregiverDetail />} />
         </Route>
         <Route element={<DashboardShell navItems={CAREGIVER_NAV} title="Caregiver" roleLabel="Caregiver" />}>
           <Route path="/caregiver" element={<CaregiverDashboard />} />
