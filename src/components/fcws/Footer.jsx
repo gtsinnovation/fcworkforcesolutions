@@ -1,4 +1,5 @@
 import { Home, MessageCircle, Heart } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -42,10 +43,17 @@ export default function Footer() {
         </div>
       </div>
       {/* Gold bottom strip */}
-      <div className="bg-accent py-3 text-center">
-        <p className="text-xs font-semibold tracking-wide text-accent-foreground">
+      <div className="bg-accent py-4 px-4">
+        <p className="text-xs font-semibold tracking-wide text-accent-foreground text-center mb-2">
           FAMILY CARE WORKFORCE SOLUTIONS – CARE YOU CAN TRUST. FAMILY WE RESPECT.
         </p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-[11px] text-accent-foreground/80">
+          <span>© {new Date().getFullYear()} Family Care Workforce Solutions. All rights reserved.</span>
+          <span className="hidden sm:inline">·</span>
+          <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
+          <span className="hidden sm:inline">·</span>
+          <Link to="/terms-of-use" className="hover:underline">Terms of Use</Link>
+        </div>
       </div>
     </footer>
   );
