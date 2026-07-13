@@ -56,7 +56,7 @@ export default function Careers() {
                 <p className="text-xs text-muted-foreground/70">{p.location}</p>
               </div>
               <Button asChild variant="outline" className="shrink-0 border-secondary text-secondary hover:bg-secondary/10">
-                <Link to="/careers/apply">Apply Now <ArrowRight className="w-4 h-4 ml-2" /></Link>
+                <Link to="/contact">Apply Now <ArrowRight className="w-4 h-4 ml-2" /></Link>
               </Button>
             </motion.div>
           ))}

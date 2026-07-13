@@ -1,10 +1,7 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
-
 const RESEND_API = "https://api.resend.com/emails";
 
 Deno.serve(async (req) => {
   try {
-    const base44 = createClientFromRequest(req);
     const body = await req.json();
     const { to, subject, html, replyTo } = body;
 

@@ -19,12 +19,16 @@ export default function CaregiverDashboard() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    base44.auth.me().then(u => setUser(u)).catch(() => {});
-    Promise.all([
-      base44.entities.ScheduleEntry.list(),
-      base44.entities.Client.list(),
-      base44.entities.IncidentReport.filter({ reportedByUserId: user?.id || "temp" }),
-    ]).then(([sched, clts, incs]) => {
+    let currentUser = null;
+    base44.auth.me().then(u => {
+      currentUser = u;
+      setUser(u);
+      return Promise.all([
+        base44.entities.ScheduleEntry.list(),
+        base44.entities.Client.list(),
+        base44.entities.IncidentReport.filter({ reportedByUserId: u?.id || "" }),
+      ]);
+    }).then(([sched, clts, incs]) => {
       setSchedules(sched);
       setClients(clts);
       setIncidents(incs);
@@ -57,7 +61,7 @@ export default function CaregiverDashboard() {
       form.reset();
       setShowIncidentForm(false);
       // Reload incidents
-      const incs = await base44.entities.IncidentReport.filter({ reportedByUserId: user?.id || "temp" });
+      const incs = await base44.entities.IncidentReport.filter({ reportedByUserId: user?.id || "" });
       setIncidents(incs);
     } catch (err) {
       setError(err.message || "Failed to submit report");

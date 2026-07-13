@@ -28,8 +28,6 @@ export default function ClientPortal() {
   const todaySchedule = schedules.filter(s => s.date === today);
   const upcoming = schedules.filter(s => s.date > today).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 5);
   const clientMap = Object.fromEntries(clients.map(c => [c.id, c]));
-  const employeeMap = {}; // Would be populated from employee data
-
   if (loading) {
     return <div className="flex justify-center py-12"><div className="w-8 h-8 border-4 border-muted border-t-secondary rounded-full animate-spin" /></div>;
   }
@@ -99,7 +97,7 @@ export default function ClientPortal() {
         <h3 className="font-heading font-semibold text-lg mb-3">Need Help?</h3>
         <p className="text-sm text-primary-foreground/80 mb-4">If you have an urgent concern about your loved one's care, don't hesitate to reach out.</p>
         <div className="flex flex-wrap gap-3">
-          <a href="tel:5552001800" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary text-secondary-foreground text-sm font-semibold hover:opacity-90 transition-opacity">
+          <a href="tel:+231888988796" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary text-secondary-foreground text-sm font-semibold hover:opacity-90 transition-opacity">
             <Phone className="w-4 h-4" /> Call Care Office
           </a>
         </div>
