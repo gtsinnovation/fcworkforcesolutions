@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Loader2, Shield, Heart, UserCircle, Mail } from "lucide-react";
+import { Loader2, Shield, Heart, UserCircle, Mail, ChevronDown, Calendar, User } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
+import Pagination from "@/components/fcws/admin/Pagination";
+
+const PAGE_SIZE = 25;
 
 const ROLES = [
   { value: "admin", label: "Admin", icon: Shield },
@@ -19,6 +23,8 @@ export default function UsersTab() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState(null);
+  const [expandedId, setExpandedId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0);
 
   function load() {
     base44.entities.User.list().then(data => { setUsers(data); setLoading(false); }).catch(() => setLoading(false));
@@ -41,6 +47,10 @@ export default function UsersTab() {
   if (loading) {
     return <div className="flex justify-center py-12"><div className="w-8 h-8 border-4 border-muted border-t-secondary rounded-full animate-spin" /></div>;
   }
+
+  const totalPages = Math.ceil(users.length / PAGE_SIZE);
+  const safePage = Math.min(currentPage, Math.max(0, totalPages - 1));
+  const pagedUsers = users.slice(safePage * PAGE_SIZE, (safePage + 1) * PAGE_SIZE);
 
   return (
     <div>
@@ -66,32 +76,61 @@ export default function UsersTab() {
       </div>
 
       <div className="space-y-3">
-        {users.map(u => (
-          <div key={u.id} className="care-card flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">
-                <Mail className="w-5 h-5 text-secondary" />
+        {pagedUsers.map(u => {
+          const isExpanded = expandedId === u.id;
+          return (
+            <div key={u.id} className="care-card">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer" onClick={() => setExpandedId(isExpanded ? null : u.id)}>
+                <div className="flex items-center gap-3 min-w-0">
+                  <ChevronDown className={cn("w-4 h-4 text-muted-foreground transition-transform shrink-0", isExpanded && "rotate-180")} />
+                  <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5 text-secondary" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-medium text-foreground truncate">{u.full_name || u.email}</p>
+                    {u.full_name && <p className="text-xs text-muted-foreground truncate">{u.email}</p>}
+                  </div>
+                  <span className={`px-2 py-0.5 rounded-full text-xs font-medium shrink-0 ${ROLE_BADGE[u.role] || ROLE_BADGE.client}`}>
+                    {u.role || "client"}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0" onClick={e => e.stopPropagation()}>
+                  {updatingId === u.id && <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />}
+                  <Select value={u.role || "client"} onValueChange={(v) => handleRoleChange(u.id, v)} disabled={updatingId === u.id}>
+                    <SelectTrigger className="w-[160px]"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      {ROLES.map(r => <SelectItem key={r.value} value={r.value}>{r.label}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
-              <div className="min-w-0">
-                <p className="font-medium text-foreground truncate">{u.full_name || u.email}</p>
-                {u.full_name && <p className="text-xs text-muted-foreground truncate">{u.email}</p>}
-              </div>
-              <span className={`px-2 py-0.5 rounded-full text-xs font-medium shrink-0 ${ROLE_BADGE[u.role] || ROLE_BADGE.client}`}>
-                {u.role || "client"}
-              </span>
+
+              {isExpanded && (
+                <div className="mt-4 pt-4 border-t border-border grid gap-4 sm:grid-cols-2 text-sm">
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">User ID</p>
+                    <p className="text-foreground break-all">{u.id}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Full Name</p>
+                    <p className="text-foreground flex items-center gap-1"><User className="w-3.5 h-3.5 text-secondary" /> {u.full_name || "—"}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Email</p>
+                    <p className="text-foreground flex items-center gap-1"><Mail className="w-3.5 h-3.5 text-secondary" /> {u.email}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Joined</p>
+                    <p className="text-foreground flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-secondary" /> {u.created_date ? new Date(u.created_date).toLocaleDateString() : "—"}</p>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="flex items-center gap-2 shrink-0">
-              {updatingId === u.id && <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />}
-              <Select value={u.role || "client"} onValueChange={(v) => handleRoleChange(u.id, v)} disabled={updatingId === u.id}>
-                <SelectTrigger className="w-[160px]"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {ROLES.map(r => <SelectItem key={r.value} value={r.value}>{r.label}</SelectItem>)}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+
+      <Pagination currentPage={safePage} totalPages={totalPages} onPageChange={setCurrentPage} totalItems={users.length} pageSize={PAGE_SIZE} />
     </div>
   );
 }
