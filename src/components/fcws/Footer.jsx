@@ -22,9 +22,14 @@ export default function Footer() {
           <div>
             <h3 className="font-heading font-bold text-sm text-accent mb-4">CONTACT US</h3>
             <div className="space-y-3 text-sm text-primary-foreground/70">
-              <div className="flex items-center justify-center md:justify-start gap-2">
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
                 <Phone className="w-4 h-4 text-accent shrink-0" />
-                <span>+231 8898 87976 / +231 76 143 5652</span>
+                <a href="tel:+231888988796" className="px-2.5 py-1 rounded-full border border-accent/40 text-xs font-semibold text-primary-foreground/90 hover:bg-accent hover:text-accent-foreground transition-colors">
+                  +231 8898 87976
+                </a>
+                <a href="tel:+231761435652" className="px-2.5 py-1 rounded-full border border-accent/40 text-xs font-semibold text-primary-foreground/90 hover:bg-accent hover:text-accent-foreground transition-colors">
+                  +231 76 143 5652
+                </a>
               </div>
               <div className="flex items-center justify-center md:justify-start gap-3">
                 <span className="text-primary-foreground/60 text-xs">Chat:</span>
