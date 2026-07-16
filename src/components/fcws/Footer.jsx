@@ -7,7 +7,7 @@ export default function Footer() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    base44.auth.isAuthenticated().then(authed => {
+    base44.auth.isAuthenticated().then((authed) => {
       if (authed) base44.auth.me().then(setUser).catch(() => {});
     });
   }, []);
@@ -24,7 +24,7 @@ export default function Footer() {
             <div className="space-y-3 text-sm text-primary-foreground/70">
               <div className="flex items-center justify-center md:justify-start gap-2">
                 <Phone className="w-4 h-4 text-accent shrink-0" />
-                <span>+231 88 898 87976 / +231 76 143 5652</span>
+                <span>+231 8898 87976 / +231 76 143 5652</span>
               </div>
               <div className="flex items-center justify-center md:justify-start gap-3">
                 <span className="text-primary-foreground/60 text-xs">Chat:</span>
@@ -60,15 +60,15 @@ export default function Footer() {
             <p className="text-sm text-primary-foreground/70 text-center md:text-right max-w-xs mb-4">
               Serving families across Liberia with dignity, compassion and excellence.
             </p>
-            {user ? (
-              <Link to={dashboardPath} className="inline-flex items-center gap-2 bg-accent text-accent-foreground font-semibold rounded-full px-4 py-2 text-xs hover:opacity-90 transition">
+            {user ?
+            <Link to={dashboardPath} className="inline-flex items-center gap-2 bg-accent text-accent-foreground font-semibold rounded-full px-4 py-2 text-xs hover:opacity-90 transition">
                 <LayoutDashboard className="w-4 h-4" /> Dashboard
-              </Link>
-            ) : (
-              <Link to="/login" className="inline-flex items-center gap-2 bg-accent text-accent-foreground font-semibold rounded-full px-4 py-2 text-xs hover:opacity-90 transition">
+              </Link> :
+
+            <Link to="/login" className="inline-flex items-center gap-2 bg-accent text-accent-foreground font-semibold rounded-full px-4 py-2 text-xs hover:opacity-90 transition">
                 <LogIn className="w-4 h-4" /> Log in
               </Link>
-            )}
+            }
           </div>
         </div>
       </div>
@@ -85,6 +85,6 @@ export default function Footer() {
           <Link to="/terms-of-use" className="hover:underline">Terms of Use</Link>
         </div>
       </div>
-    </footer>
-  );
+    </footer>);
+
 }
