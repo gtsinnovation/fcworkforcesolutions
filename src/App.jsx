@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import RoleRoute from '@/components/RoleRoute';
 // Add page imports here
 import Home from './pages/Home';
 import Services from '@/pages/fcws/Services';
@@ -66,15 +67,21 @@ const AuthenticatedApp = () => {
       
       {/* Protected dashboard routes */}
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
-        <Route element={<DashboardShell navItems={ADMIN_NAV} title="Admin" roleLabel="Admin" />}>
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/caregivers/:id" element={<CaregiverDetail />} />
+        <Route element={<RoleRoute allowedRoles={["admin"]} />}>
+          <Route element={<DashboardShell navItems={ADMIN_NAV} title="Admin" roleLabel="Admin" />}>
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/caregivers/:id" element={<CaregiverDetail />} />
+          </Route>
         </Route>
-        <Route element={<DashboardShell navItems={CAREGIVER_NAV} title="Caregiver" roleLabel="Caregiver" />}>
-          <Route path="/caregiver" element={<CaregiverDashboard />} />
+        <Route element={<RoleRoute allowedRoles={["caregiver", "admin"]} />}>
+          <Route element={<DashboardShell navItems={CAREGIVER_NAV} title="Caregiver" roleLabel="Caregiver" />}>
+            <Route path="/caregiver" element={<CaregiverDashboard />} />
+          </Route>
         </Route>
-        <Route element={<DashboardShell navItems={CLIENT_NAV} title="Family Portal" roleLabel="Client" />}>
-          <Route path="/portal" element={<ClientPortal />} />
+        <Route element={<RoleRoute allowedRoles={["client", "admin"]} />}>
+          <Route element={<DashboardShell navItems={CLIENT_NAV} title="Family Portal" roleLabel="Client" />}>
+            <Route path="/portal" element={<ClientPortal />} />
+          </Route>
         </Route>
       </Route>
       

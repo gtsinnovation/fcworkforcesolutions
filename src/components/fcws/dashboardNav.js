@@ -1,4 +1,4 @@
-import { LayoutDashboard, Briefcase, Users, CalendarDays, AlertTriangle, FileText, ClipboardList, Clock, Phone } from "lucide-react";
+import { LayoutDashboard, Briefcase, Users, CalendarDays, AlertTriangle, FileText, ClipboardList, Clock, Phone, UserCog } from "lucide-react";
 
 const ADMIN_NAV = [
   { label: "Overview", path: "/admin", icon: LayoutDashboard },
@@ -8,6 +8,7 @@ const ADMIN_NAV = [
   { label: "Incidents", path: "/admin?tab=incidents", icon: AlertTriangle },
   { label: "Audit Log", path: "/admin?tab=audit", icon: FileText },
   { label: "Leads", path: "/admin?tab=leads", icon: ClipboardList },
+  { label: "Users", path: "/admin?tab=users", icon: UserCog },
 ];
 
 const CAREGIVER_NAV = [

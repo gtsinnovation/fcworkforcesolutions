@@ -8,6 +8,7 @@ import SchedulingTab from "@/components/fcws/admin/SchedulingTab";
 import IncidentsTab from "@/components/fcws/admin/IncidentsTab";
 import AuditTab from "@/components/fcws/admin/AuditTab";
 import LeadsTab from "@/components/fcws/admin/LeadsTab";
+import UsersTab from "@/components/fcws/admin/UsersTab";
 
 const TABS = [
   { key: "overview", label: "Overview" },
@@ -17,6 +18,7 @@ const TABS = [
   { key: "incidents", label: "Incidents" },
   { key: "audit", label: "Audit Log" },
   { key: "leads", label: "Leads" },
+  { key: "users", label: "Users" },
 ];
 
 export default function AdminDashboard() {
@@ -72,6 +74,7 @@ export default function AdminDashboard() {
       {activeTab === "incidents" && <IncidentsTab />}
       {activeTab === "audit" && <AuditTab />}
       {activeTab === "leads" && <LeadsTab />}
+      {activeTab === "users" && <UsersTab />}
     </div>
   );
 }

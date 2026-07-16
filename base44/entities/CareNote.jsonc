@@ -1,0 +1,22 @@
+{
+  "name": "CareNote",
+  "type": "object",
+  "properties": {
+    "clientId": {
+      "type": "string"
+    },
+    "clientName": {
+      "type": "string"
+    },
+    "employeeId": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "clientId",
+    "note"
+  ]
+}
