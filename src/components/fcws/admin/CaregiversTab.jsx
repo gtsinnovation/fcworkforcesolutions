@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Plus, Loader2, Briefcase, Mail, Phone, CheckCircle, XCircle, Clock, Eye, ChevronDown, FileText, Calendar } from "lucide-react";
+import { Plus, Loader2, Briefcase, Mail, Phone, CheckCircle, XCircle, Clock, Eye, ChevronDown, FileText, Calendar, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HIRING_STATUS_LABELS } from "@/lib/fcws";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/components/ui/use-toast";
 import Pagination from "@/components/fcws/admin/Pagination";
 
 const PAGE_SIZE = 25;
@@ -19,6 +20,8 @@ export default function CaregiversTab() {
   const [error, setError] = useState("");
   const [expandedId, setExpandedId] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [invitingId, setInvitingId] = useState(null);
+  const { toast } = useToast();
 
   function load() {
     base44.entities.Employee.list().then(data => {
@@ -58,6 +61,18 @@ export default function CaregiversTab() {
   async function updateStatus(id, status, active) {
     await base44.entities.Employee.update(id, { hiringStatus: status, active });
     load();
+  }
+
+  async function handleInvite(emp) {
+    setInvitingId(emp.id);
+    try {
+      await base44.users.inviteUser(emp.email, "caregiver");
+      toast({ title: "Invitation sent", description: `An onboarding invite was sent to ${emp.email}` });
+    } catch (err) {
+      toast({ title: "Failed to invite", description: err.message || "Could not send invitation", variant: "destructive" });
+    } finally {
+      setInvitingId(null);
+    }
   }
 
   if (loading) {
@@ -170,6 +185,9 @@ export default function CaregiversTab() {
                       <Clock className="w-4 h-4 mr-1" /> Deactivate
                     </Button>
                   )}
+                  <Button size="sm" variant="outline" disabled={invitingId === emp.id} onClick={() => handleInvite(emp)}>
+                    {invitingId === emp.id ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <UserPlus className="w-4 h-4 mr-1" />} Invite
+                  </Button>
                 </div>
               </div>
 

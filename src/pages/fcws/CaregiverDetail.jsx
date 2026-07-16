@@ -4,15 +4,18 @@ import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import {
   ArrowLeft, Mail, Phone, Briefcase, CheckCircle, XCircle, Clock,
-  FileText, ShieldCheck, UserCircle
+  FileText, ShieldCheck, UserCircle, UserPlus, Loader2
 } from "lucide-react";
 import { HIRING_STATUS_LABELS } from "@/lib/fcws";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function CaregiverDetail() {
   const { id } = useParams();
   const [employee, setEmployee] = useState(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const [inviting, setInviting] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     base44.entities.Employee.get(id)
@@ -30,6 +33,18 @@ export default function CaregiverDetail() {
       console.error(err);
     } finally {
       setUpdating(false);
+    }
+  }
+
+  async function handleInvite() {
+    setInviting(true);
+    try {
+      await base44.users.inviteUser(employee.email, "caregiver");
+      toast({ title: "Invitation sent", description: `An onboarding invite was sent to ${employee.email}` });
+    } catch (err) {
+      toast({ title: "Failed to invite", description: err.message || "Could not send invitation", variant: "destructive" });
+    } finally {
+      setInviting(false);
     }
   }
 
@@ -76,6 +91,9 @@ export default function CaregiverDetail() {
             </div>
             <p className="text-sm text-muted-foreground">Caregiver Profile</p>
           </div>
+          <Button disabled={inviting} onClick={handleInvite} className="bg-secondary text-secondary-foreground hover:bg-secondary/90 shrink-0">
+            {inviting ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <UserPlus className="w-4 h-4 mr-1" />} Invite to Onboard
+          </Button>
         </div>
       </div>
 
