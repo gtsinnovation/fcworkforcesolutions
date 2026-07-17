@@ -9,6 +9,7 @@ import IncidentsTab from "@/components/fcws/admin/IncidentsTab";
 import AuditTab from "@/components/fcws/admin/AuditTab";
 import LeadsTab from "@/components/fcws/admin/LeadsTab";
 import UsersTab from "@/components/fcws/admin/UsersTab";
+import InviteUserDialog from "@/components/fcws/admin/InviteUserDialog";
 
 const TABS = [
   { key: "overview", label: "Overview" },
@@ -46,9 +47,12 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="font-heading font-bold text-2xl text-primary">Admin Dashboard</h1>
-        <p className="text-sm text-muted-foreground">Welcome back, {user?.full_name || user?.email}</p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div>
+          <h1 className="font-heading font-bold text-2xl text-primary">Admin Dashboard</h1>
+          <p className="text-sm text-muted-foreground">Welcome back, {user?.full_name || user?.email}</p>
+        </div>
+        <InviteUserDialog />
       </div>
 
       <div className="flex gap-1 border-b border-border mb-6 overflow-x-auto">
