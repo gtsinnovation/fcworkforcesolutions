@@ -1,19 +1,17 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Briefcase, GraduationCap, HeartHandshake, ArrowRight, CheckCircle } from "lucide-react";
+import { Briefcase, GraduationCap, ArrowRight, CheckCircle } from "lucide-react";
 import Navbar from "@/components/fcws/Navbar";
 import Footer from "@/components/fcws/Footer";
 import { Button } from "@/components/ui/button";
 
 const BENEFITS = [
-  { icon: GraduationCap, title: "Paid Training", text: "Complete our 18-module certification program — fully paid." },
-  { icon: HeartHandshake, title: "Health Benefits", text: "Medical, dental, and vision coverage for full-time caregivers." },
+  { icon: GraduationCap, title: "Training", text: "Complete our 18-module certification program — fully paid." },
   { icon: Briefcase, title: "Flexible Schedules", text: "Choose shifts that work with your life — part-time or full-time." },
 ];
 
 const POSITIONS = [
   { title: "Certified Caregiver", type: "Full-time", location: "Care City & Surrounding Areas", description: "Provide personal care, companionship, and household support to clients in their homes." },
-  { title: "Dementia Care Specialist", type: "Full-time", location: "Care City", description: "Deliver specialized care for clients with Alzheimer's and other forms of dementia." },
   { title: "Weekend Caregiver", type: "Part-time", location: "Multiple Locations", description: "Support clients with weekend care needs including personal care and companionship." },
   { title: "Live-in Caregiver", type: "Full-time", location: "Regional", description: "Provide 24/7 care and support for clients requiring continuous assistance." },
 ];
@@ -28,7 +26,7 @@ export default function Careers() {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Join a team that values compassion, professionalism, and growth. We invest in our caregivers so they can provide the best possible care.</p>
         </motion.div>
 
-        <div className="grid gap-6 sm:grid-cols-3 mb-12">
+        <div className="grid gap-6 sm:grid-cols-2 mb-12">
           {BENEFITS.map(b => {
             const Icon = b.icon;
             return (

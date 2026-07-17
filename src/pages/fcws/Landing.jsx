@@ -77,7 +77,7 @@ export default function Landing() {
             <div className="space-y-3 text-sm text-primary-foreground/75 max-w-md mb-6">
               <p>You may be far away, but your loved ones can still receive the love, care and support they deserve—right at home in Liberia.</p>
               <p>FCWS provides trusted, compassionate and professional caregivers so your family members are in <span className="text-accent font-semibold">safe hands</span>, no matter where you are in the world.</p>
-              <p>From daily living assistance to companionship and medical support, we treat your family like our own.</p>
+              <p>From daily living assistance to companionship, we treat your family like our own.</p>
             </div>
             <div className="flex flex-wrap gap-3">
               <Link to="/request-care" className="bg-accent text-accent-foreground font-semibold rounded-full px-5 py-2 hover:opacity-90 transition text-xs">Request Care</Link>
