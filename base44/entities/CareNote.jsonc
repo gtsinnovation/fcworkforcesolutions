@@ -29,6 +29,16 @@
         },
         {
           "user_condition": {
+            "role": "org_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "staff"
+          }
+        },
+        {
+          "user_condition": {
             "role": "caregiver"
           }
         }
@@ -39,6 +49,16 @@
         {
           "user_condition": {
             "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "org_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "staff"
           }
         },
         {
@@ -54,14 +74,33 @@
           }
         },
         {
+          "user_condition": {
+            "role": "org_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "staff"
+          }
+        },
+        {
           "created_by": "{{user.email}}"
         }
       ]
     },
     "delete": {
-      "user_condition": {
-        "role": "admin"
-      }
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "org_manager"
+          }
+        }
+      ]
     }
   }
 }
