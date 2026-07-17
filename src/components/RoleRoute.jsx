@@ -1,7 +1,15 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "@/lib/AuthContext";
 
-const ROLE_HOME = { admin: "/admin", caregiver: "/caregiver", client: "/portal" };
+const ROLE_HOME = {
+  admin: "/admin",
+  org_manager: "/admin",
+  staff: "/admin",
+  caregiver: "/caregiver",
+  onboarding: "/caregiver",
+  client: "/portal",
+  user: "/",
+};
 
 export default function RoleRoute({ allowedRoles }) {
   const { user, isAuthenticated } = useAuth();

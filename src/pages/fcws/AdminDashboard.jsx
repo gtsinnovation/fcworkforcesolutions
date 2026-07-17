@@ -11,15 +11,17 @@ import LeadsTab from "@/components/fcws/admin/LeadsTab";
 import UsersTab from "@/components/fcws/admin/UsersTab";
 import InviteUserDialog from "@/components/fcws/admin/InviteUserDialog";
 
+const MANAGEMENT = ["admin", "org_manager", "staff"];
+const LEADERSHIP = ["admin", "org_manager"];
 const TABS = [
-  { key: "overview", label: "Overview" },
-  { key: "caregivers", label: "Caregivers" },
-  { key: "clients", label: "Clients" },
-  { key: "scheduling", label: "Scheduling" },
-  { key: "incidents", label: "Incidents" },
-  { key: "audit", label: "Audit Log" },
-  { key: "leads", label: "Leads" },
-  { key: "users", label: "Users" },
+  { key: "overview", label: "Overview", roles: MANAGEMENT },
+  { key: "caregivers", label: "Caregivers", roles: MANAGEMENT },
+  { key: "clients", label: "Clients", roles: MANAGEMENT },
+  { key: "scheduling", label: "Scheduling", roles: MANAGEMENT },
+  { key: "incidents", label: "Incidents", roles: MANAGEMENT },
+  { key: "audit", label: "Audit Log", roles: LEADERSHIP },
+  { key: "leads", label: "Leads", roles: MANAGEMENT },
+  { key: "users", label: "Users", roles: LEADERSHIP },
 ];
 
 export default function AdminDashboard() {
@@ -28,6 +30,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
 
   const activeTab = searchParams.get("tab") || "overview";
+  const visibleTabs = TABS.filter(t => !user?.role || t.roles.includes(user.role));
 
   useEffect(() => {
     base44.auth.me().then(u => {
@@ -52,11 +55,11 @@ export default function AdminDashboard() {
           <h1 className="font-heading font-bold text-2xl text-primary">Admin Dashboard</h1>
           <p className="text-sm text-muted-foreground">Welcome back, {user?.full_name || user?.email}</p>
         </div>
-        <InviteUserDialog />
+        {(user?.role === "admin" || user?.role === "org_manager") && <InviteUserDialog />}
       </div>
 
       <div className="flex gap-1 border-b border-border mb-6 overflow-x-auto">
-        {TABS.map(tab => (
+        {visibleTabs.map(tab => (
           <button
             key={tab.key}
             onClick={() => setTab(tab.key)}

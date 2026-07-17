@@ -43,7 +43,7 @@ export default function DashboardShell({ navItems, title, roleLabel }) {
           <span className="font-heading font-bold text-sm">FCWS {roleLabel}</span>
         </div>
         <nav className="flex-1 p-3 space-y-1">
-          {navItems.map((item) => {
+          {navItems.filter(item => !item.roles || item.roles.includes(user?.role)).map((item) => {
             const Icon = item.icon;
             return (
               <Link

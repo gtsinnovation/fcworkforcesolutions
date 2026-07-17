@@ -6,10 +6,14 @@
       "type": "string",
       "enum": [
         "admin",
+        "org_manager",
+        "staff",
         "caregiver",
-        "client"
+        "onboarding",
+        "client",
+        "user"
       ],
-      "default": "client"
+      "default": "user"
     }
   }
 }

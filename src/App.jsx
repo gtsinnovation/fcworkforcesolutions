@@ -67,18 +67,18 @@ const AuthenticatedApp = () => {
       
       {/* Protected dashboard routes */}
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
-        <Route element={<RoleRoute allowedRoles={["admin"]} />}>
+        <Route element={<RoleRoute allowedRoles={["admin", "org_manager", "staff"]} />}>
           <Route element={<DashboardShell navItems={ADMIN_NAV} title="Admin" roleLabel="Admin" />}>
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/caregivers/:id" element={<CaregiverDetail />} />
           </Route>
         </Route>
-        <Route element={<RoleRoute allowedRoles={["caregiver", "admin"]} />}>
+        <Route element={<RoleRoute allowedRoles={["caregiver", "onboarding", "admin", "org_manager"]} />}>
           <Route element={<DashboardShell navItems={CAREGIVER_NAV} title="Caregiver" roleLabel="Caregiver" />}>
             <Route path="/caregiver" element={<CaregiverDashboard />} />
           </Route>
         </Route>
-        <Route element={<RoleRoute allowedRoles={["client", "admin"]} />}>
+        <Route element={<RoleRoute allowedRoles={["client", "admin", "org_manager"]} />}>
           <Route element={<DashboardShell navItems={CLIENT_NAV} title="Family Portal" roleLabel="Client" />}>
             <Route path="/portal" element={<ClientPortal />} />
           </Route>
