@@ -25,9 +25,11 @@ export default function InviteUserDialog({ onInvited }) {
     e.preventDefault();
     setInviting(true);
     try {
-      await base44.users.inviteUser(email, role);
+      const platformRole = role === "admin" ? "admin" : "user";
+      await base44.users.inviteUser(email, platformRole);
       const roleLabel = ROLES.find(r => r.value === role)?.label || role;
-      toast({ title: "Invitation sent", description: `${email} was invited as ${roleLabel}.` });
+      const note = role === "admin" ? "" : " Assign their role in User Management once they register.";
+      toast({ title: "Invitation sent", description: `${email} was invited as ${roleLabel}.${note}` });
       setOpen(false);
       setEmail("");
       setRole("caregiver");
