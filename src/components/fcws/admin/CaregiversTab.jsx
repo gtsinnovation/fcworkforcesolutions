@@ -67,7 +67,8 @@ export default function CaregiversTab() {
     setInvitingId(emp.id);
     try {
       await base44.users.inviteUser(emp.email, "user");
-      toast({ title: "Invitation sent", description: `An app invite was sent to ${emp.email}. Assign their Caregiver role in User Management once they register.` });
+      await base44.entities.PendingInvite.create({ email: emp.email.toLowerCase().trim(), intendedRole: "caregiver" });
+      toast({ title: "Invitation sent", description: `An invite was sent to ${emp.email}. Their Caregiver role will be applied automatically when they register and verify their email.` });
     } catch (err) {
       toast({ title: "Failed to invite", description: err.message || "Could not send invitation", variant: "destructive" });
     } finally {

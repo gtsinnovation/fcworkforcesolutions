@@ -8,11 +8,25 @@ export default function Navbar() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    base44.auth.isAuthenticated().then(authed => {
-      if (authed) {
-        base44.auth.me().then(setUser).catch(() => {});
-      }
+    let cancelled = false;
+    base44.auth.isAuthenticated().then(async (authed) => {
+      if (!authed || cancelled) return;
+      try {
+        const u = await base44.auth.me();
+        if (cancelled) return;
+        setUser(u);
+        // Standard platform users may have a pending invite that auto-applies their app role.
+        if (u && u.role === "user") {
+          try {
+            const res = await base44.functions.invoke("assignInvitedRole");
+            if (res?.data?.status === "upgraded" && !cancelled) {
+              window.location.reload();
+            }
+          } catch (e) { /* ignore; retries on next load */ }
+        }
+      } catch (e) { /* ignore */ }
     });
+    return () => { cancelled = true; };
   }, []);
 
   return (

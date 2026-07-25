@@ -27,9 +27,12 @@ export default function InviteUserDialog({ onInvited }) {
     try {
       const platformRole = role === "admin" ? "admin" : "user";
       await base44.users.inviteUser(email, platformRole);
+      // Record the intended app role so it is auto-assigned when the invitee registers.
+      if (role !== "admin") {
+        await base44.entities.PendingInvite.create({ email: email.toLowerCase().trim(), intendedRole: role });
+      }
       const roleLabel = ROLES.find(r => r.value === role)?.label || role;
-      const note = role === "admin" ? "" : " Assign their role in User Management once they register.";
-      toast({ title: "Invitation sent", description: `${email} was invited as ${roleLabel}.${note}` });
+      toast({ title: "Invitation sent", description: `${email} was invited as ${roleLabel}. Their role will be applied automatically when they register and verify their email.` });
       setOpen(false);
       setEmail("");
       setRole("caregiver");
