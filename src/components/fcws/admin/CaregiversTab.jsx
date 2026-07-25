@@ -66,8 +66,8 @@ export default function CaregiversTab() {
   async function handleInvite(emp) {
     setInvitingId(emp.id);
     try {
-      await base44.users.inviteUser(emp.email, "caregiver");
-      toast({ title: "Invitation sent", description: `An onboarding invite was sent to ${emp.email}` });
+      await base44.users.inviteUser(emp.email, "user");
+      toast({ title: "Invitation sent", description: `An app invite was sent to ${emp.email}. Assign their Caregiver role in User Management once they register.` });
     } catch (err) {
       toast({ title: "Failed to invite", description: err.message || "Could not send invitation", variant: "destructive" });
     } finally {
