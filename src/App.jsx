@@ -19,6 +19,10 @@ import PrivacyPolicy from '@/pages/fcws/PrivacyPolicy';
 import TermsOfUse from '@/pages/fcws/TermsOfUse';
 import Contact from '@/pages/fcws/Contact';
 import Quiz from '@/pages/fcws/Quiz';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import ForgotPassword from '@/pages/ForgotPassword';
+import ResetPassword from '@/pages/ResetPassword';
 import AdminDashboard from '@/pages/fcws/AdminDashboard';
 import CaregiverDetail from '@/pages/fcws/CaregiverDetail';
 import CaregiverDashboard from '@/pages/fcws/CaregiverDashboard';
@@ -64,11 +68,17 @@ const AuthenticatedApp = () => {
       <Route path="/terms-of-use" element={<TermsOfUse />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/quiz" element={<Quiz />} />
+
+      {/* Auth pages */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       
       {/* Protected dashboard routes */}
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
         <Route element={<RoleRoute allowedRoles={["admin", "org_manager", "staff"]} />}>
-          <Route element={<DashboardShell navItems={ADMIN_NAV} title="Admin" roleLabel="Admin" />}>
+          <Route element={<DashboardShell navItems={ADMIN_NAV} title="Dashboard" roleLabel="Admin" />}>
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/caregivers/:id" element={<CaregiverDetail />} />
           </Route>

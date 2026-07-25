@@ -53,7 +53,7 @@ export default function AdminDashboard() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="font-heading font-bold text-2xl text-primary">Admin Dashboard</h1>
+          <h1 className="font-heading font-bold text-2xl text-primary">Dashboard</h1>
           <p className="text-sm text-muted-foreground">Welcome back, {user?.full_name || user?.email}</p>
         </div>
         {(user?.role === "admin" || user?.role === "org_manager") && <InviteUserDialog />}
