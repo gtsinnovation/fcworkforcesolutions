@@ -39,8 +39,9 @@ export default function CaregiverDetail() {
   async function handleInvite() {
     setInviting(true);
     try {
-      await base44.users.inviteUser(employee.email, "caregiver");
-      toast({ title: "Invitation sent", description: `An onboarding invite was sent to ${employee.email}` });
+      await base44.users.inviteUser(employee.email, "user");
+      await base44.entities.PendingInvite.create({ email: employee.email.toLowerCase().trim(), intendedRole: "caregiver" });
+      toast({ title: "Invitation sent", description: `An onboarding invite was sent to ${employee.email}. Their Caregiver role will be applied automatically when they register and verify their email.` });
     } catch (err) {
       toast({ title: "Failed to invite", description: err.message || "Could not send invitation", variant: "destructive" });
     } finally {

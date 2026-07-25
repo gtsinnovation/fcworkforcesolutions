@@ -125,7 +125,7 @@ export default function CaregiverIncidents({ user, clients, incidents, onInciden
                 </div>
                 {editingId === inc.id ? (
                   <div className="mt-2 space-y-2">
-                    <Textarea value={editNarrative} onChange={e => setEditNarrative(e.target.value)} rows={3} label="Narrative" />
+                    <Textarea value={editNarrative} onChange={e => setEditNarrative(e.target.value)} rows={3} placeholder="Narrative..." />
                     <Textarea value={editResolution} onChange={e => setEditResolution(e.target.value)} rows={2} placeholder="Resolution / action taken..." />
                     <div className="flex gap-2">
                       <Button size="sm" onClick={() => saveEdit(inc.id)} disabled={saving} className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
