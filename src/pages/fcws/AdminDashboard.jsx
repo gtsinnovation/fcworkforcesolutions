@@ -31,6 +31,7 @@ export default function AdminDashboard() {
 
   const activeTab = searchParams.get("tab") || "overview";
   const visibleTabs = TABS.filter(t => !user?.role || t.roles.includes(user.role));
+  const allowedTab = visibleTabs.some(t => t.key === activeTab) ? activeTab : "overview";
 
   useEffect(() => {
     base44.auth.me().then(u => {
@@ -74,14 +75,14 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      {activeTab === "overview" && <OverviewTab />}
-      {activeTab === "caregivers" && <CaregiversTab />}
-      {activeTab === "clients" && <ClientsTab />}
-      {activeTab === "scheduling" && <SchedulingTab />}
-      {activeTab === "incidents" && <IncidentsTab />}
-      {activeTab === "audit" && <AuditTab />}
-      {activeTab === "leads" && <LeadsTab />}
-      {activeTab === "users" && <UsersTab />}
+      {allowedTab === "overview" && <OverviewTab />}
+      {allowedTab === "caregivers" && <CaregiversTab />}
+      {allowedTab === "clients" && <ClientsTab />}
+      {allowedTab === "scheduling" && <SchedulingTab />}
+      {allowedTab === "incidents" && <IncidentsTab />}
+      {allowedTab === "audit" && <AuditTab />}
+      {allowedTab === "leads" && <LeadsTab />}
+      {allowedTab === "users" && <UsersTab />}
     </div>
   );
 }

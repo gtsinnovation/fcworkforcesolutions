@@ -13,8 +13,7 @@ export default function OverviewTab() {
       base44.entities.Client.list(),
       base44.entities.ScheduleEntry.list(),
       base44.entities.IncidentReport.list(),
-      base44.entities.AuditLog.list("-created_date", 10),
-    ]).then(([employees, clients, schedules, incidents, logs]) => {
+    ]).then(([employees, clients, schedules, incidents]) => {
       setStats({
         employees: employees.length,
         clients: clients.length,
@@ -22,9 +21,12 @@ export default function OverviewTab() {
         incidents: incidents.length,
         pendingIncidents: incidents.filter(i => !i.read).length,
       });
-      setRecentActivity(logs);
       setLoading(false);
     }).catch(() => setLoading(false));
+
+    base44.entities.AuditLog.list("-created_date", 10)
+      .then(setRecentActivity)
+      .catch(() => {});
   }, []);
 
   const cards = [

@@ -1,19 +1,9 @@
 import { Outlet, Link, useLocation } from "react-router-dom";
-import { ShieldCheck, LayoutDashboard, Users, CalendarDays, AlertTriangle, FileText, Briefcase, LogOut, ClipboardList } from "lucide-react";
+import { ShieldCheck, LogOut } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-const ADMIN_NAV = [
-  { label: "Overview", path: "/admin", icon: LayoutDashboard },
-  { label: "Caregivers", path: "/admin?tab=caregivers", icon: Briefcase },
-  { label: "Clients", path: "/admin?tab=clients", icon: Users },
-  { label: "Scheduling", path: "/admin?tab=scheduling", icon: CalendarDays },
-  { label: "Incidents", path: "/admin?tab=incidents", icon: AlertTriangle },
-  { label: "Audit Log", path: "/admin?tab=audit", icon: FileText },
-  { label: "Leads", path: "/admin?tab=leads", icon: ClipboardList },
-];
 
 export default function DashboardShell({ navItems, title, roleLabel }) {
   const location = useLocation();
@@ -93,5 +83,3 @@ export default function DashboardShell({ navItems, title, roleLabel }) {
     </div>
   );
 }
-
-export { ADMIN_NAV };
