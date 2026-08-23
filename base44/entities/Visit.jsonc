@@ -1,0 +1,64 @@
+{
+  "name": "Visit",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string"
+    },
+    "page": {
+      "type": "string"
+    },
+    "referrer": {
+      "type": "string"
+    },
+    "userAgent": {
+      "type": "string"
+    },
+    "sessionId": {
+      "type": "string"
+    },
+    "locale": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "path",
+    "page"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "org_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "staff"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
