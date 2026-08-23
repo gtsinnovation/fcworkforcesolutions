@@ -12,7 +12,7 @@ export default function Footer() {
     });
   }, []);
 
-  const dashboardPath = user?.role === "admin" ? "/admin" : user?.role === "caregiver" ? "/caregiver" : "/portal";
+  const dashboardPath = ["admin","org_manager","staff"].includes(user?.role) ? "/admin" : ["caregiver","onboarding"].includes(user?.role) ? "/caregiver" : user?.role === "client" ? "/portal" : "/";
 
   return (
     <footer className="bg-primary text-primary-foreground mt-auto">

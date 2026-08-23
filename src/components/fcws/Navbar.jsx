@@ -49,7 +49,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           {user ? (
             <Button asChild size="sm" className="bg-secondary hover:bg-secondary/90 text-secondary-foreground">
-              <Link to={user.role === "admin" ? "/admin" : user.role === "caregiver" ? "/caregiver" : "/portal"}>
+              <Link to={["admin","org_manager","staff"].includes(user.role) ? "/admin" : ["caregiver","onboarding"].includes(user.role) ? "/caregiver" : user.role === "client" ? "/portal" : "/"}>
                 Dashboard
               </Link>
             </Button>
