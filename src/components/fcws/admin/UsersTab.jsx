@@ -4,6 +4,8 @@ import { Loader2, Shield, Heart, UserCircle, Mail, ChevronDown, Calendar, User }
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import Pagination from "@/components/fcws/admin/Pagination";
+import DeleteButton from "@/components/fcws/admin/DeleteButton";
+import { useToast } from "@/components/ui/use-toast";
 
 const PAGE_SIZE = 25;
 
@@ -25,12 +27,27 @@ export default function UsersTab() {
   const [updatingId, setUpdatingId] = useState(null);
   const [expandedId, setExpandedId] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const { toast } = useToast();
 
   function load() {
     base44.entities.User.list().then(data => { setUsers(data); setLoading(false); }).catch(() => setLoading(false));
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+    base44.auth.me().then(u => setCurrentUserId(u?.id || null)).catch(() => {});
+  }, []);
+
+  async function handleDelete(userId, email) {
+    try {
+      await base44.entities.User.delete(userId);
+      toast({ title: "User deleted", description: email });
+      load();
+    } catch (err) {
+      toast({ title: "Failed to delete user", description: err.message, variant: "destructive" });
+    }
+  }
 
   async function handleRoleChange(userId, newRole) {
     setUpdatingId(userId);
@@ -102,6 +119,9 @@ export default function UsersTab() {
                       {ROLES.map(r => <SelectItem key={r.value} value={r.value}>{r.label}</SelectItem>)}
                     </SelectContent>
                   </Select>
+                  {u.id !== currentUserId && (
+                    <DeleteButton label="" onDelete={() => handleDelete(u.id, u.email)} description="This will permanently delete this user account. This action cannot be undone." />
+                  )}
                 </div>
               </div>
 

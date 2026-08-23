@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { SERVICE_CATALOG } from "@/lib/fcws";
 import { cn } from "@/lib/utils";
 import Pagination from "@/components/fcws/admin/Pagination";
+import DeleteButton from "@/components/fcws/admin/DeleteButton";
 
 const PAGE_SIZE = 25;
 
@@ -26,6 +27,11 @@ export default function ClientsTab() {
   }
 
   useEffect(() => { load(); }, []);
+
+  async function handleDelete(id) {
+    await base44.entities.Client.delete(id);
+    load();
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -201,6 +207,9 @@ export default function ClientsTab() {
                       <p className="text-foreground">{c.scheduleRules}</p>
                     </div>
                   )}
+                  <div className="sm:col-span-2 pt-2 border-t border-border">
+                    <DeleteButton label="Delete Client" onDelete={() => handleDelete(c.id)} description="This will permanently delete this client record. This action cannot be undone." />
+                  </div>
                 </div>
               )}
             </div>

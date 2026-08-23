@@ -9,6 +9,7 @@ import { HIRING_STATUS_LABELS } from "@/lib/fcws";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import Pagination from "@/components/fcws/admin/Pagination";
+import DeleteButton from "@/components/fcws/admin/DeleteButton";
 
 const PAGE_SIZE = 25;
 
@@ -56,6 +57,12 @@ export default function CaregiversTab() {
     } finally {
       setSubmitting(false);
     }
+  }
+
+  async function handleDelete(id) {
+    await base44.entities.Employee.delete(id);
+    toast({ title: "Caregiver deleted" });
+    load();
   }
 
   async function updateStatus(id, status, active) {
@@ -189,6 +196,7 @@ export default function CaregiversTab() {
                   <Button size="sm" variant="outline" disabled={invitingId === emp.id} onClick={() => handleInvite(emp)}>
                     {invitingId === emp.id ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <UserPlus className="w-4 h-4 mr-1" />} Invite
                   </Button>
+                  <DeleteButton label="" onDelete={() => handleDelete(emp.id)} description="This will permanently delete this caregiver record." />
                 </div>
               </div>
 
