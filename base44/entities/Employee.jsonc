@@ -37,6 +37,32 @@
     "active": {
       "type": "boolean",
       "default": false
+    },
+    "educationLevel": {
+      "type": "string",
+      "enum": [
+        "high_school",
+        "college",
+        "other"
+      ],
+      "default": "high_school"
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "relationship": {
+            "type": "string"
+          }
+        }
+      }
     }
   },
   "required": [

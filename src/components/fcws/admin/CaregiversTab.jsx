@@ -41,11 +41,18 @@ export default function CaregiversTab() {
     const formData = new FormData(form);
     try {
       const specs = formData.get("specializations")?.split(",").map(s => s.trim()).filter(Boolean) || [];
+      const references = [1, 2, 3].map(i => ({
+        name: (formData.get(`ref${i}_name`) || "").trim(),
+        phone: (formData.get(`ref${i}_phone`) || "").trim(),
+        relationship: (formData.get(`ref${i}_relationship`) || "").trim(),
+      })).filter(r => r.name);
       await base44.entities.Employee.create({
         fullName: formData.get("fullName"),
         email: formData.get("email"),
         phone: formData.get("phone"),
         specializations: specs,
+        educationLevel: formData.get("educationLevel") || "high_school",
+        references,
         hiringStatus: "pending",
         active: false,
       });
@@ -119,9 +126,29 @@ export default function CaregiversTab() {
               <Input id="phone" name="phone" required placeholder="(555) 123-4567" />
             </div>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="specializations">Specializations (comma-separated)</Label>
-            <Input id="specializations" name="specializations" placeholder="Dementia care, personal care, companionship" />
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div className="space-y-2">
+              <Label htmlFor="educationLevel">Level of Education</Label>
+              <select id="educationLevel" name="educationLevel" defaultValue="high_school" className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                <option value="high_school">High School Graduate</option>
+                <option value="college">College Graduate</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="specializations">Specializations (comma-separated)</Label>
+              <Input id="specializations" name="specializations" placeholder="Dementia care, personal care, companionship" />
+            </div>
+          </div>
+          <div className="space-y-3">
+            <Label>References (up to 3)</Label>
+            {[1, 2, 3].map(i => (
+              <div key={i} className="grid gap-3 sm:grid-cols-3">
+                <Input name={`ref${i}_name`} placeholder={`Reference ${i} — Name`} />
+                <Input name={`ref${i}_phone`} placeholder="Phone" />
+                <Input name={`ref${i}_relationship`} placeholder="Relationship" />
+              </div>
+            ))}
           </div>
           {error && <p className="text-sm text-destructive">{error}</p>}
           <div className="flex gap-3">
@@ -219,6 +246,20 @@ export default function CaregiversTab() {
                     {emp.documents?.length > 0 ? (
                       <ul className="space-y-1">{emp.documents.map((d, i) => <li key={i} className="flex items-center gap-1 text-foreground"><FileText className="w-3.5 h-3.5 text-secondary" /> {d}</li>)}</ul>
                     ) : <p className="text-muted-foreground">No documents on file</p>}
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Education</p>
+                    <p className="text-foreground">{emp.educationLevel === "college" ? "College Graduate" : emp.educationLevel === "other" ? "Other" : "High School Graduate"}</p>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">References</p>
+                    {emp.references?.length > 0 ? (
+                      <div className="space-y-1">
+                        {emp.references.map((r, i) => (
+                          <p key={i} className="text-foreground">{r.name} · {r.phone} · {r.relationship}</p>
+                        ))}
+                      </div>
+                    ) : <p className="text-muted-foreground">No references on file</p>}
                   </div>
                 </div>
               )}
