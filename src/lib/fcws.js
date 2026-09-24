@@ -30,7 +30,7 @@ export const SERVICE_CATALOG = [
     icon: "ShieldCheck",
     description: "Designed to provide temporary relief for primary family caregivers to prevent burnout.",
     features: [
-      { label: "Flexible Scheduling", detail: "Hourly, half-day, overnight, or weekend coverage." },
+      { label: "Flexible Scheduling", detail: "Full day, overnight, or weekend coverage." },
       { label: "Comprehensive Coverage", detail: "Covers personal care, meals, and safety monitoring while family members travel, work, or take time to rest." },
     ],
   },
@@ -75,6 +75,32 @@ export const SERVICE_CATALOG = [
     features: [
       { label: "Shift Rotation (24/7)", detail: "Multiple caregivers working sequential 8- or 12-hour shifts for constant awake coverage." },
       { label: "Live-In Care", detail: "A primary caregiver resides in the home to provide ongoing daily assistance and nighttime availability (requiring a private room and dedicated sleep time)." },
+    ],
+  },
+  {
+    slug: "babysitting",
+    title: "Babysitting Package",
+    icon: "Baby",
+    description: "Flexible, short-term care for date nights, appointments, or occasional needs.",
+    features: [
+      { label: "Basic Supervision", detail: "Attentive monitoring to keep children safe and comfortable." },
+      { label: "Interactive Play", detail: "Games, activities, and creative play tailored to the child's interests." },
+      { label: "Meal Serving", detail: "Preparing and serving meals and snacks." },
+      { label: "Bedtime Routines", detail: "Assistance with evening wind-down and settling in for the night." },
+      { label: "Best For", detail: "Families needing as-needed care without a long-term contract." },
+    ],
+  },
+  {
+    slug: "dedicated-nanny",
+    title: "Dedicated Nanny Package",
+    icon: "Users",
+    description: "Consistent, long-term daily care integrated into your child's growth and routine.",
+    features: [
+      { label: "Structured Learning", detail: "Educational activities and developmental support tailored to the child's age." },
+      { label: "Meal Prep", detail: "Planning and preparing nutritious meals and snacks throughout the day." },
+      { label: "Schedule Management", detail: "Coordinating school, activities, naps, and daily routines." },
+      { label: "Child-Related Light Chores", detail: "Tidying play areas, laundry, and other child-focused household tasks." },
+      { label: "Best For", detail: "Families seeking ongoing full-time or part-time daily support." },
     ],
   },
 ];

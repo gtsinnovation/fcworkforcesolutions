@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowLeft, Phone, CheckCircle, Heart, User, Utensils, Pill, ClipboardCheck, ShieldCheck, Home, Brain, Moon, Clock } from "lucide-react";
+import { ArrowRight, ArrowLeft, Phone, CheckCircle, Heart, User, Utensils, Pill, ClipboardCheck, ShieldCheck, Home, Brain, Moon, Clock, Baby, Users } from "lucide-react";
 import Navbar from "@/components/fcws/Navbar";
 import Footer from "@/components/fcws/Footer";
 import { Button } from "@/components/ui/button";
 import { SERVICE_CATALOG } from "@/lib/fcws";
 
-const ICON_MAP = { User, Utensils, Heart, Pill, ClipboardCheck, ShieldCheck, Home, Brain, Moon, Clock };
+const ICON_MAP = { User, Utensils, Heart, Pill, ClipboardCheck, ShieldCheck, Home, Brain, Moon, Clock, Baby, Users };
 
 export default function ServiceDetail() {
   const { slug } = useParams();
