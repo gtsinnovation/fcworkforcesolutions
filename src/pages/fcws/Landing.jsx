@@ -116,6 +116,13 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Gold separator */}
+      <div className="bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="w-full h-0.5 bg-accent"></div>
+        </div>
+      </div>
+
       {/* Services & Trust */}
       <section className="bg-background py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
