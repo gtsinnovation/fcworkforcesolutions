@@ -55,13 +55,6 @@ export default function Landing() {
             {/* Top nav row */}
             <div className="flex items-center justify-between mb-8 md:mb-12">
               <div className="flex items-center gap-2.5">
-                <div className="bg-white rounded-xl px-2 py-1 shadow-sm">
-                  <img
-                    src="https://media.base44.com/images/public/6a50456441d8a4a42f7c8722/a8c8279ee_logov2.png"
-                    alt="Family Care Workforce Solutions"
-                    className="h-12 md:h-14 w-auto object-contain"
-                  />
-                </div>
                 <div className="hidden sm:block leading-tight">
                   <div className="font-heading font-bold text-base text-primary">Family Care</div>
                   <div className="text-xs text-accent font-semibold tracking-wide">WORKFORCE SOLUTIONS</div>
@@ -112,12 +105,12 @@ export default function Landing() {
             <Link to="/request-care" className="bg-accent text-accent-foreground font-semibold rounded-full px-6 py-2.5 hover:opacity-90 transition text-xs w-fit">Request Care</Link>
           </div>
 
-          {/* Right: photos only */}
-          <div className="relative min-h-[280px] md:min-h-[520px] bg-background">
+          {/* Right: photo only */}
+          <div className="relative min-h-[280px] md:min-h-[600px] bg-background overflow-hidden">
             <img
-              src="https://media.base44.com/images/public/6a50456441d8a4a42f7c8722/b89ce0a9a_LANDINshort1.jpg"
-              alt="FCWS caregiver with senior client"
-              className="absolute inset-0 w-full h-full object-contain [object-position:top_right]"
+              src="https://media.base44.com/images/public/6a50456441d8a4a42f7c8722/a36d511c8_designclient.jpeg"
+              alt="FCWS caregiver and client in conversation"
+              className="absolute inset-0 w-full h-full object-cover"
             />
           </div>
         </div>
