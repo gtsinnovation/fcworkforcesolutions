@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowLeft, Phone, CheckCircle, Heart, User, Utensils, Pill, ClipboardCheck, ShieldCheck } from "lucide-react";
+import { ArrowRight, ArrowLeft, Phone, CheckCircle, Heart, User, Utensils, Pill, ClipboardCheck, ShieldCheck, Home, Brain, Moon, Clock } from "lucide-react";
 import Navbar from "@/components/fcws/Navbar";
 import Footer from "@/components/fcws/Footer";
 import { Button } from "@/components/ui/button";
 import { SERVICE_CATALOG } from "@/lib/fcws";
 
-const ICON_MAP = { User, Utensils, Heart, Pill, ClipboardCheck, ShieldCheck };
+const ICON_MAP = { User, Utensils, Heart, Pill, ClipboardCheck, ShieldCheck, Home, Brain, Moon, Clock };
 
 export default function ServiceDetail() {
   const { slug } = useParams();
@@ -45,11 +45,14 @@ export default function ServiceDetail() {
 
           <div className="care-card mb-8">
             <h2 className="font-heading font-semibold text-xl text-primary mb-4">What's Included</h2>
-            <ul className="space-y-3">
-              {getFeatures(service.slug).map((f, i) => (
+            <ul className="space-y-4">
+              {service.features.map((f, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-foreground">{f}</span>
+                  <div>
+                    <span className="text-sm font-semibold text-primary">{f.label}</span>
+                    <p className="text-sm text-muted-foreground">{f.detail}</p>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -72,16 +75,4 @@ export default function ServiceDetail() {
       <Footer />
     </div>
   );
-}
-
-function getFeatures(slug) {
-  const features = {
-    "personal-care": ["Bathing and showering assistance", "Grooming, hair and oral care", "Dressing and undressing", "Toileting and incontinence care", "Mobility and transfer assistance", "Skin care and comfort measures"],
-    "meal-preparation": ["Nutritious meal planning", "Dietary restriction accommodation", "Grocery shopping for ingredients", "Fresh meal preparation daily", "Hydration monitoring", "Kitchen cleanup and sanitization"],
-    "companionship": ["Friendly conversation and socializing", "Board games and cognitive activities", "Accompaniment to social events", "Reading aloud and shared hobbies", "Walks and light exercise", "Emotional support and companionship"],
-    "medication-reminders": ["Timely medication reminders", "Medication organization", "Coordination with pharmacy", "Health monitoring and logging", "Family communication updates", "Side effect observation"],
-    "light-housekeeping": ["Light housekeeping and sanitization", "Laundry and linen changes", "Grocery shopping and errands", "Plant and pet care", "Organization and clutter management", "Safe environment checks"],
-    "respite-care": ["Temporary relief for family caregivers", "Flexible hourly or overnight care", "Caregiver matching for continuity", "Personal care and companionship", "Safe and supervised environment", "Peace of mind for families"],
-  };
-  return features[slug] || ["Personalized care tailored to individual needs", "Flexible scheduling options", "Trained and screened caregivers", "Ongoing care plan adjustments"];
 }
