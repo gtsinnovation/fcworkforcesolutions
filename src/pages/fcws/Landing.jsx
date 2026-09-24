@@ -35,15 +35,26 @@ export default function Landing() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero */}
-      <section className="bg-primary relative">
+      <section className="bg-background relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 35px, hsl(var(--primary)) 35px, hsl(var(--primary)) 36px)' }}></div>
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 relative">
           {/* Gold vertical divider */}
           <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[3px] bg-accent rounded-full"></div>
+
+          {/* Top Right Corner Badge */}
+          <div className="hidden md:flex absolute top-0 right-0 z-20 bg-primary rounded-bl-2xl px-5 py-3 items-center gap-2.5">
+            <Heart className="w-5 h-5 text-accent" />
+            <div className="leading-tight">
+              <p className="text-xs font-semibold tracking-wide text-primary-foreground">CARING FOR YOUR LOVED ONES</p>
+              <p className="text-xs italic text-accent">When you can't be there.</p>
+            </div>
+          </div>
+
           {/* Left: brand + headline */}
-          <div className="flex flex-col px-6 lg:px-10 py-6 md:py-8 text-primary-foreground md:pr-8">
+          <div className="flex flex-col px-6 lg:px-10 py-6 md:py-8 md:pr-8">
             {/* Top nav row */}
-            <div className="flex items-center justify-between mb-6 md:mb-10">
-              <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between mb-8 md:mb-12">
+              <div className="flex items-center gap-2.5">
                 <div className="bg-white rounded-xl px-2 py-1 shadow-sm">
                   <img
                     src="https://media.base44.com/images/public/6a50456441d8a4a42f7c8722/a8c8279ee_logov2.png"
@@ -51,42 +62,58 @@ export default function Landing() {
                     className="h-12 md:h-14 w-auto object-contain"
                   />
                 </div>
+                <div className="hidden sm:block leading-tight">
+                  <div className="font-heading font-bold text-base text-primary">Family Care</div>
+                  <div className="text-xs text-accent font-semibold tracking-wide">WORKFORCE SOLUTIONS</div>
+                  <div className="text-[10px] text-muted-foreground">Care You Can Trust. Family We Respect.</div>
+                </div>
               </div>
-              <div className="hidden md:flex items-center gap-5 text-xs font-medium text-primary-foreground/70">
+              <div className="hidden md:flex items-center gap-5 text-xs font-medium text-muted-foreground">
                 <Link to="/services" className="hover:text-accent transition-colors">Services</Link>
                 <Link to="/about" className="hover:text-accent transition-colors">About</Link>
                 <Link to="/careers" className="hover:text-accent transition-colors">Careers</Link>
               </div>
-              <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-primary-foreground">
+              <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-primary">
                 <Menu className="w-5 h-5" />
               </button>
             </div>
             {menuOpen && (
-              <div className="md:hidden flex flex-col gap-3 mb-6 text-sm font-medium text-primary-foreground/70">
+              <div className="md:hidden flex flex-col gap-3 mb-6 text-sm font-medium text-muted-foreground">
                 <Link to="/services" onClick={() => setMenuOpen(false)}>Services</Link>
                 <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
                 <Link to="/careers" onClick={() => setMenuOpen(false)}>Careers</Link>
-
               </div>
             )}
 
-            <p className="text-[11px] text-accent font-semibold tracking-wide mb-2">Care You Can Trust. Family We Respect.</p>
-            <h1 className="font-heading font-bold text-lg md:text-xl leading-tight mb-4">
-              PEACE OF MIND EVERY DAY
+            {/* Headline */}
+            <h1 className="font-heading font-bold text-3xl md:text-4xl leading-tight mb-3">
+              <span className="text-primary">PEACE OF MIND</span>
+              <br />
+              <span className="text-accent">EVERY DAY</span>
             </h1>
-            <div className="space-y-3 text-sm text-primary-foreground/75 max-w-md mb-6">
-              <p>You may be far away, but your loved ones can still receive the love, care and support they deserve—right at home in Liberia.</p>
-              <p>FCWS provides trusted, compassionate and professional caregivers so your family members are in <span className="text-accent font-semibold">safe hands</span>, no matter where you are in the world.</p>
-              <p>From daily living assistance to companionship, we treat your family like our own.</p>
+
+            {/* Separator: gold line + heart */}
+            <div className="flex items-center gap-2 mb-5">
+              <div className="w-10 h-0.5 bg-accent"></div>
+              <Heart className="w-4 h-4 text-accent" />
+              <div className="w-10 h-0.5 bg-accent"></div>
             </div>
-            <div className="flex flex-wrap gap-3">
-              <Link to="/request-care" className="bg-accent text-accent-foreground font-semibold rounded-full px-5 py-2 hover:opacity-90 transition text-xs">Request Care</Link>
-              <Link to="/services" className="border border-primary-foreground/30 text-primary-foreground font-semibold rounded-full px-5 py-2 hover:bg-primary-foreground/10 transition text-xs">Our Services</Link>
+
+            {/* Body text */}
+            <p className="text-sm text-muted-foreground max-w-md mb-6 leading-relaxed">
+              You may be far away, but your loved ones can still receive the love, care and support they deserve—right at home in Liberia.
+            </p>
+
+            {/* Call-out box */}
+            <div className="bg-primary text-primary-foreground rounded-2xl px-6 py-5 max-w-md mb-5">
+              <p className="text-sm leading-relaxed">FCWS provides trusted, compassionate and professional caregivers so your family members are in <span className="text-accent font-semibold">safe hands</span>.</p>
             </div>
+
+            <Link to="/request-care" className="bg-accent text-accent-foreground font-semibold rounded-full px-6 py-2.5 hover:opacity-90 transition text-xs w-fit">Request Care</Link>
           </div>
 
-          {/* Right: banner image */}
-          <div className="relative min-h-[280px] md:min-h-[520px] bg-primary">
+          {/* Right: photos only */}
+          <div className="relative min-h-[280px] md:min-h-[520px] bg-background">
             <img
               src="https://media.base44.com/images/public/6a50456441d8a4a42f7c8722/b89ce0a9a_LANDINshort1.jpg"
               alt="FCWS caregiver with senior client"
