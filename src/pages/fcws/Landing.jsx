@@ -44,7 +44,7 @@ export default function Landing() {
           {/* Left: brand + headline */}
           <div className="flex flex-col px-6 lg:px-10 py-6 md:py-8 md:pr-8">
             {/* Top nav row */}
-            <div className="flex items-center justify-end mb-3 md:mb-4">
+            <div className="flex items-center justify-start mb-3 md:mb-4">
               <div className="hidden md:flex items-center gap-5 text-xs font-medium text-muted-foreground">
                 <Link to="/services" className="hover:text-accent transition-colors">Services</Link>
                 <Link to="/about" className="hover:text-accent transition-colors">About</Link>
