@@ -41,26 +41,10 @@ export default function Landing() {
           {/* Gold vertical divider */}
           <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[3px] bg-accent rounded-full"></div>
 
-          {/* Top Right Corner Badge */}
-          <div className="hidden md:flex absolute top-0 right-0 z-20 bg-primary rounded-bl-2xl px-5 py-3 items-center gap-2.5">
-            <Heart className="w-5 h-5 text-accent" />
-            <div className="leading-tight">
-              <p className="text-xs font-semibold tracking-wide text-primary-foreground">CARING FOR YOUR LOVED ONES</p>
-              <p className="text-xs italic text-accent">When you can't be there.</p>
-            </div>
-          </div>
-
           {/* Left: brand + headline */}
           <div className="flex flex-col px-6 lg:px-10 py-6 md:py-8 md:pr-8">
             {/* Top nav row */}
-            <div className="flex items-center justify-between mb-8 md:mb-12">
-              <div className="flex items-center gap-2.5">
-                <div className="hidden sm:block leading-tight">
-                  <div className="font-heading font-bold text-base text-primary">Family Care</div>
-                  <div className="text-xs text-accent font-semibold tracking-wide">WORKFORCE SOLUTIONS</div>
-                  <div className="text-[10px] text-muted-foreground">Care You Can Trust. Family We Respect.</div>
-                </div>
-              </div>
+            <div className="flex items-center justify-end mb-3 md:mb-4">
               <div className="hidden md:flex items-center gap-5 text-xs font-medium text-muted-foreground">
                 <Link to="/services" className="hover:text-accent transition-colors">Services</Link>
                 <Link to="/about" className="hover:text-accent transition-colors">About</Link>
