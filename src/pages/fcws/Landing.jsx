@@ -63,7 +63,7 @@ export default function Landing() {
             )}
 
             {/* Hero image with all branding, headline & call-out text */}
-            <div className="flex items-start mb-6 mt-1">
+            <div className="flex items-start mb-6 mt-4">
               <img
                 src="https://media.base44.com/images/public/6a50456441d8a4a42f7c8722/ad1c9a309_designfc.jpg"
                 alt="Family Care Workforce Solutions — Peace of Mind Every Day"
