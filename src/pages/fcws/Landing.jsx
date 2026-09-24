@@ -78,28 +78,13 @@ export default function Landing() {
               </div>
             )}
 
-            {/* Headline */}
-            <h1 className="font-heading font-bold text-3xl md:text-4xl leading-tight mb-3">
-              <span className="text-primary">PEACE OF MIND</span>
-              <br />
-              <span className="text-accent">EVERY DAY</span>
-            </h1>
-
-            {/* Separator: gold line + heart */}
-            <div className="flex items-center gap-2 mb-5">
-              <div className="w-10 h-0.5 bg-accent"></div>
-              <Heart className="w-4 h-4 text-accent" />
-              <div className="w-10 h-0.5 bg-accent"></div>
-            </div>
-
-            {/* Body text */}
-            <p className="text-sm text-muted-foreground max-w-md mb-6 leading-relaxed">
-              You may be far away, but your loved ones can still receive the love, care and support they deserve—right at home in Liberia.
-            </p>
-
-            {/* Call-out box */}
-            <div className="bg-primary text-primary-foreground rounded-2xl px-6 py-5 max-w-md mb-5">
-              <p className="text-sm leading-relaxed">FCWS provides trusted, compassionate and professional caregivers so your family members are in <span className="text-accent font-semibold">safe hands</span>.</p>
+            {/* Hero image with all branding, headline & call-out text */}
+            <div className="flex-1 flex items-start mb-6">
+              <img
+                src="https://media.base44.com/images/public/6a50456441d8a4a42f7c8722/ad1c9a309_designfc.jpg"
+                alt="Family Care Workforce Solutions — Peace of Mind Every Day"
+                className="w-full h-auto object-contain [object-position:top_left] rounded-lg"
+              />
             </div>
 
             <Link to="/request-care" className="bg-accent text-accent-foreground font-semibold rounded-full px-6 py-2.5 hover:opacity-90 transition text-xs w-fit">Request Care</Link>
