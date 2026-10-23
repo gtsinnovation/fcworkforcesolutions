@@ -36,7 +36,7 @@ export default function Footer() {
                 <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition" aria-label="Facebook">
                   <Facebook className="w-5 h-5 text-accent" />
                 </a>
-                <a href="https://wa.me/231888988796" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition" aria-label="WhatsApp">
+                <a href="https://wa.me/231889887976" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition" aria-label="WhatsApp">
                   <MessageCircle className="w-5 h-5 text-accent fill-accent" />
                 </a>
                 <Link to="/contact" className="hover:opacity-80 transition" aria-label="Email">
