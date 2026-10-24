@@ -101,7 +101,7 @@ export default function TermsOfUse() {
               <br />
               FDA Community, Bernard's Farm, Monrovia, Liberia
               <br />
-              +231 88 898 87976 / +231 76 143 5652
+              +231 88 988 7976 / +231 76 143 5652
             </p>
           </section>
         </div>
