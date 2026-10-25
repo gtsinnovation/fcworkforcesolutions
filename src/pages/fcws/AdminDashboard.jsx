@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import OverviewTab from "@/components/fcws/admin/OverviewTab";
 import CaregiversTab from "@/components/fcws/admin/CaregiversTab";
+import ApplicationsTab from "@/components/fcws/admin/ApplicationsTab";
 import ClientsTab from "@/components/fcws/admin/ClientsTab";
 import SchedulingTab from "@/components/fcws/admin/SchedulingTab";
 import IncidentsTab from "@/components/fcws/admin/IncidentsTab";
@@ -17,6 +18,7 @@ const LEADERSHIP = ["admin", "org_manager"];
 const TABS = [
   { key: "overview", label: "Overview", roles: MANAGEMENT },
   { key: "caregivers", label: "Caregivers", roles: MANAGEMENT },
+  { key: "applications", label: "Applications", roles: MANAGEMENT },
   { key: "clients", label: "Clients", roles: MANAGEMENT },
   { key: "scheduling", label: "Scheduling", roles: MANAGEMENT },
   { key: "incidents", label: "Incidents", roles: MANAGEMENT },
@@ -79,6 +81,7 @@ export default function AdminDashboard() {
 
       {allowedTab === "overview" && <OverviewTab />}
       {allowedTab === "caregivers" && <CaregiversTab />}
+      {allowedTab === "applications" && <ApplicationsTab />}
       {allowedTab === "clients" && <ClientsTab />}
       {allowedTab === "scheduling" && <SchedulingTab />}
       {allowedTab === "incidents" && <IncidentsTab />}

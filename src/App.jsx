@@ -20,6 +20,8 @@ import PrivacyPolicy from '@/pages/fcws/PrivacyPolicy';
 import TermsOfUse from '@/pages/fcws/TermsOfUse';
 import Contact from '@/pages/fcws/Contact';
 import Quiz from '@/pages/fcws/Quiz';
+import ApplyForRole from '@/pages/fcws/ApplyForRole';
+import ApplicationStatus from '@/pages/fcws/ApplicationStatus';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
@@ -69,6 +71,8 @@ const AuthenticatedApp = () => {
       <Route path="/terms-of-use" element={<TermsOfUse />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/quiz" element={<Quiz />} />
+      <Route path="/careers/apply" element={<ApplyForRole />} />
+      <Route path="/application-status" element={<ApplicationStatus />} />
 
       {/* Auth pages */}
       <Route path="/login" element={<Login />} />

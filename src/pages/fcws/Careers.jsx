@@ -4,16 +4,11 @@ import { Briefcase, GraduationCap, ArrowRight, CheckCircle } from "lucide-react"
 import Navbar from "@/components/fcws/Navbar";
 import Footer from "@/components/fcws/Footer";
 import { Button } from "@/components/ui/button";
+import { JOB_POSITIONS } from "@/lib/applications";
 
 const BENEFITS = [
   { icon: GraduationCap, title: "Training", text: "Complete our 18-module certification program — fully paid." },
   { icon: Briefcase, title: "Flexible Schedules", text: "Choose shifts that work with your life — part-time or full-time." },
-];
-
-const POSITIONS = [
-  { title: "Certified Caregiver", type: "Full-time", location: "Care City & Surrounding Areas", description: "Provide personal care, companionship, and household support to clients in their homes." },
-  { title: "Weekend Caregiver", type: "Part-time", location: "Multiple Locations", description: "Support clients with weekend care needs including personal care and companionship." },
-  { title: "Live-in Caregiver", type: "Full-time", location: "Regional", description: "Provide 24/7 care and support for clients requiring continuous assistance." },
 ];
 
 export default function Careers() {
@@ -41,9 +36,14 @@ export default function Careers() {
           })}
         </div>
 
-        <h2 className="font-heading font-bold text-2xl text-primary mb-6">Open Positions</h2>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+          <h2 className="font-heading font-bold text-2xl text-primary">Open Positions</h2>
+          <Link to="/application-status" className="text-sm font-semibold text-secondary hover:underline">
+            Already applied? Track your application status
+          </Link>
+        </div>
         <div className="space-y-4 mb-12">
-          {POSITIONS.map((p, i) => (
+          {JOB_POSITIONS.map((p, i) => (
             <motion.div key={p.title} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} className="care-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-3 mb-1">
@@ -54,7 +54,7 @@ export default function Careers() {
                 <p className="text-xs text-muted-foreground/70">{p.location}</p>
               </div>
               <Button asChild variant="outline" className="shrink-0 border-secondary text-secondary hover:bg-secondary/10">
-                <Link to="/contact">Apply Now <ArrowRight className="w-4 h-4 ml-2" /></Link>
+                <Link to={`/careers/apply?position=${encodeURIComponent(p.title)}`}>Apply Now <ArrowRight className="w-4 h-4 ml-2" /></Link>
               </Button>
             </motion.div>
           ))}

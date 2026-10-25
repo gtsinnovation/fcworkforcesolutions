@@ -1,4 +1,4 @@
-import { LayoutDashboard, Briefcase, Users, CalendarDays, AlertTriangle, FileText, ClipboardList, Clock, Phone, UserCog, Activity } from "lucide-react";
+import { LayoutDashboard, Briefcase, Users, CalendarDays, AlertTriangle, FileText, ClipboardList, ClipboardCheck, Clock, Phone, UserCog, Activity } from "lucide-react";
 
 const MANAGEMENT = ["admin", "org_manager", "staff"];
 const LEADERSHIP = ["admin", "org_manager"];
@@ -6,6 +6,7 @@ const LEADERSHIP = ["admin", "org_manager"];
 const ADMIN_NAV = [
   { label: "Overview", path: "/admin", icon: LayoutDashboard, roles: MANAGEMENT },
   { label: "Caregivers", path: "/admin?tab=caregivers", icon: Briefcase, roles: MANAGEMENT },
+  { label: "Applications", path: "/admin?tab=applications", icon: ClipboardCheck, roles: MANAGEMENT },
   { label: "Clients", path: "/admin?tab=clients", icon: Users, roles: MANAGEMENT },
   { label: "Scheduling", path: "/admin?tab=scheduling", icon: CalendarDays, roles: MANAGEMENT },
   { label: "Incidents", path: "/admin?tab=incidents", icon: AlertTriangle, roles: MANAGEMENT },

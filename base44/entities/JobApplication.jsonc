@@ -1,0 +1,122 @@
+{
+  "name": "JobApplication",
+  "type": "object",
+  "properties": {
+    "fullName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string"
+    },
+    "yearsExperience": {
+      "type": "number"
+    },
+    "experience": {
+      "type": "string"
+    },
+    "lookupCode": {
+      "type": "string"
+    },
+    "applicantUserId": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "reviewing",
+        "shortlisted",
+        "interviewed",
+        "hired",
+        "not_selected"
+      ],
+      "default": "submitted"
+    },
+    "decisionNote": {
+      "type": "string"
+    },
+    "reviewedByName": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "fullName",
+    "email",
+    "phone",
+    "city",
+    "position",
+    "yearsExperience",
+    "experience"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "org_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "staff"
+          }
+        },
+        {
+          "data.email": "{{user.email}}"
+        },
+        {
+          "data.applicantUserId": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "org_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "staff"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "org_manager"
+          }
+        }
+      ]
+    }
+  }
+}
