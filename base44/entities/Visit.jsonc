@@ -19,6 +19,15 @@
     },
     "locale": {
       "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
     }
   },
   "required": [
