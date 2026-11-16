@@ -14,8 +14,11 @@ import PeriodFilter from "./analytics/PeriodFilter";
 import MetricCard from "./analytics/MetricCard";
 import SourceList from "./analytics/SourceList";
 import VisitDetailDialog from "./analytics/VisitDetailDialog";
+import ChannelBreakdown from "./analytics/ChannelBreakdown";
 import {
   PERIODS,
+  CHANNELS,
+  classifyChannel,
   periodStart,
   periodLabel,
   localDateKey,
@@ -38,6 +41,7 @@ const SESSION_COLUMNS = [
   { key: "pages", label: "Pages Viewed" },
   { key: "first", label: "First Seen", render: (r) => formatTimestamp(r.first) },
   { key: "last", label: "Last Active", render: (r) => formatTimestamp(r.last) },
+  { key: "source", label: "Traffic Source", render: (r) => sourceLabel(r.referrer) },
   { key: "country", label: "Country", render: (r) => countryName(r.country) },
 ];
 
@@ -104,7 +108,7 @@ export default function AnalyticsTab() {
     const sessionMap = new Map();
     filtered.forEach((v) => {
       const key = v.sessionId || v.id;
-      const current = sessionMap.get(key) || { id: key, pages: 0, country: "", first: v.created_date, last: v.created_date };
+      const current = sessionMap.get(key) || { id: key, pages: 0, country: "", first: v.created_date, last: v.created_date, referrer: v.referrer || "" };
       current.pages += 1;
       if (v.created_date) {
         if (!current.first || new Date(v.created_date) < new Date(current.first)) current.first = v.created_date;
@@ -114,6 +118,26 @@ export default function AnalyticsTab() {
       sessionMap.set(key, current);
     });
     const sessions = Array.from(sessionMap.values());
+
+    const channelMap = new Map();
+    sessions.forEach((s) => {
+      const channelKey = classifyChannel(s.referrer);
+      const entry = channelMap.get(channelKey) || { ...CHANNELS[channelKey], visitors: 0, sources: new Map() };
+      entry.visitors += 1;
+      const host = sourceLabel(s.referrer);
+      entry.sources.set(host, (entry.sources.get(host) || 0) + 1);
+      channelMap.set(channelKey, entry);
+    });
+    const channels = Array.from(channelMap.values())
+      .map((c) => ({
+        ...c,
+        share: sessions.length ? Math.round((c.visitors / sessions.length) * 100) : 0,
+        sources: Array.from(c.sources.entries())
+          .map(([name, count]) => ({ name, count }))
+          .sort((a, b) => b.count - a.count)
+          .slice(0, 3),
+      }))
+      .sort((a, b) => b.visitors - a.visitors);
 
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
@@ -134,6 +158,7 @@ export default function AnalyticsTab() {
     return {
       filtered,
       sessions,
+      channels,
       todayVisits,
       totalVisits: filtered.length,
       uniqueVisitors: sessions.length,
@@ -283,6 +308,8 @@ export default function AnalyticsTab() {
           </BarChart>
         </ResponsiveContainer>
       </div>
+
+      <ChannelBreakdown rows={stats.channels} label={label} />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="care-card">
