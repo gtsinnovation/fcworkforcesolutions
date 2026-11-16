@@ -182,7 +182,7 @@ export default function Landing() {
               className="inline-flex items-center gap-2 font-heading font-bold text-base md:text-lg text-primary underline decoration-primary/40 decoration-2 underline-offset-4 hover:decoration-primary hover:opacity-80 transition"
             >
               <Share2 className="w-4 h-4 md:w-5 md:h-5 shrink-0" />
-              RECOMMEND FCWS TO OTHER LIBERIANS IN THE DIASPORA
+              Share Family Care Workforce Solutions (FCWS) with your Liberian Friends and Family Abroad
             </button>
           </h2>
           <p className="text-sm text-primary/80 mb-1">Your referral can bring comfort and care to someone you love.</p>
