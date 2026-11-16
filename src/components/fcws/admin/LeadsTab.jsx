@@ -181,6 +181,10 @@ export default function LeadsTab() {
                               <p className="text-foreground">{lead.serviceInterest || "—"}</p>
                             </div>
                             <div>
+                              <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Service Date Range</p>
+                              <p className="text-foreground flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-secondary" /> {lead.serviceDateRange || "Not specified"}</p>
+                            </div>
+                            <div>
                               <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Email</p>
                               <p className="text-foreground flex items-center gap-1"><Mail className="w-3.5 h-3.5 text-secondary" /> {lead.email}</p>
                             </div>

@@ -14,6 +14,19 @@
     "serviceInterest": {
       "type": "string"
     },
+    "serviceDateRange": {
+      "type": "string",
+      "enum": [
+        "1 month or less",
+        "2 month",
+        "Undecided"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "gray"
+      ]
+    },
     "message": {
       "type": "string"
     },

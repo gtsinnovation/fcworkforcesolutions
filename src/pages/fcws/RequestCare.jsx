@@ -29,6 +29,7 @@ export default function RequestCare() {
         email: formData.get("email"),
         phone: formData.get("phone"),
         serviceInterest: formData.get("serviceInterest") || "General inquiry",
+        serviceDateRange: formData.get("serviceDateRange") || "",
         message: formData.get("message") || "",
       };
       await base44.entities.CareLead.create(leadData);
@@ -42,6 +43,7 @@ export default function RequestCare() {
           <p><strong>Email:</strong> ${leadData.email}</p>
           <p><strong>Phone:</strong> ${leadData.phone}</p>
           <p><strong>Service Interest:</strong> ${leadData.serviceInterest}</p>
+          <p><strong>Caregiver Service Date Range:</strong> ${leadData.serviceDateRange || "Not specified"}</p>
           <p><strong>Message:</strong></p>
           <p>${leadData.message.replace(/\n/g, "<br>")}</p>
         `,
@@ -103,6 +105,17 @@ export default function RequestCare() {
                   <SelectContent>
                     {SERVICE_CATALOG.map(s => <SelectItem key={s.slug} value={s.title}>{s.title}</SelectItem>)}
                     <SelectItem value="General inquiry">General Inquiry</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="serviceDateRange">Caregiver Service Date Range</Label>
+                <Select name="serviceDateRange">
+                  <SelectTrigger id="serviceDateRange"><SelectValue placeholder="Select a duration" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1 month or less">1 month or less</SelectItem>
+                    <SelectItem value="2 month">2 month</SelectItem>
+                    <SelectItem value="Undecided">Undecided</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
