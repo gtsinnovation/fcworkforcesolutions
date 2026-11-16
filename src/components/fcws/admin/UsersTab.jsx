@@ -6,8 +6,11 @@ import { cn } from "@/lib/utils";
 import Pagination from "@/components/fcws/admin/Pagination";
 import DeleteButton from "@/components/fcws/admin/DeleteButton";
 import { useToast } from "@/components/ui/use-toast";
+import { logAudit } from "@/lib/audit";
 
 const PAGE_SIZE = 25;
+
+const roleLabel = (value) => ROLES.find((r) => r.value === (value || "client"))?.label || value || "client";
 
 const ROLES = [
   { value: "admin", label: "Admin", icon: Shield },
@@ -44,6 +47,7 @@ export default function UsersTab() {
   async function handleDelete(userId, email) {
     try {
       await base44.entities.User.delete(userId);
+      await logAudit("user.deleted", `Deleted the account ${email}`);
       toast({ title: "User deleted", description: email });
       load();
     } catch (err) {
@@ -54,7 +58,15 @@ export default function UsersTab() {
   async function handleRoleChange(userId, newRole) {
     setUpdatingId(userId);
     try {
+      const target = users.find(u => u.id === userId);
+      const previous = target?.role || "client";
       await base44.entities.User.update(userId, { role: newRole });
+      if (previous !== newRole) {
+        await logAudit(
+          "user.role_changed",
+          `Changed ${target?.email || "an account"} from ${roleLabel(previous)} to ${roleLabel(newRole)}`
+        );
+      }
       load();
     } catch (err) {
       console.error(err);

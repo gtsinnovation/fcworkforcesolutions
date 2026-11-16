@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 import { sendInviteEmail } from "../../shared/resend.ts";
+import { recordAudit } from "../../shared/audit.ts";
 
 const INVITER_ROLES = ["admin", "org_manager", "staff"];
 
@@ -77,6 +78,11 @@ export default async function (req) {
     } catch (error) {
       emailError = error.message;
     }
+
+    await recordAudit(base44, user, {
+      action: "invitation.sent",
+      description: `Invited ${email} as ${LABELS[role]}${emailSent ? "" : " (invite saved, email not delivered)"}`,
+    });
 
     return Response.json({
       status: "invited",

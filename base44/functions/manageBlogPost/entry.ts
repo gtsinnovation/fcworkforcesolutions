@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
+import { recordAudit } from "../../shared/audit.ts";
 
 const AUTHORS = ["admin", "org_manager", "staff"];
 const APPROVERS = ["admin", "org_manager"];
@@ -82,6 +83,10 @@ export default async function (req) {
         reviewNote: String(body.note || "").slice(0, 500),
         publishedDate: approved ? existing.publishedDate || new Date().toISOString() : existing.publishedDate || "",
       });
+      await recordAudit(base44, user, {
+        action: approved ? "blog.approved" : "blog.changes_requested",
+        description: `${approved ? "Published" : "Sent back"} the article “${existing.title}”${approved ? "" : ` — ${String(body.note || "no note").slice(0, 120)}`}`,
+      });
       return Response.json({ status: "ok", post });
     }
 
@@ -97,6 +102,10 @@ export default async function (req) {
         return Response.json({ error: "Only an admin can delete this post" }, { status: 403 });
       }
       await store.delete(existing.id);
+      await recordAudit(base44, user, {
+        action: "blog.deleted",
+        description: `Deleted the article “${existing.title}” (${existing.status})`,
+      });
       return Response.json({ status: "ok" });
     }
 
@@ -184,6 +193,12 @@ export default async function (req) {
       publishedDate: status === "published" ? new Date().toISOString() : "",
       reviewedByName: status === "published" ? user.full_name || user.email : "",
       reviewNote: "",
+    });
+    await recordAudit(base44, user, {
+      action: status === "published" ? "blog.published" : "blog.submitted",
+      description: status === "published"
+        ? `Published the article “${post.title}”`
+        : `Saved the article “${post.title}” as ${status}`,
     });
     return Response.json({ status: "ok", post });
   } catch (error) {

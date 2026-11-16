@@ -7,6 +7,7 @@ import {
   FileText, ShieldCheck, UserCircle, UserPlus, Loader2
 } from "lucide-react";
 import { HIRING_STATUS_LABELS } from "@/lib/fcws";
+import { logAudit } from "@/lib/audit";
 import { useToast } from "@/components/ui/use-toast";
 
 export default function CaregiverDetail() {
@@ -28,6 +29,10 @@ export default function CaregiverDetail() {
     setUpdating(true);
     try {
       const updated = await base44.entities.Employee.update(id, { hiringStatus: status, active });
+      await logAudit(
+        "caregiver.status_changed",
+        `${employee?.fullName || "Caregiver"} set to ${HIRING_STATUS_LABELS[status] || status}${active ? " (active)" : ""}`
+      );
       setEmployee(updated);
     } catch (err) {
       console.error(err);

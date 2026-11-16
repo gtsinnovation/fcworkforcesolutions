@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HIRING_STATUS_LABELS } from "@/lib/fcws";
+import { logAudit } from "@/lib/audit";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import Pagination from "@/components/fcws/admin/Pagination";
@@ -73,7 +74,12 @@ export default function CaregiversTab() {
   }
 
   async function updateStatus(id, status, active) {
+    const emp = employees.find(e => e.id === id);
     await base44.entities.Employee.update(id, { hiringStatus: status, active });
+    await logAudit(
+      "caregiver.status_changed",
+      `${emp?.fullName || "Caregiver"} set to ${HIRING_STATUS_LABELS[status] || status}${active ? " (active)" : ""}`
+    );
     load();
   }
 
