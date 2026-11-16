@@ -18,18 +18,13 @@ export default function Contact() {
     const email = formData.get("email");
     const message = formData.get("message");
     try {
-      await base44.functions.invoke("sendEmail", {
-        to: "fcworkforcesolution@gmail.com",
-        subject: `New Contact Form Message — ${name}`,
-        replyTo: email,
-        html: `
-          <h2>New Contact Form Message</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message.replace(/\n/g, "<br>")}</p>
-        `,
+      const res = await base44.functions.invoke("sendEmail", {
+        type: "contact",
+        name,
+        email,
+        message,
       });
+      if (res.data?.error) throw new Error(res.data.error);
       setSubmitted(true);
     } catch (err) {
       setError("Failed to send message. Please try again or call us directly.");

@@ -13,8 +13,8 @@ export default function ClientPortal() {
   useEffect(() => {
     base44.auth.me().then(u => setUser(u)).catch(() => {});
     Promise.all([
-      base44.entities.ScheduleEntry.list(),
-      base44.entities.Client.list(),
+      base44.entities.ScheduleEntry.list("-date", 100),
+      base44.entities.Client.list("-created_date", 10),
       base44.entities.IncidentReport.list("-created_date", 5),
     ]).then(([sched, clts, incs]) => {
       setSchedules(sched);
@@ -50,8 +50,8 @@ export default function ClientPortal() {
           <div className="font-heading font-bold text-2xl text-primary">{upcoming.length}</div>
         </div>
         <div className="care-card">
-          <div className="flex items-center gap-3 mb-2"><Users className="w-5 h-5 text-secondary" /><span className="text-sm text-muted-foreground">Care Team</span></div>
-          <div className="font-heading font-bold text-2xl text-primary">{clients.length}</div>
+          <div className="flex items-center gap-3 mb-2"><Users className="w-5 h-5 text-secondary" /><span className="text-sm text-muted-foreground">Visits Scheduled</span></div>
+          <div className="font-heading font-bold text-2xl text-primary">{schedules.length}</div>
         </div>
       </div>
 

@@ -28,6 +28,13 @@ Deno.serve(async (req) => {
     const invite = pending[0];
     const intendedRole = invite.intendedRole;
 
+    // Whitelist: an invite can never grant admin or an unknown role. Admin
+    // access is only ever set deliberately from the Users tab.
+    const ALLOWED_ROLES = ["org_manager", "staff", "caregiver", "onboarding", "client", "user"];
+    if (!ALLOWED_ROLES.includes(intendedRole)) {
+      return Response.json({ error: "Invalid invited role" }, { status: 400 });
+    }
+
     // Apply the intended role to the current user (service role is required to set User.role).
     await base44.asServiceRole.entities.User.update(user.id, { role: intendedRole });
     await base44.asServiceRole.entities.PendingInvite.delete(invite.id);

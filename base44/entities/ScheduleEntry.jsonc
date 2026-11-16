@@ -5,6 +5,10 @@
     "clientId": {
       "type": "string"
     },
+    "clientEmail": {
+      "type": "string",
+      "description": "Family login email copied from the client record so the family can see their own visits"
+    },
     "employeeId": {
       "type": "string"
     },
@@ -73,12 +77,10 @@
           }
         },
         {
-          "user_condition": {
-            "role": "client"
-          }
+          "data.employeeEmail": "{{user.email}}"
         },
         {
-          "data.employeeEmail": "{{user.email}}"
+          "data.clientEmail": "{{user.email}}"
         }
       ]
     },

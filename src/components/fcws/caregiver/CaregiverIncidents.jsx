@@ -24,10 +24,13 @@ export default function CaregiverIncidents({ user, clients, incidents, onInciden
     const form = e.currentTarget;
     const formData = new FormData(form);
     try {
+      const clientName = formData.get("clientName");
+      const clientRecord = clients.find(c => c.fullName === clientName);
       await base44.entities.IncidentReport.create({
         reportedByUserId: user?.id || "",
         reportedByName: user?.full_name || user?.email || "",
-        clientName: formData.get("clientName"),
+        clientName,
+        clientEmail: clientRecord?.email || "",
         incidentDateTime: formData.get("incidentDateTime"),
         narrative: formData.get("narrative"),
         severity: formData.get("severity") || "Low",

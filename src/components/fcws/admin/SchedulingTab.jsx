@@ -85,8 +85,10 @@ export default function SchedulingTab() {
     const formData = new FormData(form);
     try {
       const emp = employees.find(e => e.id === formData.get("employeeId"));
+      const client = clients.find(c => c.id === formData.get("clientId"));
       await base44.entities.ScheduleEntry.create({
         clientId: formData.get("clientId"),
+        clientEmail: client?.email || "",
         employeeId: formData.get("employeeId"),
         employeeEmail: emp?.email || "",
         service: formData.get("service"),

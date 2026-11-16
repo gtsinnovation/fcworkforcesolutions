@@ -43,6 +43,7 @@ export default function ClientsTab() {
       const services = formData.getAll("services");
       await base44.entities.Client.create({
         fullName: formData.get("fullName"),
+        email: String(formData.get("email") || "").trim().toLowerCase(),
         emergencyContact: {
           name: formData.get("emName"),
           relationship: formData.get("emRelationship"),
@@ -100,6 +101,10 @@ export default function ClientsTab() {
                 ))}
               </div>
             </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="email">Family Email — grants this family the portal</Label>
+            <Input id="email" name="email" type="email" placeholder="family@example.com" />
           </div>
           <div className="border-t border-border pt-4">
             <h4 className="font-semibold text-sm text-primary mb-3">Emergency Contact</h4>
@@ -173,6 +178,12 @@ export default function ClientsTab() {
                   <div>
                     <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Enrolled</p>
                     <p className="text-foreground flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> {c.created_date ? new Date(c.created_date).toLocaleDateString() : "—"}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Family Email (portal)</p>
+                    <p className="text-foreground flex items-center gap-1 break-all">
+                      <Mail className="w-3.5 h-3.5 text-secondary shrink-0" /> {c.email || "Not linked yet"}
+                    </p>
                   </div>
                   {c.emergencyContact && (
                     <div className="sm:col-span-2">

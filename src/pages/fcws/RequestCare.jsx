@@ -40,26 +40,12 @@ export default function RequestCare() {
     setSubmitting(true);
     setError("");
     try {
-      await base44.entities.CareLead.create(leadData);
-      await base44.functions.invoke("sendEmail", {
-        to: "fcworkforcesolution@gmail.com",
-        subject: `New Care Request — ${leadData.fullName}`,
-        replyTo: leadData.email,
-        html: `
-          <h2>New Care Request</h2>
-          <p><strong>Name:</strong> ${leadData.fullName}</p>
-          <p><strong>Email:</strong> ${leadData.email}</p>
-          <p><strong>Phone:</strong> ${leadData.phone}</p>
-          <p><strong>Service Interest:</strong> ${leadData.serviceInterest}</p>
-          <p><strong>Caregiver Service Date Range:</strong> ${leadData.serviceDateRange || "Not specified"}</p>
-          <p><strong>Message:</strong></p>
-          <p>${leadData.message.replace(/\n/g, "<br>")}</p>
-        `,
-      }).catch(() => {});
+      const res = await base44.functions.invoke("submitCareRequest", leadData);
+      if (res.data?.error) throw new Error(res.data.error);
       setSubmitted(true);
       formRef.current?.reset();
     } catch (err) {
-      setError(err.message || "Something went wrong. Please try again.");
+      setError(err?.response?.data?.error || err.message || "Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
     }

@@ -27,12 +27,17 @@ export default function CaregiverDashboard() {
       setSchedules(scheds);
 
       const clientIds = [...new Set(scheds.map(s => s.clientId))];
-      const allClients = await base44.entities.Client.list();
-      const myClients = allClients.filter(c => clientIds.includes(c.id));
-      setClients(myClients);
-
-      const noteList = await base44.entities.CareNote.list("-created_date", 50);
-      setNotes(noteList.filter(n => clientIds.includes(n.clientId)));
+      if (clientIds.length) {
+        setClients(await base44.entities.Client.filter({ id: { $in: clientIds } }));
+        const notePage = await base44.entities.CareNote.filter(
+          { clientId: { $in: clientIds } },
+          { sort: "-created_date", limit: 50 }
+        );
+        setNotes(notePage.items || notePage);
+      } else {
+        setClients([]);
+        setNotes([]);
+      }
 
       const incs = await base44.entities.IncidentReport.filter({ reportedByUserId: u.id || "" });
       setIncidents(incs);

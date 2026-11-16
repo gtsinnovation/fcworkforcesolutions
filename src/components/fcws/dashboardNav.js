@@ -1,4 +1,4 @@
-import { LayoutDashboard, Briefcase, Users, CalendarDays, AlertTriangle, FileText, ClipboardList, ClipboardCheck, Clock, Phone, UserCog, Activity } from "lucide-react";
+import { LayoutDashboard, Briefcase, Users, CalendarDays, AlertTriangle, FileText, ClipboardList, ClipboardCheck, UserCog, Activity } from "lucide-react";
 
 const MANAGEMENT = ["admin", "org_manager", "staff"];
 const LEADERSHIP = ["admin", "org_manager"];
@@ -16,16 +16,14 @@ const ADMIN_NAV = [
   { label: "Users", path: "/admin?tab=users", icon: UserCog, roles: LEADERSHIP },
 ];
 
+// Each entry must point at a real route — schedule details and contact live on
+// the dashboard page itself, so they are not separate navigation items.
 const CAREGIVER_NAV = [
   { label: "Dashboard", path: "/caregiver", icon: LayoutDashboard, roles: ["caregiver", "onboarding", "admin", "org_manager"] },
-  { label: "Schedule", path: "/caregiver", icon: CalendarDays, roles: ["caregiver", "onboarding", "admin", "org_manager"] },
-  { label: "File Incident", path: "/caregiver", icon: AlertTriangle, roles: ["caregiver", "onboarding", "admin", "org_manager"] },
 ];
 
 const CLIENT_NAV = [
   { label: "Family Portal", path: "/portal", icon: LayoutDashboard, roles: ["client", "admin", "org_manager"] },
-  { label: "Schedule", path: "/portal", icon: CalendarDays, roles: ["client", "admin", "org_manager"] },
-  { label: "Contact Us", path: "/portal", icon: Phone, roles: ["client", "admin", "org_manager"] },
 ];
 
 export { ADMIN_NAV, CAREGIVER_NAV, CLIENT_NAV };

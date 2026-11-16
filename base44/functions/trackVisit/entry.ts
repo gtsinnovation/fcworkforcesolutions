@@ -38,6 +38,19 @@ export default async function(req) {
       if (/^[A-Za-z]{2}$/.test(regionCode)) country = regionCode.toUpperCase();
     }
 
+    // Throttle: ignore a repeat view of the same page from the same session
+    // within 5 minutes, so refreshes and bots cannot flood the table.
+    if (sessionId) {
+      const recent = await base44.asServiceRole.entities.Visit.filter(
+        { sessionId, path },
+        { sort: "-created_date", limit: 1 }
+      );
+      const lastVisit = recent.items[0];
+      if (lastVisit && Date.now() - new Date(lastVisit.created_date).getTime() < 5 * 60 * 1000) {
+        return Response.json({ status: "skipped" });
+      }
+    }
+
     await base44.asServiceRole.entities.Visit.create({
       path,
       page,

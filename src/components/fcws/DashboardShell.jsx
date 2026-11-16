@@ -37,7 +37,7 @@ export default function DashboardShell({ navItems, title, roleLabel }) {
             const Icon = item.icon;
             return (
               <Link
-                key={item.path}
+                key={item.label}
                 to={item.path}
                 onClick={() => setSidebarOpen(false)}
                 className={cn(

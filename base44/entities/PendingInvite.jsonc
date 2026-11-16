@@ -39,11 +39,6 @@
           "user_condition": {
             "role": "org_manager"
           }
-        },
-        {
-          "user_condition": {
-            "role": "staff"
-          }
         }
       ]
     },
