@@ -36,3 +36,16 @@ export function formatPostDate(value) {
 export function postUrl(slug) {
   return `/caregiving-insight/${slug}`;
 }
+
+export function absolutePostUrl(slug) {
+  return `${window.location.origin}${postUrl(slug)}`;
+}
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+// A post counts as "today" while it is less than 24 hours old.
+export function isFreshPost(post) {
+  const stamp = post?.publishedDate || post?.created_date;
+  const time = stamp ? new Date(stamp).getTime() : 0;
+  return Boolean(time) && Date.now() - time < DAY_MS;
+}

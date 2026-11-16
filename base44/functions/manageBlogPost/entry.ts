@@ -12,6 +12,35 @@ const slugify = (value) =>
     .replace(/-+/g, "-")
     .slice(0, 80);
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+const normalizeText = (value) =>
+  String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+// Posts must be unique: refuse a title or body already submitted in the last 24 hours
+const findDuplicate = async (store, { title, content, excludeId }) => {
+  const page = await store.list("-created_date", 50);
+  const items = Array.isArray(page) ? page : page?.items || [];
+  const since = Date.now() - DAY_MS;
+  const wantedTitle = normalizeText(title);
+  const wantedContent = normalizeText(content);
+  return (
+    items.find(
+      (item) =>
+        item.id !== excludeId &&
+        new Date(item.created_date).getTime() >= since &&
+        (normalizeText(item.title) === wantedTitle ||
+          (wantedContent.length > 0 && normalizeText(item.content) === wantedContent))
+    ) || null
+  );
+};
+
+const duplicateMessage =
+  "This article matches one submitted in the last 24 hours. Please make the title and content unique.";
+
 const plainText = (value) =>
   String(value || "")
     .replace(/[#*_>`\-\[\]()]/g, " ")
@@ -105,6 +134,13 @@ export default async function (req) {
         return Response.json({ error: "Published posts can only be edited by an admin" }, { status: 403 });
       }
 
+      const duplicate = await findDuplicate(store, {
+        title,
+        content: fields.content,
+        excludeId: existing.id,
+      });
+      if (duplicate) return Response.json({ error: duplicateMessage }, { status: 409 });
+
       const nextStatus = isApprover
         ? safeStatus
         : existing.status === "rejected"
@@ -123,6 +159,11 @@ export default async function (req) {
       });
       return Response.json({ status: "ok", post });
     }
+
+    const duplicate = await findDuplicate(store, { title, content: fields.content }).catch((e) => {
+      throw new Error(`duplicate check failed: ${e.message}`);
+    });
+    if (duplicate) return Response.json({ error: duplicateMessage }, { status: 409 });
 
     const base = slugify(title) || "post";
     let slug = base;

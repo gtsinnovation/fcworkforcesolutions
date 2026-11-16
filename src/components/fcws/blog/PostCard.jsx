@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Clock, BookOpen } from "lucide-react";
 import { Image } from "@/components/ui/image";
-import { CATEGORY_STYLES, readingTime, formatPostDate, postUrl } from "@/lib/blog";
+import { CATEGORY_STYLES, readingTime, formatPostDate, postUrl, isFreshPost } from "@/lib/blog";
+import FreshTag from "@/components/fcws/blog/FreshTag";
 
 export default function PostCard({ post }) {
   const categoryClass = CATEGORY_STYLES[post.category] || "bg-muted text-muted-foreground";
@@ -25,9 +26,12 @@ export default function PostCard({ post }) {
         )}
       </div>
       <div className="flex flex-col flex-1 p-5">
-        <span className={`self-start text-[11px] font-semibold px-2.5 py-1 rounded-full mb-3 ${categoryClass}`}>
-          {post.category || "Caregiving Tips"}
-        </span>
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${categoryClass}`}>
+            {post.category || "Caregiving Tips"}
+          </span>
+          {isFreshPost(post) && <FreshTag />}
+        </div>
         <h3 className="font-heading font-semibold text-lg text-primary leading-snug mb-2 group-hover:text-secondary transition-colors">
           {post.title}
         </h3>

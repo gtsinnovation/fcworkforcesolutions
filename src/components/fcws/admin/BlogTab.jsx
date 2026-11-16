@@ -4,7 +4,9 @@ import { Plus, Pencil, Trash2, Check, X, Eye, Loader2, BookOpen, Send } from "lu
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import BlogPostForm from "./BlogPostForm";
-import { POST_STATUS, CATEGORY_STYLES, formatPostDate, postUrl } from "@/lib/blog";
+import FreshTag from "@/components/fcws/blog/FreshTag";
+import CopyLinkButton from "@/components/fcws/blog/CopyLinkButton";
+import { POST_STATUS, CATEGORY_STYLES, formatPostDate, postUrl, isFreshPost } from "@/lib/blog";
 
 const FILTERS = [
   { key: "all", label: "All" },
@@ -163,6 +165,7 @@ export default function BlogTab() {
                       <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${CATEGORY_STYLES[post.category] || "bg-muted text-muted-foreground"}`}>
                         {post.category}
                       </span>
+                      {isFreshPost(post) && <FreshTag />}
                     </div>
                     <h3 className="font-heading font-semibold text-primary truncate">{post.title}</h3>
                     <p className="text-xs text-muted-foreground mt-1">
@@ -176,11 +179,14 @@ export default function BlogTab() {
 
                   <div className="flex flex-wrap items-center gap-2 shrink-0">
                     {post.status === "published" && (
-                      <Button asChild size="sm" variant="ghost">
-                        <Link to={postUrl(post.slug)} target="_blank">
-                          <Eye className="w-4 h-4" /> View
-                        </Link>
-                      </Button>
+                      <>
+                        <Button asChild size="sm" variant="ghost">
+                          <Link to={postUrl(post.slug)} target="_blank">
+                            <Eye className="w-4 h-4" /> View
+                          </Link>
+                        </Button>
+                        <CopyLinkButton slug={post.slug} />
+                      </>
                     )}
                     {isApprover && ["pending", "draft"].includes(post.status) && (
                       <Button

@@ -4,9 +4,12 @@ import { ArrowLeft, Clock, CalendarDays } from "lucide-react";
 import Navbar from "@/components/fcws/Navbar";
 import Footer from "@/components/fcws/Footer";
 import PostBody from "@/components/fcws/blog/PostBody";
+import FreshTag from "@/components/fcws/blog/FreshTag";
+import ShareBar from "@/components/fcws/blog/ShareBar";
 import { Image } from "@/components/ui/image";
 import { base44 } from "@/api/base44Client";
-import { CATEGORY_STYLES, readingTime, formatPostDate, postUrl } from "@/lib/blog";
+import { CATEGORY_STYLES, readingTime, formatPostDate, postUrl, absolutePostUrl, isFreshPost } from "@/lib/blog";
+import { applyPostMeta } from "@/lib/postMeta";
 
 export default function InsightPost() {
   const { slug } = useParams();
@@ -37,6 +40,17 @@ export default function InsightPost() {
     return () => meta.remove();
   }, [loading, post]);
 
+  // Social previews: title, description, image and canonical link for this article
+  useEffect(() => {
+    if (!post) return;
+    return applyPostMeta({
+      title: `${post.title} | Caregiving Insight`,
+      description: post.excerpt || String(post.content || "").slice(0, 160),
+      image: post.coverImage || "",
+      url: absolutePostUrl(post.slug),
+    });
+  }, [post]);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -66,13 +80,16 @@ export default function InsightPost() {
           </div>
         ) : (
           <article>
-            <span
-              className={`inline-block text-[11px] font-semibold px-2.5 py-1 rounded-full mb-4 ${
-                CATEGORY_STYLES[post.category] || "bg-muted text-muted-foreground"
-              }`}
-            >
-              {post.category || "Caregiving Tips"}
-            </span>
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <span
+                className={`inline-block text-[11px] font-semibold px-2.5 py-1 rounded-full ${
+                  CATEGORY_STYLES[post.category] || "bg-muted text-muted-foreground"
+                }`}
+              >
+                {post.category || "Caregiving Tips"}
+              </span>
+              {isFreshPost(post) && <FreshTag />}
+            </div>
             <h1 className="font-heading font-bold text-2xl md:text-3xl text-primary leading-tight mb-4">
               {post.title}
             </h1>
@@ -99,6 +116,8 @@ export default function InsightPost() {
             )}
 
             <PostBody content={post.content} />
+
+            <ShareBar title={post.title} url={absolutePostUrl(post.slug)} />
           </article>
         )}
 
