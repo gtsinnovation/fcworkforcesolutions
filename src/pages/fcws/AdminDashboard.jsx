@@ -79,7 +79,7 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      {allowedTab === "overview" && <OverviewTab />}
+      {allowedTab === "overview" && <OverviewTab onNavigate={setTab} />}
       {allowedTab === "caregivers" && <CaregiversTab />}
       {allowedTab === "applications" && <ApplicationsTab />}
       {allowedTab === "clients" && <ClientsTab />}

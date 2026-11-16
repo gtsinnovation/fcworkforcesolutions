@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { Users, Briefcase, CalendarDays, AlertTriangle, TrendingUp, Clock } from "lucide-react";
 
-export default function OverviewTab() {
+export default function OverviewTab({ onNavigate }) {
   const [stats, setStats] = useState({ employees: 0, clients: 0, schedules: 0, incidents: 0, pendingIncidents: 0 });
   const [recentActivity, setRecentActivity] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [emptyCard, setEmptyCard] = useState(null);
 
   useEffect(() => {
     Promise.all([
@@ -30,11 +31,16 @@ export default function OverviewTab() {
   }, []);
 
   const cards = [
-    { label: "Total Caregivers", value: stats.employees, icon: Briefcase, color: "text-secondary bg-secondary/10" },
-    { label: "Active Clients", value: stats.clients, icon: Users, color: "text-blue-600 bg-blue-100" },
-    { label: "Scheduled Visits", value: stats.schedules, icon: CalendarDays, color: "text-accent-foreground bg-accent" },
-    { label: "Incident Reports", value: stats.incidents, icon: AlertTriangle, color: "text-destructive bg-destructive/10" },
+    { label: "Total Caregivers", value: stats.employees, icon: Briefcase, color: "text-secondary bg-secondary/10", tab: "caregivers", empty: "No caregivers on record yet." },
+    { label: "Active Clients", value: stats.clients, icon: Users, color: "text-blue-600 bg-blue-100", tab: "clients", empty: "No clients on record yet." },
+    { label: "Scheduled Visits", value: stats.schedules, icon: CalendarDays, color: "text-accent-foreground bg-accent", tab: "scheduling", empty: "No visits scheduled yet." },
+    { label: "Incident Reports", value: stats.incidents, icon: AlertTriangle, color: "text-destructive bg-destructive/10", tab: "incidents", empty: "No incident reports filed yet." },
   ];
+
+  const handleCardClick = (card) => {
+    if (card.value > 0) onNavigate?.(card.tab);
+    else setEmptyCard(emptyCard === card.label ? null : card.label);
+  };
 
   if (loading) {
     return <div className="flex justify-center py-12"><div className="w-8 h-8 border-4 border-muted border-t-secondary rounded-full animate-spin" /></div>;
@@ -46,7 +52,12 @@ export default function OverviewTab() {
         {cards.map(card => {
           const Icon = card.icon;
           return (
-            <div key={card.label} className="care-card">
+            <button
+              key={card.label}
+              type="button"
+              onClick={() => handleCardClick(card)}
+              className="care-card w-full text-left hover:border-accent hover:shadow-md transition-all cursor-pointer"
+            >
               <div className="flex items-center justify-between mb-3">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${card.color}`}>
                   <Icon className="w-5 h-5" />
@@ -54,7 +65,14 @@ export default function OverviewTab() {
               </div>
               <div className="font-heading font-bold text-3xl text-primary">{card.value}</div>
               <div className="text-sm text-muted-foreground">{card.label}</div>
-            </div>
+              {card.value > 0 ? (
+                <p className="text-[11px] font-semibold text-accent mt-2">View details →</p>
+              ) : (
+                <p className={`text-[11px] mt-2 ${emptyCard === card.label ? "font-semibold text-foreground" : "text-muted-foreground"}`}>
+                  {emptyCard === card.label ? card.empty : "No data yet"}
+                </p>
+              )}
+            </button>
           );
         })}
       </div>

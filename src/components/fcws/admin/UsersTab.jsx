@@ -28,6 +28,8 @@ export default function UsersTab() {
   const [expandedId, setExpandedId] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [roleFilter, setRoleFilter] = useState(null);
+  const [emptyRole, setEmptyRole] = useState(null);
   const { toast } = useToast();
 
   function load() {
@@ -65,9 +67,20 @@ export default function UsersTab() {
     return <div className="flex justify-center py-12"><div className="w-8 h-8 border-4 border-muted border-t-secondary rounded-full animate-spin" /></div>;
   }
 
-  const totalPages = Math.ceil(users.length / PAGE_SIZE);
+  const visibleUsers = roleFilter ? users.filter(u => (u.role || "client") === roleFilter) : users;
+  const totalPages = Math.ceil(visibleUsers.length / PAGE_SIZE);
   const safePage = Math.min(currentPage, Math.max(0, totalPages - 1));
-  const pagedUsers = users.slice(safePage * PAGE_SIZE, (safePage + 1) * PAGE_SIZE);
+  const pagedUsers = visibleUsers.slice(safePage * PAGE_SIZE, (safePage + 1) * PAGE_SIZE);
+
+  const handleRoleCard = (role, count) => {
+    if (count > 0) {
+      setRoleFilter(roleFilter === role ? null : role);
+      setCurrentPage(0);
+      setExpandedId(null);
+    } else {
+      setEmptyRole(emptyRole === role ? null : role);
+    }
+  };
 
   return (
     <div>
@@ -80,17 +93,43 @@ export default function UsersTab() {
         <div className="grid gap-3 sm:grid-cols-3 text-center">
           {ROLES.map(r => {
             const Icon = r.icon;
-            const count = users.filter(u => u.role === r.value).length;
+            const count = users.filter(u => (u.role || "client") === r.value).length;
             return (
-              <div key={r.value} className="p-3 rounded-lg bg-muted/40">
+              <button
+                key={r.value}
+                type="button"
+                onClick={() => handleRoleCard(r.value, count)}
+                className={cn(
+                  "p-3 rounded-lg bg-muted/40 transition-all cursor-pointer hover:bg-muted hover:shadow-sm",
+                  roleFilter === r.value && "ring-2 ring-secondary"
+                )}
+              >
                 <Icon className="w-5 h-5 mx-auto mb-1 text-secondary" />
                 <div className="font-heading font-bold text-lg text-primary">{count}</div>
                 <div className="text-xs text-muted-foreground">{r.label}</div>
-              </div>
+                {count > 0 ? (
+                  <div className="text-[11px] font-semibold text-accent mt-1">View users →</div>
+                ) : (
+                  <div className={`text-[11px] mt-1 ${emptyRole === r.value ? "font-semibold text-foreground" : "text-muted-foreground"}`}>
+                    {emptyRole === r.value ? "No users with this role yet." : "No data yet"}
+                  </div>
+                )}
+              </button>
             );
           })}
         </div>
       </div>
+
+      {roleFilter && (
+        <div className="flex items-center justify-between gap-3 mb-4 text-sm">
+          <p className="text-muted-foreground">
+            Showing <span className="font-semibold text-foreground">{ROLES.find(r => r.value === roleFilter)?.label}</span> users ({visibleUsers.length})
+          </p>
+          <button type="button" onClick={() => setRoleFilter(null)} className="font-semibold text-secondary hover:underline">
+            Show all users
+          </button>
+        </div>
+      )}
 
       <div className="space-y-3">
         {pagedUsers.map(u => {
@@ -150,7 +189,7 @@ export default function UsersTab() {
         })}
       </div>
 
-      <Pagination currentPage={safePage} totalPages={totalPages} onPageChange={setCurrentPage} totalItems={users.length} pageSize={PAGE_SIZE} />
+      <Pagination currentPage={safePage} totalPages={totalPages} onPageChange={setCurrentPage} totalItems={visibleUsers.length} pageSize={PAGE_SIZE} />
     </div>
   );
 }
