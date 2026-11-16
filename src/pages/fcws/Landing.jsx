@@ -71,6 +71,10 @@ export default function Landing() {
               />
             </div>
 
+            <h1 className="font-heading font-bold text-sm md:text-base text-primary leading-snug mb-4 max-w-sm">
+              Trusted home care in Liberia for Liberian families in the diaspora
+            </h1>
+
             <Link to="/request-care" className="bg-accent text-accent-foreground font-semibold rounded-full px-6 py-2.5 hover:opacity-90 transition text-xs w-fit">Request Care</Link>
           </div>
 
