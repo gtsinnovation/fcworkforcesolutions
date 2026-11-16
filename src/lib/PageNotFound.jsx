@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
@@ -6,6 +7,18 @@ import { useQuery } from '@tanstack/react-query';
 export default function PageNotFound({}) {
     const location = useLocation();
     const pageName = location.pathname.substring(1);
+
+    // Tell crawlers this address really is missing, so search engines drop it
+    // instead of indexing a "not found" screen.
+    useEffect(() => {
+        const tag = document.createElement('meta');
+        tag.name = 'prerender-status-code';
+        tag.content = '404';
+        document.head.appendChild(tag);
+        return () => {
+            if (tag.parentNode) tag.parentNode.removeChild(tag);
+        };
+    }, []);
 
     const { data: authData, isFetched } = useQuery({
         queryKey: ['user'],

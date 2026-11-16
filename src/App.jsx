@@ -28,6 +28,7 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
+import Mfa from '@/pages/Mfa';
 import AdminDashboard from '@/pages/fcws/AdminDashboard';
 import CaregiverDetail from '@/pages/fcws/CaregiverDetail';
 import CaregiverDashboard from '@/pages/fcws/CaregiverDashboard';
