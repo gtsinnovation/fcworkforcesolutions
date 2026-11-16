@@ -1,9 +1,9 @@
 import { PERIODS } from "@/lib/analytics";
 
-export default function PeriodFilter({ value, onChange }) {
+export default function PeriodFilter({ value, onChange, periods = PERIODS }) {
   return (
     <div className="flex flex-wrap gap-2">
-      {PERIODS.map((p) => {
+      {periods.map((p) => {
         const active = p.key === value;
         return (
           <button

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { Users, Briefcase, CalendarDays, AlertTriangle, TrendingUp, Clock } from "lucide-react";
+import OverviewCharts from "./OverviewCharts";
 
 export default function OverviewTab({ onNavigate }) {
   const [stats, setStats] = useState({ employees: 0, clients: 0, schedules: 0, incidents: 0, pendingIncidents: 0 });
@@ -85,6 +86,8 @@ export default function OverviewTab({ onNavigate }) {
           </p>
         </div>
       )}
+
+      <OverviewCharts onNavigate={onNavigate} />
 
       <div className="care-card">
         <h3 className="font-heading font-semibold text-lg text-primary mb-4 flex items-center gap-2">
