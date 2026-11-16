@@ -1,0 +1,152 @@
+{
+  "name": "BlogPost",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly identifier used by the public Caregiving Insight page"
+    },
+    "excerpt": {
+      "type": "string",
+      "maxLength": 400
+    },
+    "content": {
+      "type": "string",
+      "description": "Article body written in Markdown"
+    },
+    "coverImage": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Caregiving Tips",
+        "Family Support",
+        "Hiring & Careers",
+        "Company News"
+      ],
+      "enumColors": [
+        "blue",
+        "green",
+        "purple",
+        "gray"
+      ],
+      "default": "Caregiving Tips"
+    },
+    "authorName": {
+      "type": "string"
+    },
+    "authorEmail": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending",
+        "published",
+        "rejected"
+      ],
+      "enumColors": [
+        "gray",
+        "yellow",
+        "green",
+        "red"
+      ],
+      "default": "draft",
+      "description": "Only an admin may publish: staff posts wait in pending until reviewed"
+    },
+    "reviewNote": {
+      "type": "string",
+      "description": "Admin feedback when changes are requested"
+    },
+    "reviewedByName": {
+      "type": "string"
+    },
+    "publishedDate": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000
+    }
+  },
+  "required": [
+    "title",
+    "content"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "org_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "staff"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.status": "published"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "org_manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "staff"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "org_manager"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "org_manager"
+          }
+        }
+      ]
+    }
+  }
+}

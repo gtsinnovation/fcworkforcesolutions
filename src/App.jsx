@@ -20,6 +20,8 @@ import PrivacyPolicy from '@/pages/fcws/PrivacyPolicy';
 import TermsOfUse from '@/pages/fcws/TermsOfUse';
 import Contact from '@/pages/fcws/Contact';
 import Quiz from '@/pages/fcws/Quiz';
+import CaregivingInsight from '@/pages/fcws/CaregivingInsight';
+import InsightPost from '@/pages/fcws/InsightPost';
 import ApplyForRole from '@/pages/fcws/ApplyForRole';
 import ApplicationStatus from '@/pages/fcws/ApplicationStatus';
 import Login from '@/pages/Login';
@@ -66,6 +68,8 @@ const AuthenticatedApp = () => {
       <Route path="/services/:slug" element={<ServiceDetail />} />
       <Route path="/about" element={<About />} />
       <Route path="/careers" element={<Careers />} />
+      <Route path="/caregiving-insight" element={<CaregivingInsight />} />
+      <Route path="/caregiving-insight/:slug" element={<InsightPost />} />
       <Route path="/request-care" element={<RequestCare />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />

@@ -85,6 +85,8 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-[11px] text-accent-foreground/80">
           <span>© {new Date().getFullYear()} Family Care Workforce Solutions. All rights reserved.</span>
           <span className="hidden sm:inline">·</span>
+          <Link to="/caregiving-insight" className="hover:underline">Caregiving Insight</Link>
+          <span className="hidden sm:inline">·</span>
           <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
           <span className="hidden sm:inline">·</span>
           <Link to="/terms-of-use" className="hover:underline">Terms of Use</Link>

@@ -45,6 +45,7 @@ export default function Navbar() {
           <Link to="/services" className="hover:text-primary transition-colors">Services</Link>
           <Link to="/careers" className="hover:text-primary transition-colors">Careers</Link>
           <Link to="/about" className="hover:text-primary transition-colors">About</Link>
+          <Link to="/caregiving-insight" className="hover:text-primary transition-colors">Insight</Link>
         </div>
         <div className="flex items-center gap-3">
           {user ? (
