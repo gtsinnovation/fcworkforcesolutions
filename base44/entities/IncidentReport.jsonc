@@ -11,6 +11,10 @@
     "clientName": {
       "type": "string"
     },
+    "clientEmail": {
+      "type": "string",
+      "description": "Family login email copied from the client record so only that family sees the report"
+    },
     "incidentDateTime": {
       "type": "string"
     },
@@ -92,12 +96,10 @@
           }
         },
         {
-          "user_condition": {
-            "role": "client"
-          }
+          "data.reportedByUserId": "{{user.id}}"
         },
         {
-          "data.reportedByUserId": "{{user.id}}"
+          "data.clientEmail": "{{user.email}}"
         }
       ]
     },
