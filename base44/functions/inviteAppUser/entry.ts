@@ -55,6 +55,14 @@ export default async function (req) {
     if (role === "admin" && user.role !== "admin") {
       return Response.json({ error: "Only an admin can invite an administrator." }, { status: 403 });
     }
+    // Elevated roles (manager, staff) grant dashboard access, so only a full
+    // admin may hand them out — staff cannot promote someone above themselves.
+    if ((role === "org_manager" || role === "staff") && user.role !== "admin") {
+      return Response.json(
+        { error: "Only an admin can invite a manager or staff member." },
+        { status: 403 }
+      );
+    }
 
     const intendedRole = INVITEABLE[role];
 
