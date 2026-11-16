@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   User, Utensils, Heart, Pill, ClipboardCheck, ShieldCheck,
-  Phone, MapPin, Users, HeartHandshake, Home, Menu
+  Phone, MapPin, Users, HeartHandshake, Home, Menu, Share2
 } from "lucide-react";
 import { SERVICE_CATALOG } from "@/lib/fcws";
 import Footer from "@/components/fcws/Footer";
@@ -31,6 +31,30 @@ export default function Landing() {
   }, []);
 
   const dashboardPath = user?.role === "admin" ? "/admin" : user?.role === "caregiver" ? "/caregiver" : "/portal";
+  const [shareMsg, setShareMsg] = useState("");
+
+  const handleShare = async () => {
+    const shareData = {
+      title: "Family Care Workforce Solutions",
+      text: "Trusted home care in Liberia for Liberian families in the diaspora.",
+      url: window.location.origin,
+    };
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch {
+        // visitor cancelled the share sheet
+      }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(shareData.url);
+      setShareMsg("Link copied — share it with family and friends.");
+    } catch {
+      setShareMsg(shareData.url);
+    }
+    setTimeout(() => setShareMsg(""), 5000);
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -151,11 +175,19 @@ export default function Landing() {
       {/* Referral Banner */}
       <section className="bg-accent text-accent-foreground">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10 text-center">
-          <h2 className="font-heading font-bold text-base md:text-lg text-primary mb-2">
-            RECOMMEND FCWS TO OTHER LIBERIANS IN THE DIASPORA
+          <h2 className="mb-2">
+            <button
+              type="button"
+              onClick={handleShare}
+              className="inline-flex items-center gap-2 font-heading font-bold text-base md:text-lg text-primary underline decoration-primary/40 decoration-2 underline-offset-4 hover:decoration-primary hover:opacity-80 transition"
+            >
+              <Share2 className="w-4 h-4 md:w-5 md:h-5 shrink-0" />
+              RECOMMEND FCWS TO OTHER LIBERIANS IN THE DIASPORA
+            </button>
           </h2>
           <p className="text-sm text-primary/80 mb-1">Your referral can bring comfort and care to someone you love.</p>
           <p className="text-xs italic text-primary/60">Together, we care.</p>
+          {shareMsg && <p className="text-xs font-semibold text-primary mt-2 break-all">{shareMsg}</p>}
         </div>
       </section>
 
