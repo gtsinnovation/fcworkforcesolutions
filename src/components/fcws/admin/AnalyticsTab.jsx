@@ -19,6 +19,7 @@ import {
   PERIODS,
   CHANNELS,
   classifyChannel,
+  isPreviewReferrer,
   periodStart,
   periodLabel,
   localDateKey,
@@ -97,7 +98,7 @@ export default function AnalyticsTab() {
 
   useEffect(() => {
     base44.entities.Visit.list("-created_date", 1000)
-      .then((data) => { setVisits(data); setLoading(false); })
+      .then((data) => { setVisits(data.filter((v) => !isPreviewReferrer(v.referrer))); setLoading(false); })
       .catch(() => setLoading(false));
   }, []);
 
@@ -111,7 +112,11 @@ export default function AnalyticsTab() {
       const current = sessionMap.get(key) || { id: key, pages: 0, country: "", first: v.created_date, last: v.created_date, referrer: v.referrer || "" };
       current.pages += 1;
       if (v.created_date) {
-        if (!current.first || new Date(v.created_date) < new Date(current.first)) current.first = v.created_date;
+        // The channel is how the visitor first arrived, not where they last clicked from
+        if (!current.first || new Date(v.created_date) < new Date(current.first)) {
+          current.first = v.created_date;
+          current.referrer = v.referrer || "";
+        }
         if (!current.last || new Date(v.created_date) > new Date(current.last)) current.last = v.created_date;
       }
       if (!current.country && v.country) current.country = v.country;
@@ -274,7 +279,9 @@ export default function AnalyticsTab() {
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-6">
         <div>
           <h2 className="font-heading font-bold text-xl text-primary">Visitor Traffic Analytics</h2>
-          <p className="text-sm text-muted-foreground">Engagement, traffic sources and country of origin</p>
+          <p className="text-sm text-muted-foreground">
+            Outside audience only — signed-in staff and preview visits are excluded
+          </p>
         </div>
         <PeriodFilter value={period} onChange={setPeriod} />
       </div>

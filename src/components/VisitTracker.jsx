@@ -40,14 +40,21 @@ export default function VisitTracker() {
 
     const page = PAGE_NAMES[path] || (path.startsWith("/services/") ? "Service Detail" : "Page");
 
-    base44.functions.invoke("trackVisit", {
-      path,
-      page,
-      referrer: document.referrer || "",
-      userAgent: navigator.userAgent || "",
-      sessionId: getSessionId(),
-      locale: navigator.language || "",
-    }).catch(() => {});
+    // Only outside visitors count as audience traffic — skip signed-in staff,
+    // caregivers, families and the editor preview.
+    base44.auth.isAuthenticated()
+      .then((signedIn) => {
+        if (signedIn) return;
+        base44.functions.invoke("trackVisit", {
+          path,
+          page,
+          referrer: document.referrer || "",
+          userAgent: navigator.userAgent || "",
+          sessionId: getSessionId(),
+          locale: navigator.language || "",
+        }).catch(() => {});
+      })
+      .catch(() => {});
   }, [location.pathname]);
 
   return null;

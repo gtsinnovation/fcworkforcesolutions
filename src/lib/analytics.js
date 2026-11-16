@@ -66,6 +66,13 @@ const isInternalHost = (host) =>
   (typeof window !== "undefined" && host === window.location.hostname.toLowerCase()) ||
   APP_HOSTS.some((entry) => host === entry || host.endsWith(`.${entry}`));
 
+// Visits made from the editor preview are internal, never a real audience.
+export function isPreviewReferrer(referrer) {
+  const host = sourceLabel(referrer).toLowerCase();
+  if (!host || host === "direct") return false;
+  return host === "app.base44.com";
+}
+
 // Groups a visit's referrer into the channel the visitor arrived through.
 export function classifyChannel(referrer) {
   if (!referrer) return "direct";

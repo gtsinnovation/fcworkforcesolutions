@@ -8,6 +8,15 @@ export default async function(req) {
     const body = await req.json().catch(() => ({}));
     const base44 = createClientFromRequest(req);
 
+    // In-app traffic is not audience traffic: signed-in staff, caregivers,
+    // families and the editor preview are ignored.
+    try {
+      const viewer = await base44.auth.me();
+      if (viewer?.id) return Response.json({ status: "skipped", reason: "in_app" });
+    } catch {
+      // no session — an outside visitor
+    }
+
     const path = String(body.path || "/").slice(0, 200);
     const page = String(body.page || "Page").slice(0, 100);
     const referrer = String(body.referrer || "").slice(0, 500);
