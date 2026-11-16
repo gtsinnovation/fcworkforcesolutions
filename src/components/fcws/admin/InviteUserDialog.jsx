@@ -25,14 +25,17 @@ export default function InviteUserDialog({ onInvited }) {
     e.preventDefault();
     setInviting(true);
     try {
-      const platformRole = role === "admin" ? "admin" : "user";
-      await base44.users.inviteUser(email, platformRole);
-      // Record the intended app role so it is auto-assigned when the invitee registers.
-      if (role !== "admin") {
-        await base44.entities.PendingInvite.create({ email: email.toLowerCase().trim(), intendedRole: role });
-      }
+      // The app sends its own invitation and keeps its own invite list; no platform invite is created.
+      const { data } = await base44.functions.invoke("inviteAppUser", { email: email.trim().toLowerCase(), role });
+      if (data?.error) throw new Error(data.error);
       const roleLabel = ROLES.find(r => r.value === role)?.label || role;
-      toast({ title: "Invitation sent", description: `${email} was invited as ${roleLabel}. Their role will be applied automatically when they register and verify their email.` });
+      const adminNote = role === "admin" ? " Admin access is granted from the Users tab once they register." : "";
+      toast({
+        title: data?.emailSent ? "Invitation sent" : "Invitation recorded",
+        description: data?.emailSent
+          ? `${email} was invited as ${roleLabel}. Their role will be applied automatically when they register and verify their email.${adminNote}`
+          : `The invite is saved, but the email could not be sent. Ask them to register at ${data?.registerUrl || "/register"} with this address.${adminNote}`,
+      });
       setOpen(false);
       setEmail("");
       setRole("caregiver");

@@ -80,9 +80,14 @@ export default function CaregiversTab() {
   async function handleInvite(emp) {
     setInvitingId(emp.id);
     try {
-      await base44.users.inviteUser(emp.email, "user");
-      await base44.entities.PendingInvite.create({ email: emp.email.toLowerCase().trim(), intendedRole: "caregiver" });
-      toast({ title: "Invitation sent", description: `An invite was sent to ${emp.email}. Their Caregiver role will be applied automatically when they register and verify their email.` });
+      const { data } = await base44.functions.invoke("inviteAppUser", { email: emp.email, role: "caregiver" });
+      if (data?.error) throw new Error(data.error);
+      toast({
+        title: data?.emailSent ? "Invitation sent" : "Invitation recorded",
+        description: data?.emailSent
+          ? `An invite was sent to ${emp.email}. Their Caregiver role will be applied automatically when they register and verify their email.`
+          : `The invite is saved, but the email could not be sent. Ask them to register at ${data?.registerUrl || "/register"} with this address.`,
+      });
     } catch (err) {
       toast({ title: "Failed to invite", description: err.message || "Could not send invitation", variant: "destructive" });
     } finally {
