@@ -65,12 +65,12 @@ export default function AdminDashboard() {
         {(user?.role === "admin" || user?.role === "org_manager") && <InviteUserDialog />}
       </div>
 
-      <div className="flex gap-1 border-b border-border mb-6 overflow-x-auto">
+      <div className="grid grid-cols-2 gap-1 border-b border-border mb-6 sm:flex sm:flex-wrap">
         {visibleTabs.map(tab => (
           <button
             key={tab.key}
             onClick={() => setTab(tab.key)}
-            className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+            className={`px-2 py-2 text-xs font-medium border-b-2 transition-colors truncate text-left sm:px-4 sm:py-2.5 sm:text-sm sm:text-center ${
               activeTab === tab.key
                 ? "border-secondary text-secondary"
                 : "border-transparent text-muted-foreground hover:text-foreground"
