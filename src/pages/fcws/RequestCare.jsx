@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, Loader2, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -11,27 +11,35 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { base44 } from "@/api/base44Client";
 import { SERVICE_CATALOG } from "@/lib/fcws";
+import EmailVerificationDialog from "@/components/fcws/EmailVerificationDialog";
 
 export default function RequestCare() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [pendingLead, setPendingLead] = useState(null);
+  const formRef = useRef(null);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    setError("");
+    const formData = new FormData(e.currentTarget);
+    setPendingLead({
+      fullName: formData.get("fullName"),
+      email: String(formData.get("email") || "").trim(),
+      phone: formData.get("phone"),
+      serviceInterest: formData.get("serviceInterest") || "General inquiry",
+      serviceDateRange: formData.get("serviceDateRange") || "",
+      message: formData.get("message") || "",
+    });
+  };
+
+  const submitVerifiedRequest = async () => {
+    const leadData = pendingLead;
+    setPendingLead(null);
     setSubmitting(true);
     setError("");
-    const form = e.currentTarget;
-    const formData = new FormData(form);
     try {
-      const leadData = {
-        fullName: formData.get("fullName"),
-        email: formData.get("email"),
-        phone: formData.get("phone"),
-        serviceInterest: formData.get("serviceInterest") || "General inquiry",
-        serviceDateRange: formData.get("serviceDateRange") || "",
-        message: formData.get("message") || "",
-      };
       await base44.entities.CareLead.create(leadData);
       await base44.functions.invoke("sendEmail", {
         to: "fcworkforcesolution@gmail.com",
@@ -49,7 +57,7 @@ export default function RequestCare() {
         `,
       }).catch(() => {});
       setSubmitted(true);
-      form.reset();
+      formRef.current?.reset();
     } catch (err) {
       setError(err.message || "Something went wrong. Please try again.");
     } finally {
@@ -83,7 +91,7 @@ export default function RequestCare() {
             <h1 className="font-heading font-bold text-3xl md:text-4xl text-primary mb-3">Request Care Services</h1>
             <p className="text-muted-foreground mb-8">Tell us about your loved one's needs and we'll get back to you within 24 hours for a free consultation.</p>
 
-            <form onSubmit={handleSubmit} className="care-card space-y-5">
+            <form ref={formRef} onSubmit={handleSubmit} className="care-card space-y-5">
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="fullName">Full Name *</Label>
@@ -127,7 +135,18 @@ export default function RequestCare() {
               <Button type="submit" disabled={submitting} className="w-full h-12 bg-secondary text-secondary-foreground hover:bg-secondary/90">
                 {submitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Submitting...</> : "Submit Request"}
               </Button>
+              <p className="text-xs text-center text-muted-foreground">
+                We'll email a 6-digit code to confirm your address before your request is sent.
+              </p>
             </form>
+
+            <EmailVerificationDialog
+              open={!!pendingLead}
+              email={pendingLead?.email || ""}
+              name={pendingLead?.fullName || ""}
+              onVerified={submitVerifiedRequest}
+              onClose={() => setPendingLead(null)}
+            />
           </motion.div>
         )}
       </div>
