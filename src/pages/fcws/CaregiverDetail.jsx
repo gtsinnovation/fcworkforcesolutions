@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import {
-  ArrowLeft, Mail, Phone, Briefcase, CheckCircle, XCircle, Clock,
+  ArrowLeft, Mail, Phone, Briefcase, CheckCircle, XCircle, Clock, Home, MapPin,
   FileText, ShieldCheck, UserCircle, UserPlus, Loader2
 } from "lucide-react";
 import { HIRING_STATUS_LABELS } from "@/lib/fcws";
@@ -131,6 +131,24 @@ export default function CaregiverDetail() {
               <div>
                 <p className="text-xs text-muted-foreground">Phone</p>
                 <a href={`tel:${employee.phone}`} className="text-sm text-primary hover:text-secondary transition-colors">{employee.phone}</a>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+                <Home className="w-4 h-4 text-muted-foreground" />
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground">Home Address</p>
+                <p className="text-sm text-primary">{employee.homeAddress || "Not provided"}</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+                <MapPin className="w-4 h-4 text-muted-foreground" />
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground">City</p>
+                <p className="text-sm text-primary">{employee.city || "Not provided"}</p>
               </div>
             </div>
           </div>

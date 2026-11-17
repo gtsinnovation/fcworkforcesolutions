@@ -12,6 +12,12 @@
     "phone": {
       "type": "string"
     },
+    "homeAddress": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
     "specializations": {
       "type": "array",
       "items": {

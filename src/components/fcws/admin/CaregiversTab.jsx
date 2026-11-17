@@ -51,6 +51,8 @@ export default function CaregiversTab() {
         fullName: formData.get("fullName"),
         email: formData.get("email"),
         phone: formData.get("phone"),
+        homeAddress: (formData.get("homeAddress") || "").trim(),
+        city: (formData.get("city") || "").trim(),
         specializations: specs,
         educationLevel: formData.get("educationLevel") || "high_school",
         references,
@@ -135,6 +137,16 @@ export default function CaregiversTab() {
             <div className="space-y-2">
               <Label htmlFor="phone">Phone *</Label>
               <Input id="phone" name="phone" required placeholder="(555) 123-4567" />
+            </div>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-3">
+            <div className="space-y-2 sm:col-span-2">
+              <Label htmlFor="homeAddress">Home Address</Label>
+              <Input id="homeAddress" name="homeAddress" placeholder="123 Main Street, Sinkor" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="city">City</Label>
+              <Input id="city" name="city" placeholder="Monrovia" />
             </div>
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
@@ -257,6 +269,10 @@ export default function CaregiversTab() {
                     {emp.documents?.length > 0 ? (
                       <ul className="space-y-1">{emp.documents.map((d, i) => <li key={i} className="flex items-center gap-1 text-foreground"><FileText className="w-3.5 h-3.5 text-secondary" /> {d}</li>)}</ul>
                     ) : <p className="text-muted-foreground">No documents on file</p>}
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Home Address</p>
+                    <p className="text-foreground">{emp.homeAddress || "—"}{emp.city ? `, ${emp.city}` : ""}</p>
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Education</p>
