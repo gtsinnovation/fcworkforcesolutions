@@ -45,7 +45,8 @@ export default function InsightPost() {
     if (!post) return;
     return applyPostMeta({
       title: `${post.title} | Caregiving Insight`,
-      description: post.excerpt || String(post.content || "").slice(0, 160),
+      description: post.metaDescription || post.excerpt || String(post.content || "").slice(0, 160),
+      keywords: post.keywords || "",
       image: post.coverImage || "",
       url: absolutePostUrl(post.slug),
     });

@@ -13,6 +13,16 @@
       "type": "string",
       "maxLength": 400
     },
+    "metaDescription": {
+      "type": "string",
+      "maxLength": 400,
+      "description": "Search and social description for this article; falls back to the excerpt"
+    },
+    "keywords": {
+      "type": "string",
+      "maxLength": 400,
+      "description": "Comma-separated search topics for this article"
+    },
     "content": {
       "type": "string",
       "description": "Article body written in Markdown"

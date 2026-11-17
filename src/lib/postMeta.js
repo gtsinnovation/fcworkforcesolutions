@@ -18,7 +18,7 @@ const setMeta = (attr, key, content, cleanups) => {
   });
 };
 
-export function applyPostMeta({ title, description, image, url, type = "article" }) {
+export function applyPostMeta({ title, description, keywords, image, url, type = "article" }) {
   const cleanups = [];
 
   setMeta("property", "og:type", type, cleanups);
@@ -33,6 +33,7 @@ export function applyPostMeta({ title, description, image, url, type = "article"
   if (image) setMeta("name", "twitter:image", image, cleanups);
 
   setMeta("name", "description", description, cleanups);
+  if (keywords) setMeta("name", "keywords", keywords, cleanups);
 
   let canonical = document.head.querySelector('link[rel="canonical"]');
   const previousHref = canonical?.getAttribute("href") ?? null;
