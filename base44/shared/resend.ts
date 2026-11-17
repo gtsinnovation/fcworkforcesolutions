@@ -96,7 +96,7 @@ export async function sendOrgNotification({ subject, html, text, replyTo }) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "FCWS <onboarding@resend.dev>",
+      from: "FCWS <notifications@familycareworkforce.com>",
       to: [ORG_EMAIL],
       subject,
       html,
