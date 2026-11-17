@@ -37,8 +37,20 @@ export function postUrl(slug) {
   return `/caregiving-insight/${slug}`;
 }
 
+// The public address articles should always be shared at.
+const PUBLIC_SITE_URL = "https://familycareworkforce.com";
+
+// Editor previews and the free base44.app host must never end up in a shared
+// link or a canonical tag, so those hosts resolve to the public domain.
+const isPlatformHost = (hostname) =>
+  hostname === "base44.app" ||
+  hostname.endsWith(".base44.app") ||
+  hostname.endsWith(".base44.com");
+
 export function absolutePostUrl(slug) {
-  return `${window.location.origin}${postUrl(slug)}`;
+  const { hostname, origin } = window.location;
+  const base = isPlatformHost(hostname) ? PUBLIC_SITE_URL : origin;
+  return `${base}${postUrl(slug)}`;
 }
 
 const DAY_MS = 24 * 60 * 60 * 1000;
