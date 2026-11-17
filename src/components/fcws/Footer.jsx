@@ -28,7 +28,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center justify-center md:justify-start gap-3">
                 <span className="text-primary-foreground/60 text-xs">Chat:</span>
-                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition" aria-label="Facebook">
+                <a href="https://www.facebook.com/profile.php?id=61592347563835" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition" aria-label="Facebook">
                   <Facebook className="w-5 h-5 text-accent" />
                 </a>
                 <a href="https://wa.me/231889887976" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition" aria-label="WhatsApp">

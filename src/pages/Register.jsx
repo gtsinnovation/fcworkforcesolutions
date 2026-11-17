@@ -46,7 +46,19 @@ export default function Register() {
       if (result?.access_token) {
         base44.auth.setToken(result.access_token);
       }
-      window.location.href = "/";
+      // An invited caregiver should finish onboarding the moment their email is
+      // verified, without depending on a later page load to grant the role.
+      let destination = "/";
+      try {
+        const invite = await base44.functions.invoke("assignInvitedRole");
+        const role = invite?.data?.role;
+        if (["caregiver", "onboarding"].includes(role)) destination = "/caregiver";
+        else if (["admin", "org_manager", "staff"].includes(role)) destination = "/admin";
+        else if (role === "client") destination = "/portal";
+      } catch (e) {
+        // The invite stays on file and is applied on the next page load.
+      }
+      window.location.href = destination;
     } catch (err) {
       setError(err.message || "Invalid verification code");
     } finally {

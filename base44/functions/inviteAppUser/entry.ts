@@ -75,8 +75,10 @@ export default async function (req) {
       await base44.asServiceRole.entities.PendingInvite.create({ email, intendedRole });
     }
 
-    const origin = (req.headers.get("X-Base44-App-Url") || "https://familycareworkforce.base44.app").replace(/\/$/, "");
-    const registerUrl = `${origin}/register`;
+    // The invite link must open the live site. Deriving it from the request
+    // header produced preview-only hosts the recipient can never open, so the
+    // invitation always points at the canonical domain.
+    const registerUrl = "https://familycareworkforce.com/register";
 
     let emailSent = false;
     let emailError = null;

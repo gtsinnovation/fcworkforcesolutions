@@ -15,8 +15,9 @@ export default function Navbar() {
         const u = await base44.auth.me();
         if (cancelled) return;
         setUser(u);
-        // Standard platform users may have a pending invite that auto-applies their app role.
-        if (u && u.role === "user") {
+        // Standard platform users (role "user", or no role yet) may have a pending
+        // invite that auto-applies their app role.
+        if (u && (!u.role || u.role === "user")) {
           try {
             const res = await base44.functions.invoke("assignInvitedRole");
             if (res?.data?.status === "upgraded" && !cancelled) {
