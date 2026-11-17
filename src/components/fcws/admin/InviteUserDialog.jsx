@@ -1,18 +1,15 @@
 import { useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { UserPlus, Loader2, Shield, Heart, UserCircle } from "lucide-react";
+import { UserPlus, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
+import { APP_ROLES } from "@/lib/roles";
 
-const ROLES = [
-  { value: "admin", label: "Admin", icon: Shield, desc: "Full access to all dashboard features" },
-  { value: "caregiver", label: "Caregiver", icon: Heart, desc: "Access to schedules, clients, and incident reporting" },
-  { value: "client", label: "Client / Family", icon: UserCircle, desc: "Access to the family portal for care updates" },
-];
+const ROLES = APP_ROLES;
 
 export default function InviteUserDialog({ onInvited }) {
   const [open, setOpen] = useState(false);

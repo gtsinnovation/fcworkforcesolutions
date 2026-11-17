@@ -4,6 +4,10 @@ const MAX_ATTEMPTS = 5;
 
 export default async function (req) {
   try {
+    if (req.method !== "POST") {
+      return Response.json({ error: "Method not allowed" }, { status: 405 });
+    }
+
     const body = await req.json().catch(() => ({}));
     const email = String(body.email || "").trim().toLowerCase();
     const code = String(body.code || "").trim();

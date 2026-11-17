@@ -1,16 +1,11 @@
 import { Home, MessageCircle, Heart, Facebook, Phone, Mail, LayoutDashboard, LogIn } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { base44 } from "@/api/base44Client";
+import { useAuth } from "@/lib/AuthContext";
 
 export default function Footer() {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    base44.auth.isAuthenticated().then((authed) => {
-      if (authed) base44.auth.me().then(setUser).catch(() => {});
-    });
-  }, []);
+  // The shared auth context already knows who is signed in, so the footer does
+  // not need its own profile request.
+  const { user } = useAuth();
 
   const dashboardPath = ["admin","org_manager","staff"].includes(user?.role) ? "/admin" : ["caregiver","onboarding"].includes(user?.role) ? "/caregiver" : user?.role === "client" ? "/portal" : "/";
 

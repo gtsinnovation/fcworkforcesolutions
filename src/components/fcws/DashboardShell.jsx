@@ -1,18 +1,16 @@
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { ShieldCheck, LogOut } from "lucide-react";
 import { base44 } from "@/api/base44Client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/lib/AuthContext";
 
 export default function DashboardShell({ navItems, title, roleLabel }) {
   const location = useLocation();
-  const [user, setUser] = useState(null);
+  // The auth context already holds the signed-in user; no extra profile request.
+  const { user } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  useEffect(() => {
-    base44.auth.me().then(setUser).catch(() => {});
-  }, []);
 
   const handleLogout = async () => {
     await base44.auth.logout();

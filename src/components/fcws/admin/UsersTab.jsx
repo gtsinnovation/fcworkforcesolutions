@@ -1,28 +1,16 @@
 import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Loader2, Shield, Heart, UserCircle, Mail, ChevronDown, Calendar, User } from "lucide-react";
+import { Loader2, Mail, ChevronDown, Calendar, User } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import Pagination from "@/components/fcws/admin/Pagination";
 import DeleteButton from "@/components/fcws/admin/DeleteButton";
 import { useToast } from "@/components/ui/use-toast";
 import { logAudit } from "@/lib/audit";
+import { APP_ROLES, roleInfo, roleLabel } from "@/lib/roles";
 
 const PAGE_SIZE = 25;
-
-const roleLabel = (value) => ROLES.find((r) => r.value === (value || "client"))?.label || value || "client";
-
-const ROLES = [
-  { value: "admin", label: "Admin", icon: Shield },
-  { value: "caregiver", label: "Caregiver", icon: Heart },
-  { value: "client", label: "Client / Family", icon: UserCircle },
-];
-
-const ROLE_BADGE = {
-  admin: "bg-accent/15 text-accent",
-  caregiver: "bg-secondary/15 text-secondary",
-  client: "bg-blue-100 text-blue-700",
-};
+const ROLES = APP_ROLES;
 
 export default function UsersTab() {
   const [users, setUsers] = useState([]);
@@ -69,7 +57,7 @@ export default function UsersTab() {
       }
       load();
     } catch (err) {
-      console.error(err);
+      toast({ title: "Could not change role", description: err.message, variant: "destructive" });
     } finally {
       setUpdatingId(null);
     }
@@ -158,8 +146,8 @@ export default function UsersTab() {
                     <p className="font-medium text-foreground truncate">{u.full_name || u.email}</p>
                     {u.full_name && <p className="text-xs text-muted-foreground truncate">{u.email}</p>}
                   </div>
-                  <span className={`px-2 py-0.5 rounded-full text-xs font-medium shrink-0 ${ROLE_BADGE[u.role] || ROLE_BADGE.client}`}>
-                    {u.role || "client"}
+                  <span className={`px-2 py-0.5 rounded-full text-xs font-medium shrink-0 ${roleInfo(u.role).badge}`}>
+                    {roleLabel(u.role)}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 shrink-0" onClick={e => e.stopPropagation()}>

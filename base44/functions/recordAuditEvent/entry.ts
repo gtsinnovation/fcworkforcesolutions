@@ -3,7 +3,9 @@ import { recordAudit } from "../../shared/audit.ts";
 
 // Records a staff action taken from the dashboard (role changes, hiring
 // decisions and the like) so the Audit Log shows who did what.
-const ALLOWED_ROLES = ["admin", "org_manager", "staff", "caregiver", "onboarding"];
+// Only the people who work in the dashboard write its audit trail. Caregivers
+// and families have no audited actions, so their accounts cannot add entries.
+const ALLOWED_ROLES = ["admin", "org_manager", "staff"];
 
 export default async function (req) {
   try {

@@ -2,9 +2,17 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 
 const CODE_TTL_MINUTES = 10;
 const RESEND_COOLDOWN_SECONDS = 60;
+// Ceiling on codes issued across the whole site in a short window, so the
+// endpoint cannot be used to email-bomb arbitrary addresses at scale.
+const WINDOW_LIMIT = 40;
+const LIMIT_WINDOW_MINUTES = 10;
 
 export default async function (req) {
   try {
+    if (req.method !== "POST") {
+      return Response.json({ error: "Method not allowed" }, { status: 405 });
+    }
+
     const body = await req.json().catch(() => ({}));
     const email = String(body.email || "").trim().toLowerCase();
     const name = String(body.name || "").trim();
@@ -26,6 +34,20 @@ export default async function (req) {
       );
     }
 
+    // Site-wide burst ceiling: a real visitor never needs this many codes.
+    try {
+      const windowStart = new Date(Date.now() - LIMIT_WINDOW_MINUTES * 60 * 1000).toISOString();
+      const recent = await admin.entities.RequestVerification.count({ created_date: { $gt: windowStart } });
+      if (recent >= WINDOW_LIMIT) {
+        return Response.json(
+          { error: "Too many verification requests right now. Please try again in a few minutes." },
+          { status: 429 }
+        );
+      }
+    } catch {
+      // A failed count must never block a genuine request.
+    }
+
     await admin.entities.RequestVerification.deleteMany({ email });
 
     const random = new Uint32Array(1);
@@ -36,7 +58,11 @@ export default async function (req) {
     await admin.entities.RequestVerification.create({ email, code, expiresAt, attempts: 0, verified: false });
 
     const greeting = name ? `Hi ${name},` : "Hello,";
-    const mail = await admin.integrations.Core.SendEmail({
+    // A delivery failure must read as a friendly message, never as the mail
+    // provider's internal wording.
+    let mail;
+    try {
+      mail = await admin.integrations.Core.SendEmail({
       to: email,
       subject: "Your Family Care Workforce verification code",
       category: "transactional",
@@ -57,8 +83,14 @@ export default async function (req) {
           </div>
         </div>
       `,
-      text: `${greeting}\n\nYour Family Care Workforce verification code is ${code}. It expires in ${CODE_TTL_MINUTES} minutes.\n\nIf you did not request this, you can ignore this email.`,
-    });
+        text: `${greeting}\n\nYour Family Care Workforce verification code is ${code}. It expires in ${CODE_TTL_MINUTES} minutes.\n\nIf you did not request this, you can ignore this email.`,
+      });
+    } catch {
+      return Response.json(
+        { error: "We couldn't send the code right now. Please try again in a moment." },
+        { status: 502 }
+      );
+    }
 
     if (mail && mail.success === false) {
       return Response.json(

@@ -107,7 +107,7 @@ export default function BlogTab() {
         </div>
         <div className="flex flex-wrap gap-2">
           <Button asChild variant="outline">
-            <Link to="/caregiving-insight" target="_blank">
+            <Link to="/caregiving-insight" target="_blank" rel="noreferrer">
               <Eye className="w-4 h-4" /> View blog
             </Link>
           </Button>
@@ -181,7 +181,7 @@ export default function BlogTab() {
                     {post.status === "published" && (
                       <>
                         <Button asChild size="sm" variant="ghost">
-                          <Link to={postUrl(post.slug)} target="_blank">
+                          <Link to={postUrl(post.slug)} target="_blank" rel="noreferrer">
                             <Eye className="w-4 h-4" /> View
                           </Link>
                         </Button>

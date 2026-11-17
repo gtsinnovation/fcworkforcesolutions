@@ -27,7 +27,7 @@ const TABS = [
   { key: "leads", label: "Leads", roles: MANAGEMENT },
   { key: "insight", label: "Caregiving Insight", roles: MANAGEMENT },
   { key: "analytics", label: "Analytics", roles: MANAGEMENT },
-  { key: "users", label: "Users", roles: LEADERSHIP },
+  { key: "users", label: "Users", roles: ["admin"] },
 ];
 
 export default function AdminDashboard() {

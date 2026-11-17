@@ -14,7 +14,7 @@ const ADMIN_NAV = [
   { label: "Leads", path: "/admin?tab=leads", icon: ClipboardList, roles: MANAGEMENT },
   { label: "Caregiving Insight", path: "/admin?tab=insight", icon: BookOpen, roles: MANAGEMENT },
   { label: "Analytics", path: "/admin?tab=analytics", icon: Activity, roles: MANAGEMENT },
-  { label: "Users", path: "/admin?tab=users", icon: UserCog, roles: LEADERSHIP },
+  { label: "Users", path: "/admin?tab=users", icon: UserCog, roles: ["admin"] },
 ];
 
 // Each entry must point at a real route — schedule details and contact live on
