@@ -83,7 +83,7 @@ export default async function (req) {
     let emailSent = false;
     let emailError = null;
     try {
-      await sendInviteEmail({ to: email, roleLabel: LABELS[role], registerUrl });
+      await sendInviteEmail({ admin: base44.asServiceRole, to: email, roleLabel: LABELS[role], registerUrl });
       emailSent = true;
     } catch (error) {
       emailError = error.message;

@@ -44,10 +44,9 @@ export function emailShell(title, rows, message) {
 
 // Invitation mail. The recipient is always an address a staff member chose to
 // invite, and the body carries only the invitation itself — never app data.
-export async function sendInviteEmail({ to, roleLabel, registerUrl }) {
-  const apiKey = secrets.get("RESEND_API_KEY");
-  if (!apiKey) throw new Error("Email provider is not configured.");
-
+// Sends through the platform's built-in email so invitations do not depend on a
+// separately verified mail provider.
+export async function sendInviteEmail({ admin, to, roleLabel, registerUrl }) {
   const html = `
     <div style="font-family:Arial,Helvetica,sans-serif;background:#f7f7f8;padding:24px">
       <div style="max-width:560px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb">
@@ -72,25 +71,18 @@ export async function sendInviteEmail({ to, roleLabel, registerUrl }) {
     </div>
   `;
 
-  const res = await fetch(RESEND_API, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: "FCWS <onboarding@resend.dev>",
-      to: [to],
-      subject: "You are invited to Family Care Workforce Solutions",
-      html,
-      text: `You have been invited to join Family Care Workforce Solutions as ${roleLabel}.\n\nCreate your account here: ${registerUrl}\n`,
-    }),
-    signal: AbortSignal.timeout(15000),
+  const result = await admin.integrations.Core.SendEmail({
+    to,
+    subject: "You are invited to Family Care Workforce Solutions",
+    category: "transactional",
+    html,
+    text: `You have been invited to join Family Care Workforce Solutions as ${roleLabel}.\n\nCreate your account here: ${registerUrl}\n`,
   });
 
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data?.message || "Email provider error");
-  return data;
+  if (result && result.success === false) {
+    throw new Error(result.message || "Email could not be delivered");
+  }
+  return result;
 }
 
 export async function sendOrgNotification({ subject, html, text, replyTo }) {
